@@ -60,7 +60,6 @@ MonoBehaviour:
   Speed: 150
   GravityDownAcceleration: 10
   TrajectoryCorrectionDistance: -1
-  InheritWeaponVelocity: 0
   Damage: 40
 --- !u!54 &2786715183910192962
 Rigidbody:

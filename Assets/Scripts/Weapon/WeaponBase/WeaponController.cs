@@ -67,7 +67,6 @@ public class WeaponController : MonoBehaviour
     public float AmmoUsageRateWhileCharging = 1f;
 
     [Header("Audio & Visual")] 
-    public Animator WeaponAnimator;
     public GameObject MuzzleFlashPrefab;
     public bool UnparentMuzzleFlash;
     public AudioClip ShootSfx;
@@ -107,8 +106,6 @@ public class WeaponController : MonoBehaviour
     AudioSource m_ShootAudioSource;
 
     public bool IsReloading { get; private set; }
-
-    const string k_AnimAttackParameter = "Attack";
 
     private Queue<Rigidbody> m_PhysicalAmmoPool;
 
@@ -416,12 +413,6 @@ public class WeaponController : MonoBehaviour
         if (ShootSfx && !UseContinuousShootSound)
         {
             m_ShootAudioSource.PlayOneShot(ShootSfx);
-        }
-
-        // Trigger attack animation if there is any
-        if (WeaponAnimator)
-        {
-            WeaponAnimator.SetTrigger(k_AnimAttackParameter);
         }
 
         OnShoot?.Invoke();

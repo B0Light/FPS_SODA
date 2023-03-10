@@ -42,7 +42,7 @@ public class EnemyController : MonoBehaviour
         }
         //animation
         _anim.SetBool("isWalk", m_isChase);
-
+        _anim.SetBool("isAtk", m_isAtk);
         if (_health.m_target != null)
         {
             m_target = _health.m_target.transform;

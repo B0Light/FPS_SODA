@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody))]
@@ -7,8 +8,10 @@ using UnityEngine;
 public class ProjectileStandard : ProjectileBase
 {
     [Header("General")]
-    public float Radius = 0.01f;
+    public float Radius = 0.01f; // chargeParameter / Boom
     public Transform Root;
+    [SerializeField] LayerMask m_layerMask = 0;
+    public bool Boom = false;
 
     public float MaxLifeTime = 5f;
     public GameObject ImpactVfx;
@@ -48,7 +51,6 @@ public class ProjectileStandard : ProjectileBase
 
         // Ignore colliders of owner
         Collider[] ownerColliders = m_ProjectileBase.Owner.GetComponentsInChildren<Collider>();
-        m_IgnoredColliders.AddRange(ownerColliders);
 
         // Handle case of player shooting (make projectiles not go through walls, and remember center-of-screen trajectory)
         PlayerWeaponsManager playerWeaponsManager = m_ProjectileBase.Owner.GetComponent<PlayerWeaponsManager>();
@@ -83,6 +85,19 @@ public class ProjectileStandard : ProjectileBase
         Health health = collision.gameObject.GetComponent<Health>();
         if (health)
             health.TakeDamage(Damage, m_ProjectileBase.Owner);
+
+        if (Boom)
+        {
+            RaycastHit[] hits = Physics.SphereCastAll(transform.position,
+                Radius, transform.up, 0f, m_layerMask);
+            foreach (var hit in hits)
+            {
+                Health blasted = collision.gameObject.GetComponent<Health>();
+                if (blasted)
+                    blasted.TakeDamage(Damage, m_ProjectileBase.Owner);
+            }
+        }
+
         
         // impact vfx
         if (ImpactVfx)

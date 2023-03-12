@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.Windows;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(EnemyAtk))]
+[RequireComponent(typeof(EnemyPath))]
 public class EnemyController : MonoBehaviour
 {
     Health _health;
@@ -14,9 +16,7 @@ public class EnemyController : MonoBehaviour
     public float m_atkRadius = 2f;
     public float m_atkRange = 4f;
 
-    [Header("Animator")]
-    
-    public bool m_isChase = false;
+    public bool isBoss = false;
     public bool m_isAtk = false;
     public bool m_isDead = false;
 
@@ -37,7 +37,6 @@ public class EnemyController : MonoBehaviour
             StopAllCoroutines();
             return;
         }
-
         //target
         if (_health.m_target)
         {
@@ -67,7 +66,7 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
-
+    
     private void FixedUpdate()
     {
         Targeting();

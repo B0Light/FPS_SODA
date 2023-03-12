@@ -6,20 +6,19 @@ public class EnemyAtk : MonoBehaviour
 
     public enum Type
     {
-        A, B, C
+        A, B, C, Boss
     };
 
-    EnemyController _EnemyController;
-    Animator _anim;
-    WeaponController _weaponController;
+    protected EnemyController _EnemyController;
+    protected WeaponController _weaponController;
+    protected Animator _anim;
 
     public Type enemyType;
     public float m_dmg;
-    float m_meleeRadius = 1.5f;
-    float m_meleeRange = 1f;
-    public GameObject bullet;
-    
-    private void Awake() {
+    protected float m_meleeRadius = 4f;
+    protected float m_meleeRange = 2f;
+
+    protected virtual void Awake() {
         _EnemyController = GetComponent<EnemyController>();
         _weaponController = GetComponentInChildren<WeaponController>();
         _anim = GetComponentInChildren<Animator>();
@@ -35,20 +34,14 @@ public class EnemyAtk : MonoBehaviour
             case Type.A:
                 yield return new WaitForSeconds(0.2f);
                 MeleeAtk();
-                _anim.SetBool("isAtk", true);
+                _anim.SetTrigger("doAtk");
                 yield return new WaitForSeconds(1f);
-                _anim.SetBool("isAtk", false);
                 break;
 
             case Type.B:
-                yield return new WaitForSeconds(0.5f);
-                Rigidbody _rbody = GetComponent<Rigidbody>();
-                if (_rbody)
-                {
-                    _rbody.AddForce(transform.forward * 200, ForceMode.Impulse);
-                    MeleeAtk();
-                    _rbody.velocity = Vector3.zero;
-                }
+                yield return new WaitForSeconds(0.2f);
+                _anim.SetTrigger("doAtk");
+                MeleeAtk();
                 yield return new WaitForSeconds(2f);
                 break;
 
@@ -67,11 +60,10 @@ public class EnemyAtk : MonoBehaviour
                 break;
         }
 
-        _EnemyController.m_isChase = true;
         _EnemyController.m_isAtk = false;
     }
 
-    void MeleeAtk()
+    protected void MeleeAtk()
     {
         RaycastHit[] hits = Physics.SphereCastAll(transform.position,
                 m_meleeRadius, transform.forward, m_meleeRange, LayerMask.GetMask("Player"));

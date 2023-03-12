@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
     public float AimingRotationMultiplier = 0.4f;
 
     private float _speed;
-    private float _rotationVelocity;
     private float _verticalVelocity;
     private float _terminalVelocity = 53.0f;
 
@@ -216,7 +215,7 @@ public class PlayerController : MonoBehaviour
         isDodge = false;
     }
 
-        private static float ClampAngle(float lfAngle, float lfMin, float lfMax) // 카메라 회전시 360도 안으로 유지
+    private static float ClampAngle(float lfAngle, float lfMin, float lfMax) // 카메라 회전시 360도 안으로 유지
     {
         if (lfAngle < -360f) lfAngle += 360f;
         if (lfAngle > 360f) lfAngle -= 360f;

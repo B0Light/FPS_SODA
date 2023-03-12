@@ -11,7 +11,6 @@ public class Health : MonoBehaviour
 
     protected MeshRenderer[] m_meshs;
 
-    public bool Invincible { get; set; }
     public bool CanPickup() => m_health.Value < m_health.GetMaxValue();
     public float GetRatio() => m_health.Value / m_health.GetMaxValue();
  
@@ -49,8 +48,6 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float damage, GameObject damageSource)
     {
-        if (Invincible)
-            return;
         m_target = damageSource;
         StartCoroutine(OnDmg(damage));
     }

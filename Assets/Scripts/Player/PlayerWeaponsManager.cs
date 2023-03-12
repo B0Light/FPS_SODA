@@ -452,8 +452,6 @@ public class PlayerWeaponsManager : MonoBehaviour
         {
             return m_WeaponSlots[index];
         }
-
-        // if we didn't find a valid active weapon in our weapon slots, return null
         return null;
     }
 

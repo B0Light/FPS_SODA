@@ -6,15 +6,15 @@ using UnityEngine.AI;
 [RequireComponent(typeof(EnemyController))]
 public class EnemyPath : MonoBehaviour
 {
-    NavMeshAgent m_navMesh = null;
+    public NavMeshAgent m_navMesh = null;
     EnemyController _enemyController;
     Animator _anim;
 
-    [SerializeField] float m_distance = 0f;
+    public float m_distance = 0f;
     [SerializeField] LayerMask m_layerMask = 0;
     [SerializeField] Transform[] m_patrolNode = null;
 
-    Transform m_target = null;
+    public Transform m_target = null;
 
     int m_count = 0;
 
@@ -47,14 +47,13 @@ public class EnemyPath : MonoBehaviour
         InvokeRepeating("MoveToNextWayNode", 0f, 2f);
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (_enemyController.m_isAtk == true) return;
 
         _anim.SetBool("isWalk", m_navMesh.velocity.magnitude > 0);
         if (m_navMesh.velocity == Vector3.zero)
         {
-            _enemyController.m_isChase = false;
             MoveToNextWayNode();
         }
         Sight(); 
@@ -80,7 +79,6 @@ public class EnemyPath : MonoBehaviour
         TraceNavSetting();
         if (m_target != null ) return;
 
-        _enemyController.m_isChase = true;
         if(m_navMesh.velocity == Vector3.zero)
         {
             m_count++;

@@ -10,7 +10,7 @@ public class ProjectileStandard : ProjectileBase
     [Header("General")]
     public float Radius = 0.01f; // chargeParameter / Boom
     public Transform Root;
-    [SerializeField] LayerMask m_layerMask = 0;
+    public LayerMask m_layerMask = 0;
     public bool Boom = false;
 
     public float MaxLifeTime = 5f;
@@ -48,9 +48,6 @@ public class ProjectileStandard : ProjectileBase
         m_Velocity = transform.forward * Speed;
         m_IgnoredColliders = new List<Collider>();
         transform.position += m_ProjectileBase.InheritedMuzzleVelocity * Time.deltaTime;
-
-        // Ignore colliders of owner
-        Collider[] ownerColliders = m_ProjectileBase.Owner.GetComponentsInChildren<Collider>();
 
         // Handle case of player shooting (make projectiles not go through walls, and remember center-of-screen trajectory)
         PlayerWeaponsManager playerWeaponsManager = m_ProjectileBase.Owner.GetComponent<PlayerWeaponsManager>();

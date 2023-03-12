@@ -103,6 +103,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Radius: 1
   Root: {fileID: 106790115311484948}
+  m_layerMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  Boom: 0
   MaxLifeTime: 5
   ImpactVfx: {fileID: 4260779743739990948, guid: bbe6bdea7cd168e428a309e9eb2e728b, type: 3}
   ImpactVfxLifetime: 5

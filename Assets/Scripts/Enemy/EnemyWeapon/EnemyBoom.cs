@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class EnemyBoom : MonoBehaviour
 {
-    public GameObject meshObj;
-    public GameObject effectObj;
     Rigidbody _rbody;
 
     private void Awake()

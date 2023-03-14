@@ -59,7 +59,6 @@ public class PlayerWeaponsManager : MonoBehaviour
     public Vector3 m_WeaponRecoilLocalPosition;
     Vector3 m_AccumulatedRecoil;
 
-    float m_TimeStartedWeaponSwitch;
     WeaponSwitchState m_WeaponSwitchState;
     int m_WeaponSwitchNewWeaponIndex;
 
@@ -97,7 +96,6 @@ public class PlayerWeaponsManager : MonoBehaviour
             if (!activeWeapon.AutomaticReload && m_InputSystem.reload && activeWeapon.CurrentAmmoRatio < 1.0f)
             {
                 IsAiming = false;
-                activeWeapon.StartReloadAnimation();
                 return;
             }
             // Aiming
@@ -121,15 +119,18 @@ public class PlayerWeaponsManager : MonoBehaviour
             (activeWeapon == null || !activeWeapon.IsCharging) &&
             (m_WeaponSwitchState == WeaponSwitchState.Up || m_WeaponSwitchState == WeaponSwitchState.Down))
         {
+            
             int switchWeaponInput = m_InputSystem.GetSwitchWeaponInput();
             if (switchWeaponInput != 0)
             {
+                //scroll switch
                 bool switchUp = switchWeaponInput > 0;
                 animator.SetTrigger("doSwap");
                 SwitchWeapon(switchUp);
             }
             else
             {
+                // button Switch
                 switchWeaponInput = m_InputSystem.GetSelectWeaponInput();
                 if (switchWeaponInput != 0)
                 {
@@ -191,15 +192,16 @@ public class PlayerWeaponsManager : MonoBehaviour
         SwitchToWeaponIndex(newWeaponIndex);
     }
         
-    public void SwitchToWeaponIndex(int newWeaponIndex, bool force = false)
+    public void SwitchToWeaponIndex(int newWeaponIndex)
     {
-        if (force || (newWeaponIndex != ActiveWeaponIndex && newWeaponIndex >= 0))
+        if (newWeaponIndex != ActiveWeaponIndex && newWeaponIndex >= 0)
         {
             m_WeaponSwitchNewWeaponIndex = newWeaponIndex;
-            m_TimeStartedWeaponSwitch = Time.time;
 
+            
             if (GetActiveWeapon() == null)
             {
+                // 무기가 비어있다면 들 준비
                 m_WeaponSwitchState = WeaponSwitchState.PutUpNew;
                 ActiveWeaponIndex = m_WeaponSwitchNewWeaponIndex;
 
@@ -211,6 +213,7 @@ public class PlayerWeaponsManager : MonoBehaviour
             }
             else
             {
+                // 무기가 있다면 내릴준비 
                 m_WeaponSwitchState = WeaponSwitchState.PutDownPrevious;
             }
         }
@@ -218,7 +221,7 @@ public class PlayerWeaponsManager : MonoBehaviour
         
     public WeaponController HasWeapon(WeaponController weaponPrefab)
     {
-        // Checks if we already have a weapon coming from the specified prefab
+        // 인자로 받은 무기를 보유중이면 보유중인 무기 반환 아니면 null
         for (var index = 0; index < m_WeaponSlots.Length; index++)
         {
             var w = m_WeaponSlots[index];
@@ -307,53 +310,38 @@ public class PlayerWeaponsManager : MonoBehaviour
     // Updates the animated transition of switching weapons
     void UpdateWeaponSwitching()
     {
-        float switchingTimeFactor = 0f;
-        if (WeaponSwitchDelay == 0f)
+        
+        if (m_WeaponSwitchState == WeaponSwitchState.PutDownPrevious)
         {
-            switchingTimeFactor = 1f;
-        }
-        else
-        {
-            switchingTimeFactor = Mathf.Clamp01((Time.time - m_TimeStartedWeaponSwitch) / WeaponSwitchDelay);
-        }
-
-        // Handle transiting to new switch state
-        if (switchingTimeFactor >= 1f)
-        {
-            if (m_WeaponSwitchState == WeaponSwitchState.PutDownPrevious)
+            // 기존 무기 내려두기
+            WeaponController oldWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
+            if (oldWeapon != null)
             {
-                // Deactivate old weapon
-                WeaponController oldWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
-                if (oldWeapon != null)
-                {
-                    oldWeapon.ShowWeapon(false);
-                }
-
-                ActiveWeaponIndex = m_WeaponSwitchNewWeaponIndex;
-                switchingTimeFactor = 0f;
-
-                // Activate new weapon
-                WeaponController newWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
-                if (OnSwitchedToWeapon != null)
-                {
-                    OnSwitchedToWeapon.Invoke(newWeapon);
-                }
-
-                if (newWeapon)
-                {
-                    m_TimeStartedWeaponSwitch = Time.time;
-                    m_WeaponSwitchState = WeaponSwitchState.PutUpNew;
-                }
-                else
-                {
-                    // if new weapon is null, don't follow through with putting weapon back up
-                    m_WeaponSwitchState = WeaponSwitchState.Down;
-                }
+                oldWeapon.ShowWeapon(false);
             }
-            else if (m_WeaponSwitchState == WeaponSwitchState.PutUpNew)
+
+            ActiveWeaponIndex = m_WeaponSwitchNewWeaponIndex;
+
+            // 새 무기 활성화 준비
+            WeaponController newWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
+            if (OnSwitchedToWeapon != null)
             {
-                m_WeaponSwitchState = WeaponSwitchState.Up;
+                OnSwitchedToWeapon.Invoke(newWeapon);
             }
+
+            if (newWeapon)
+            {
+                m_WeaponSwitchState = WeaponSwitchState.PutUpNew;
+            }
+            else
+            {
+                m_WeaponSwitchState = WeaponSwitchState.Down;
+            }
+        }
+        else if (m_WeaponSwitchState == WeaponSwitchState.PutUpNew)
+        {
+            // 새 무기 즉시 활성화
+            m_WeaponSwitchState = WeaponSwitchState.Up;
         }
 
     }
@@ -367,28 +355,26 @@ public class PlayerWeaponsManager : MonoBehaviour
             return false;
         }
 
-        // search our weapon slots for the first free one, assign the weapon to it, and return true if we found one. Return false otherwise
         for (int i = 0; i < m_WeaponSlots.Length; i++)
         {
-            // only add the weapon if the slot is free
             if (m_WeaponSlots[i] == null)
             {
-                // spawn the weapon prefab as child of the weapon socket
+                // 신규 무기 설정
                 WeaponController weaponInstance = Instantiate(weaponPrefab, WeaponParentSocket);
                 weaponInstance.transform.localPosition = Vector3.zero;
                 weaponInstance.transform.localRotation = Quaternion.identity;
-                // Set owner to this gameObject so the weapon can alter projectile/damage logic accordingly
+                // 신규무기 투사체 오너 설정
                 weaponInstance.Owner = gameObject;
                 weaponInstance.SourcePrefab = weaponPrefab.gameObject;
                 weaponInstance.ShowWeapon(false);
 
-                // Assign the first person layer to the weapon
+                // 신규무기 레이어 설정
                 int layerIndex = Mathf.RoundToInt(Mathf.Log(FpsWeaponLayer.value, 2)); // This function converts a layermask to a layer index
                 foreach (Transform t in weaponInstance.gameObject.GetComponentsInChildren<Transform>(true))
                 {
                     t.gameObject.layer = layerIndex;
                 }
-
+                // 신규 무기 추가
                 m_WeaponSlots[i] = weaponInstance;
 
                 if (OnAddedWeapon != null)
@@ -409,36 +395,6 @@ public class PlayerWeaponsManager : MonoBehaviour
         return false;
     }
 
-    public bool RemoveWeapon(WeaponController weaponInstance)
-    {
-        // Look through our slots for that weapon
-        for (int i = 0; i < m_WeaponSlots.Length; i++)
-        {
-            // when weapon found, remove it
-            if (m_WeaponSlots[i] == weaponInstance)
-            {
-                m_WeaponSlots[i] = null;
-
-                if (OnRemovedWeapon != null)
-                {
-                    OnRemovedWeapon.Invoke(weaponInstance, i);
-                }
-
-                Destroy(weaponInstance.gameObject);
-
-                // Handle case of removing active weapon (switch to next weapon)
-                if (i == ActiveWeaponIndex)
-                {
-                    SwitchWeapon(true);
-                }
-
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public WeaponController GetActiveWeapon()
     {
         return GetWeaponAtSlotIndex(ActiveWeaponIndex);
@@ -454,6 +410,7 @@ public class PlayerWeaponsManager : MonoBehaviour
         }
         return null;
     }
+
 
     int GetDistanceBetweenWeaponSlots(int fromSlotIndex, int toSlotIndex, bool ascendingOrder)
     {

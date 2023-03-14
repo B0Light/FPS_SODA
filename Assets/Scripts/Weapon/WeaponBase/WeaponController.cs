@@ -162,15 +162,6 @@ public class WeaponController : MonoBehaviour
         IsReloading = false;
     }
 
-    public void StartReloadAnimation()
-    {
-        if (m_CurrentAmmo < m_CarriedPhysicalBullets)
-        {
-            GetComponent<Animator>().SetTrigger("Reload");
-            IsReloading = true;
-        }
-    }
-
     void Update()
     {
         UpdateAmmo();
@@ -270,12 +261,6 @@ public class WeaponController : MonoBehaviour
     public void ShowWeapon(bool show)
     {
         WeaponRoot.SetActive(show);
-
-        if (show && ChangeWeaponSfx)
-        {
-            m_ShootAudioSource.PlayOneShot(ChangeWeaponSfx);
-        }
-
         IsWeaponActive = show;
     }
 

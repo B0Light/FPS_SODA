@@ -65,6 +65,7 @@ public class EnemyAtk : MonoBehaviour
 
     protected void MeleeAtk()
     {
+        
         RaycastHit[] hits = Physics.SphereCastAll(transform.position,
                 m_meleeRadius, transform.forward, m_meleeRange, LayerMask.GetMask("Player"));
         if (hits.Length > 0)

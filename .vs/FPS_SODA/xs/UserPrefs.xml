@@ -1,15 +1,15 @@
 ﻿<Properties StartupConfiguration="{D8C436A7-D429-85DA-4E22-9EB42A7802DA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Enemy/EnemyAtk.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Enemy/EnemyBose/BossAtk.cs">
     <Files>
-      <File FileName="Assets/Scripts/Enemy/EnemyAtk.cs" Line="77" Column="17" />
-      <File FileName="Assets/Scripts/Actor/Health.cs" />
-      <File FileName="Assets/Scripts/Weapon/Projectile_Base/ProjectileStandard.cs" Line="80" Column="1" />
-      <File FileName="Assets/Scripts/Weapon/WeaponBase/WeaponController.cs" />
+      <File FileName="Assets/Scripts/Actor/Health.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Weapon/Projectile_Base/ProjectileStandard.cs" />
+      <File FileName="Assets/Scripts/Weapon/WeaponBase/WeaponController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Enemy/EnemyBose/BossAtk.cs" Line="90" Column="61" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8f772b7c-c7fd-4caf-910f-9b528a3767f2" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="9df2e1fd-866c-4ffc-af4d-783ffafed7df" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

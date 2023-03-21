@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Photon.Pun;
 
 public class EnemyBullet : MonoBehaviour
 {
@@ -36,13 +37,16 @@ public class EnemyBullet : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Floor"))
         {
-            Collider[] cols = Physics.OverlapSphere(transform.position, m_Radius, m_layerMask);
-            foreach (var col in cols)
+            if (PhotonNetwork.IsMasterClient)
             {
-                Health health = col.GetComponent<Health>();
-                if (health != null)
+                Collider[] cols = Physics.OverlapSphere(transform.position, m_Radius, m_layerMask);
+                foreach (var col in cols)
                 {
-                    health.TakeDamage(m_dmg, Owner);
+                    Health health = col.GetComponent<Health>();
+                    if (health != null)
+                    {
+                        health.TakeDamage(m_dmg, Owner);
+                    }
                 }
             }
 

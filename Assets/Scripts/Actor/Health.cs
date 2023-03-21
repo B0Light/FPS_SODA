@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
 
-public class Health : MonoBehaviour
+public class Health : MonoBehaviourPun
 {
     public Gauge<float> m_health;
     public float m_MaxHealth = 100f;
@@ -10,10 +11,17 @@ public class Health : MonoBehaviour
     public GameObject m_target = null;
 
     protected MeshRenderer[] m_meshs;
+    protected bool isDead = false;
 
     public bool CanPickup() => m_health.Value < m_health.GetMaxValue();
     public float GetRatio() => m_health.Value / m_health.GetMaxValue();
- 
+
+    [PunRPC]
+    public void ApplyUpdatedHealth(float newHealth, bool newDead)
+    {
+        m_health.Value = newHealth;
+        isDead = newDead;
+    }
 
     private void Awake()
     {
@@ -33,9 +41,18 @@ public class Health : MonoBehaviour
         }
     }
 
+    [PunRPC]
     public void Heal(float healAmount)
     {
-        m_health.Value += healAmount;
+        if(isDead) { return; }
+
+        if(PhotonNetwork.IsMasterClient)
+        {
+            m_health.Value += healAmount;
+            photonView.RPC("ApplyUpdatedHealth", RpcTarget.Others, m_health.Value, isDead);
+            photonView.RPC("Heal", RpcTarget.Others, healAmount);
+        }
+        
     }
 
     IEnumerator RecoverHealth(float delay) 
@@ -46,9 +63,16 @@ public class Health : MonoBehaviour
         StartCoroutine("RecoverHealth", delay);
     }
 
+    [PunRPC]
     public void TakeDamage(float damage, GameObject damageSource)
     {
-        m_target = damageSource;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            m_target = damageSource;
+            m_health.Value -= damage; 
+            photonView.RPC("ApplyUpdatedHealth", RpcTarget.Others, m_health.Value, isDead);
+            photonView.RPC("TakeDamage", RpcTarget.Others, damage, damageSource);
+        }
         StartCoroutine(OnDmg(damage));
     }
 
@@ -57,7 +81,6 @@ public class Health : MonoBehaviour
         foreach (MeshRenderer mesh in m_meshs)
             mesh.material.color = Color.red;
         yield return new WaitForSeconds(0.2f);
-        m_health.Value -= damage;
         if (m_health.Value > 0)
         {
             foreach (MeshRenderer mesh in m_meshs)
@@ -68,6 +91,7 @@ public class Health : MonoBehaviour
             foreach (MeshRenderer mesh in m_meshs)
                 mesh.material.color = Color.gray;
             m_health.Value = 0f;
+            isDead = true;
             Destroy(gameObject);
         }
     }

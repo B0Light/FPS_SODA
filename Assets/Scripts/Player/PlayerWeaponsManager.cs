@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerWeaponsManager : MonoBehaviour
+public class PlayerWeaponsManager : MonoBehaviourPun
 {
     public enum WeaponSwitchState
     {
@@ -86,6 +87,11 @@ public class PlayerWeaponsManager : MonoBehaviour
 
     void Update()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+
         WeaponController activeWeapon = GetActiveWeapon();
 
         if (activeWeapon != null && activeWeapon.IsReloading)
@@ -157,6 +163,11 @@ public class PlayerWeaponsManager : MonoBehaviour
     // Update various animated features in LateUpdate because it needs to override the animated arm position
     void LateUpdate()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+
         UpdateWeaponAiming();
         UpdateWeaponBob();
         UpdateWeaponRecoil();

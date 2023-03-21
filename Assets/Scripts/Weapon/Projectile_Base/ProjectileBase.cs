@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
-
-public abstract class ProjectileBase : MonoBehaviour
+using Photon.Pun;
+public abstract class ProjectileBase : MonoBehaviourPun
 {
     public GameObject Owner { get; private set; }
     public Vector3 InitialPosition { get; private set; }

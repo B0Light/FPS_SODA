@@ -1,10 +1,11 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerInput))]
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPun
 {
     [Header("Player")]
     public float MoveSpeed = 10.0f;
@@ -92,6 +93,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (!photonView.IsMine)
+        {
+            Debug.Log("photonView is not mine");
+            return;
+        }
         JumpAndGravity();
         GroundedCheck();
         Move();
@@ -100,6 +106,10 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         CameraRotation();
     }
 

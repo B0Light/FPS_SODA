@@ -2,6 +2,7 @@
 using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
+using Photon.Pun;
 
 [RequireComponent (typeof(Rigidbody))]
 [RequireComponent (typeof(SphereCollider))]
@@ -80,21 +81,24 @@ public class ProjectileStandard : ProjectileBase
     private void OnCollisionEnter(Collision collision)
     {
         Health health = collision.gameObject.GetComponent<Health>();
-        if (health)
-            health.TakeDamage(Damage, m_ProjectileBase.Owner);
-
-        if (Boom)
+        if (PhotonNetwork.IsMasterClient)
         {
-            RaycastHit[] hits = Physics.SphereCastAll(transform.position,
-                Radius, transform.up, 0f, m_layerMask);
-            foreach (var hit in hits)
+            if (health)
+                health.TakeDamage(Damage, m_ProjectileBase.Owner);
+
+        
+            if (Boom)
             {
-                Health blasted = collision.gameObject.GetComponent<Health>();
-                if (blasted)
-                    blasted.TakeDamage(Damage, m_ProjectileBase.Owner);
+                RaycastHit[] hits = Physics.SphereCastAll(transform.position,
+                    Radius, transform.up, 0f, m_layerMask);
+                foreach (var hit in hits)
+                {
+                    Health blasted = collision.gameObject.GetComponent<Health>();
+                    if (blasted)
+                        blasted.TakeDamage(Damage, m_ProjectileBase.Owner);
+                }
             }
         }
-
         
         // impact vfx
         if (ImpactVfx)

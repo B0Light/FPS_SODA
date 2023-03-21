@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
@@ -30,7 +31,8 @@ public class Health : MonoBehaviourPun
     void Start()
     {
         m_health = new Gauge<float>(m_MaxHealth);
-        StartCoroutine("RecoverHealth", 2f);
+        if(PhotonNetwork.IsMasterClient)
+            StartCoroutine("RecoverHealth", 2f);
     }
 
     private void Update()
@@ -60,6 +62,7 @@ public class Health : MonoBehaviourPun
         if (m_health.Value < m_MaxHealth)
             m_health.Value += m_recover;
         yield return new WaitForSeconds(delay);
+        photonView.RPC("ApplyUpdatedHealth", RpcTarget.Others, m_health.Value, isDead);
         StartCoroutine("RecoverHealth", delay);
     }
 
@@ -69,9 +72,9 @@ public class Health : MonoBehaviourPun
         if (PhotonNetwork.IsMasterClient)
         {
             m_target = damageSource;
-            m_health.Value -= damage; 
-            photonView.RPC("ApplyUpdatedHealth", RpcTarget.Others, m_health.Value, isDead);
-            photonView.RPC("TakeDamage", RpcTarget.Others, damage, damageSource);
+            m_health.Value -= damage;
+            //photonView.RPC("ApplyUpdatedHealth", RpcTarget.Others, m_health.Value, isDead);
+            //photonView.RPC("TakeDamage", RpcTarget.Others, damage, damageSource);
         }
         StartCoroutine(OnDmg(damage));
     }
@@ -92,7 +95,7 @@ public class Health : MonoBehaviourPun
                 mesh.material.color = Color.gray;
             m_health.Value = 0f;
             isDead = true;
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 }

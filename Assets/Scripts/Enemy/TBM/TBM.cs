@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TreeEditor;
@@ -29,7 +30,7 @@ public class TBM : EnemyBullet
         SearchEnemy();
 
         yield return new WaitForSeconds(5f);
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
     protected override void Start()
     {  

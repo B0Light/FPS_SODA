@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Photon.Pun;
 
-public class EnemyBullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviourPun
 {
     protected Rigidbody m_rigidbody;
     public float m_dmg = 30f;
@@ -49,9 +49,9 @@ public class EnemyBullet : MonoBehaviour
                     }
                 }
             }
-
+            
             Impact();
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 

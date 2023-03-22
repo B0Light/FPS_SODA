@@ -49,21 +49,6 @@ public class ProjectileStandard : ProjectileBase
         m_Velocity = transform.forward * Speed;
         m_IgnoredColliders = new List<Collider>();
         transform.position += m_ProjectileBase.InheritedMuzzleVelocity * Time.deltaTime;
-
-        // Handle case of player shooting (make projectiles not go through walls, and remember center-of-screen trajectory)
-        PlayerWeaponsManager playerWeaponsManager = m_ProjectileBase.Owner.GetComponent<PlayerWeaponsManager>();
-        if (playerWeaponsManager)
-        {
-            Vector3 cameraToMuzzle = (m_ProjectileBase.InitialPosition -
-                                        playerWeaponsManager.WeaponCamera.transform.position);
-
-            m_TrajectoryCorrectionVector = Vector3.ProjectOnPlane(-cameraToMuzzle,
-                playerWeaponsManager.WeaponCamera.transform.forward);
-            if (TrajectoryCorrectionDistance == 0)
-            {
-                transform.position += m_TrajectoryCorrectionVector;
-            }
-        }
     }
 
     void Update()

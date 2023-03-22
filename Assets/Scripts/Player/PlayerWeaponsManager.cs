@@ -15,7 +15,6 @@ public class PlayerWeaponsManager : MonoBehaviourPun
     public List<WeaponController> StartingWeapons = new List<WeaponController>();
 
     [Header("References")]
-    public Camera WeaponCamera;
     public Transform WeaponParentSocket;
     public Transform DefaultWeaponPosition;
     public Transform AimingWeaponPosition;
@@ -40,7 +39,6 @@ public class PlayerWeaponsManager : MonoBehaviourPun
     public LayerMask FpsWeaponLayer;
 
     public bool IsAiming { get; private set; }
-    public bool IsPointingAtEnemy { get; private set; }
     public int ActiveWeaponIndex { get; private set; }
 
     public UnityAction<WeaponController> OnSwitchedToWeapon;
@@ -145,18 +143,6 @@ public class PlayerWeaponsManager : MonoBehaviourPun
                 }
             }
         }
-        IsPointingAtEnemy = false;
-        if (activeWeapon)
-        {
-            if (Physics.Raycast(WeaponCamera.transform.position, WeaponCamera.transform.forward, out RaycastHit hit,
-                1000, -1, QueryTriggerInteraction.Ignore))
-            {
-                if (hit.collider.GetComponentInParent<Health>() != null)
-                {
-                    IsPointingAtEnemy = true;
-                }
-            }
-        }
     }
 
 
@@ -179,7 +165,6 @@ public class PlayerWeaponsManager : MonoBehaviourPun
     public void SetFov(float fov)
     {
         m_PlayerController.PlayerCamera.fieldOfView = fov;
-        WeaponCamera.fieldOfView = fov * WeaponFovMultiplier;
     }
 
     public void SwitchWeapon(bool ascendingOrder)

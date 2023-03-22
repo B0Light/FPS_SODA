@@ -51,7 +51,7 @@ public class EnemyBullet : MonoBehaviourPun
             }
             
             Impact();
-            PhotonNetwork.Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 

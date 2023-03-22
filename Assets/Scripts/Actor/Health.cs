@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(PhotonView))]
 public class Health : MonoBehaviourPun
 {
     public Gauge<float> m_health;
@@ -69,11 +70,11 @@ public class Health : MonoBehaviourPun
     [PunRPC]
     public void TakeDamage(float damage, GameObject damageSource)
     {
+        m_target = damageSource;
         if (PhotonNetwork.IsMasterClient)
         {
-            m_target = damageSource;
             m_health.Value -= damage;
-            //photonView.RPC("ApplyUpdatedHealth", RpcTarget.Others, m_health.Value, isDead);
+            photonView.RPC("ApplyUpdatedHealth", RpcTarget.Others, m_health.Value, isDead);
             //photonView.RPC("TakeDamage", RpcTarget.Others, damage, damageSource);
         }
         StartCoroutine(OnDmg(damage));

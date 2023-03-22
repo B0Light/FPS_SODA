@@ -1,85 +1,83 @@
-using Photon.Pun; // À¯´ÏÆ¼¿ë Æ÷Åæ ÄÄÆ÷³ÍÆ®µé
-using Photon.Realtime; // Æ÷Åæ ¼­ºñ½º °ü·Ã ¶óÀÌºê·¯¸®
-using System;
-using UnityEditor.XR;
+using Photon.Pun; // ìœ ë‹ˆí‹°ìš© í¬í†¤ ì»´í¬ë„ŒíŠ¸ë“¤
+using Photon.Realtime; // í¬í†¤ ì„œë¹„ìŠ¤ ê´€ë ¨ ë¼ì´ë¸ŒëŸ¬ë¦¬
 using UnityEngine;
 using UnityEngine.UI;
 
-// ¸¶½ºÅÍ(¸ÅÄ¡ ¸ŞÀÌÅ·) ¼­¹ö¿Í ·ë Á¢¼ÓÀ» ´ã´ç
+// ë§ˆìŠ¤í„°(ë§¤ì¹˜ ë©”ì´í‚¹) ì„œë²„ì™€ ë£¸ ì ‘ì†ì„ ë‹´ë‹¹
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
-    private string gameVersion = "1"; // °ÔÀÓ ¹öÀü
+    private string gameVersion = "1"; // ê²Œì„ ë²„ì „
 
     private string userID = "jack";
 
-    public Text connectionInfoText; // ³×Æ®¿öÅ© Á¤º¸¸¦ Ç¥½ÃÇÒ ÅØ½ºÆ®
-    public Button joinButton; // ·ë Á¢¼Ó ¹öÆ°
+    public Text connectionInfoText; // ë„¤íŠ¸ì›Œí¬ ì •ë³´ë¥¼ í‘œì‹œí•  í…ìŠ¤íŠ¸
+    public Button joinButton; // ë£¸ ì ‘ì† ë²„íŠ¼
 
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
-        PhotonNetwork.GameVersion = gameVersion;        // Á¢¼Ó¿¡ ÇÊ¿äÇÑ Á¤º¸(°ÔÀÓ ¹öÀü) ¼³Á¤
+        PhotonNetwork.GameVersion = gameVersion;        // ì ‘ì†ì— í•„ìš”í•œ ì •ë³´(ê²Œì„ ë²„ì „) ì„¤ì •
         PhotonNetwork.NickName = userID;
 
         Debug.Log(PhotonNetwork.SendRate);
 
-        PhotonNetwork.ConnectUsingSettings(); // ¼³Á¤ÇÑ Á¤º¸¸¦ °¡Áö°í ¸¶½ºÅÍ ¼­¹ö Á¢¼Ó ½Ãµµ
+        PhotonNetwork.ConnectUsingSettings(); // ì„¤ì •í•œ ì •ë³´ë¥¼ ê°€ì§€ê³  ë§ˆìŠ¤í„° ì„œë²„ ì ‘ì† ì‹œë„
 
-        // ·ë Á¢¼Ó ¹öÆ°À» Àá½Ã ºñÈ°¼ºÈ­
+        // ë£¸ ì ‘ì† ë²„íŠ¼ì„ ì ì‹œ ë¹„í™œì„±í™”
         joinButton.interactable = false;
-        // Á¢¼ÓÀ» ½Ãµµ ÁßÀÓÀ» ÅØ½ºÆ®·Î Ç¥½Ã
-        connectionInfoText.text = "¸¶½ºÅÍ ¼­¹ö¿¡ Á¢¼ÓÁß...";
+        // ì ‘ì†ì„ ì‹œë„ ì¤‘ì„ì„ í…ìŠ¤íŠ¸ë¡œ í‘œì‹œ
+        connectionInfoText.text = "ë§ˆìŠ¤í„° ì„œë²„ì— ì ‘ì†ì¤‘...";
     }
 
-    // ¸¶½ºÅÍ ¼­¹ö Á¢¼Ó ¼º°ø½Ã ÀÚµ¿ ½ÇÇà
+    // ë§ˆìŠ¤í„° ì„œë²„ ì ‘ì† ì„±ê³µì‹œ ìë™ ì‹¤í–‰
     public override void OnConnectedToMaster()
     {
-        // ·ë Á¢¼Ó ¹öÆ°À» È°¼ºÈ­
+        // ë£¸ ì ‘ì† ë²„íŠ¼ì„ í™œì„±í™”
         joinButton.interactable = true;
-        // Á¢¼Ó Á¤º¸ Ç¥½Ã
-        connectionInfoText.text = "¿Â¶óÀÎ : ¸¶½ºÅÍ ¼­¹ö¿Í ¿¬°áµÊ";
+        // ì ‘ì† ì •ë³´ í‘œì‹œ
+        connectionInfoText.text = "ì˜¨ë¼ì¸ : ë§ˆìŠ¤í„° ì„œë²„ì™€ ì—°ê²°ë¨";
     }
 
-    // ¸¶½ºÅÍ ¼­¹ö Á¢¼Ó ½ÇÆĞ½Ã ÀÚµ¿ ½ÇÇà
+    // ë§ˆìŠ¤í„° ì„œë²„ ì ‘ì† ì‹¤íŒ¨ì‹œ ìë™ ì‹¤í–‰
     public override void OnDisconnected(DisconnectCause cause)
     {
-        // ·ë Á¢¼Ó ¹öÆ°À» ºñÈ°¼ºÈ­
+        // ë£¸ ì ‘ì† ë²„íŠ¼ì„ ë¹„í™œì„±í™”
         joinButton.interactable = false;
-        // Á¢¼Ó Á¤º¸ Ç¥½Ã
-        connectionInfoText.text = "¿ÀÇÁ¶óÀÎ : ¸¶½ºÅÍ ¼­¹ö¿Í ¿¬°áµÇÁö ¾ÊÀ½\nÁ¢¼Ó Àç½Ãµµ Áß...";
+        // ì ‘ì† ì •ë³´ í‘œì‹œ
+        connectionInfoText.text = "ì˜¤í”„ë¼ì¸ : ë§ˆìŠ¤í„° ì„œë²„ì™€ ì—°ê²°ë˜ì§€ ì•ŠìŒ\nì ‘ì† ì¬ì‹œë„ ì¤‘...";
 
-        // ¸¶½ºÅÍ ¼­¹ö·ÎÀÇ ÀçÁ¢¼Ó ½Ãµµ
+        // ë§ˆìŠ¤í„° ì„œë²„ë¡œì˜ ì¬ì ‘ì† ì‹œë„
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    // ·ë Á¢¼Ó ½Ãµµ
+    // ë£¸ ì ‘ì† ì‹œë„
     public void Connect()
     {
-        // Áßº¹ Á¢¼Ó ½Ãµµ¸¦ ¸·±â À§ÇØ, Á¢¼Ó ¹öÆ° Àá½Ã ºñÈ°¼ºÈ­
+        // ì¤‘ë³µ ì ‘ì† ì‹œë„ë¥¼ ë§‰ê¸° ìœ„í•´, ì ‘ì† ë²„íŠ¼ ì ì‹œ ë¹„í™œì„±í™”
         joinButton.interactable = false;
 
-        // ¸¶½ºÅÍ ¼­¹ö¿¡ Á¢¼ÓÁßÀÌ¶ó¸é
+        // ë§ˆìŠ¤í„° ì„œë²„ì— ì ‘ì†ì¤‘ì´ë¼ë©´
         if (PhotonNetwork.IsConnected)
         {
-            // ·ë Á¢¼Ó ½ÇÇà
-            connectionInfoText.text = "·ë¿¡ Á¢¼Ó...";
+            // ë£¸ ì ‘ì† ì‹¤í–‰
+            connectionInfoText.text = "ë£¸ì— ì ‘ì†...";
             PhotonNetwork.JoinRandomRoom();
         }
         else
         {
-            // ¸¶½ºÅÍ ¼­¹ö¿¡ Á¢¼ÓÁßÀÌ ¾Æ´Ï¶ó¸é, ¸¶½ºÅÍ ¼­¹ö¿¡ Á¢¼Ó ½Ãµµ
-            connectionInfoText.text = "¿ÀÇÁ¶óÀÎ : ¸¶½ºÅÍ ¼­¹ö¿Í ¿¬°áµÇÁö ¾ÊÀ½\nÁ¢¼Ó Àç½Ãµµ Áß...";
-            // ¸¶½ºÅÍ ¼­¹ö·ÎÀÇ ÀçÁ¢¼Ó ½Ãµµ
+            // ë§ˆìŠ¤í„° ì„œë²„ì— ì ‘ì†ì¤‘ì´ ì•„ë‹ˆë¼ë©´, ë§ˆìŠ¤í„° ì„œë²„ì— ì ‘ì† ì‹œë„
+            connectionInfoText.text = "ì˜¤í”„ë¼ì¸ : ë§ˆìŠ¤í„° ì„œë²„ì™€ ì—°ê²°ë˜ì§€ ì•ŠìŒ\nì ‘ì† ì¬ì‹œë„ ì¤‘...";
+            // ë§ˆìŠ¤í„° ì„œë²„ë¡œì˜ ì¬ì ‘ì† ì‹œë„
             PhotonNetwork.ConnectUsingSettings();
         }
     }
 
-    // (ºó ¹æÀÌ ¾ø¾î)·£´ı ·ë Âü°¡¿¡ ½ÇÆĞÇÑ °æ¿ì ÀÚµ¿ ½ÇÇà
+    // (ë¹ˆ ë°©ì´ ì—†ì–´)ëœë¤ ë£¸ ì°¸ê°€ì— ì‹¤íŒ¨í•œ ê²½ìš° ìë™ ì‹¤í–‰
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.Log($"JoinRandFail {returnCode} : {message}");
-        // Á¢¼Ó »óÅÂ Ç¥½Ã
-        connectionInfoText.text = "ºó ¹æÀÌ ¾øÀ½, »õ·Î¿î ¹æ »ı¼º...";
+        // ì ‘ì† ìƒíƒœ í‘œì‹œ
+        connectionInfoText.text = "ë¹ˆ ë°©ì´ ì—†ìŒ, ìƒˆë¡œìš´ ë°© ìƒì„±...";
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 20;
         roomOptions.IsOpen = true;
@@ -93,14 +91,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         Debug.Log($"RoomName : {PhotonNetwork.CurrentRoom.Name}");
     }
 
-    // ·ë¿¡ Âü°¡ ¿Ï·áµÈ °æ¿ì ÀÚµ¿ ½ÇÇà
+    // ë£¸ì— ì°¸ê°€ ì™„ë£Œëœ ê²½ìš° ìë™ ì‹¤í–‰
     public override void OnJoinedRoom()
     {
         Debug.Log($"PhotonNetwork.InRoom : {PhotonNetwork.InRoom}");
         Debug.Log($"PlayerCount : {PhotonNetwork.CurrentRoom.PlayerCount}");
-        // Á¢¼Ó »óÅÂ Ç¥½Ã
-        connectionInfoText.text = "¹æ Âü°¡ ¼º°ø";
-        // ¸ğµç ·ë Âü°¡ÀÚµéÀÌ Main ¾ÀÀ» ·ÎµåÇÏ°Ô ÇÔ
+        // ì ‘ì† ìƒíƒœ í‘œì‹œ
+        connectionInfoText.text = "ë°© ì°¸ê°€ ì„±ê³µ";
+        // ëª¨ë“  ë£¸ ì°¸ê°€ìë“¤ì´ Main ì”¬ì„ ë¡œë“œí•˜ê²Œ í•¨
         PhotonNetwork.LoadLevel("NewProject");
     }
 }

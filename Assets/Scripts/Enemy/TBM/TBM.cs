@@ -1,10 +1,6 @@
 using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
-using TreeEditor;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
 public class TBM : EnemyBullet
 {

@@ -74,10 +74,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    // ?? ??? ?? ???? ???
     public override void OnLeftRoom()
     {
-        // ?? ??? ?? ??? ???
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("LobbyScene");
     }
 }

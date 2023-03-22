@@ -37,19 +37,15 @@ public class EnemyBullet : MonoBehaviourPun
     {
         if (!collision.gameObject.CompareTag("Floor"))
         {
-            if (PhotonNetwork.IsMasterClient)
+            Collider[] cols = Physics.OverlapSphere(transform.position, m_Radius, m_layerMask);
+            foreach (var col in cols)
             {
-                Collider[] cols = Physics.OverlapSphere(transform.position, m_Radius, m_layerMask);
-                foreach (var col in cols)
+                Health health = col.GetComponent<Health>();
+                if (health != null)
                 {
-                    Health health = col.GetComponent<Health>();
-                    if (health != null)
-                    {
-                        health.TakeDamage(m_dmg, Owner);
-                    }
+                    health.TakeDamage(m_dmg, Owner);
                 }
             }
-            
             Impact();
             Destroy(gameObject);
         }

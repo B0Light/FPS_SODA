@@ -66,24 +66,23 @@ public class ProjectileStandard : ProjectileBase
     private void OnCollisionEnter(Collision collision)
     {
         Health health = collision.gameObject.GetComponent<Health>();
-        if (PhotonNetwork.IsMasterClient)
-        {
-            if (health)
-                health.TakeDamage(Damage, m_ProjectileBase.Owner);
+        
+        if (health)
+            health.TakeDamage(Damage, m_ProjectileBase.Owner);
 
         
-            if (Boom)
+        if (Boom)
+        {
+            RaycastHit[] hits = Physics.SphereCastAll(transform.position,
+                Radius, transform.up, 0f, m_layerMask);
+            foreach (var hit in hits)
             {
-                RaycastHit[] hits = Physics.SphereCastAll(transform.position,
-                    Radius, transform.up, 0f, m_layerMask);
-                foreach (var hit in hits)
-                {
-                    Health blasted = collision.gameObject.GetComponent<Health>();
-                    if (blasted)
-                        blasted.TakeDamage(Damage, m_ProjectileBase.Owner);
-                }
+                Health blasted = collision.gameObject.GetComponent<Health>();
+                if (blasted)
+                    blasted.TakeDamage(Damage, m_ProjectileBase.Owner);
             }
         }
+        
         
         // impact vfx
         if (ImpactVfx)

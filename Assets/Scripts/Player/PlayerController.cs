@@ -1,3 +1,4 @@
+using Cinemachine;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -31,9 +32,13 @@ public class PlayerController : MonoBehaviourPun
     public float GroundedRadius = 0.5f;
     public LayerMask GroundLayers;
 
-    [Header("Camera")]
-    public Camera PlayerCamera;
-    public float _CameraVerticalAngle = 0f;
+    [Header("Cinemachine")]
+    private float _cinemachineTargetPitch;
+    public GameObject CinemachineCameraTarget;
+    public float TopClamp = 90.0f;
+    public float BottomClamp = -90.0f;
+    private float _rotationVelocity;
+    private const float _threshold = 0.01f;
     [Range(0.1f, 1f)]
     public float AimingRotationMultiplier = 0.4f;
 
@@ -44,6 +49,8 @@ public class PlayerController : MonoBehaviourPun
     private float _jumpTimeoutDelta;
     private float _fallTimeoutDelta;
 
+    private PhotonView pv;
+    private CinemachineVirtualCamera VirtualCamera;
     private PlayerWeaponsManager _WeaponsManager;
     private PlayerInput _playerInput;
     private CharacterController _controller;
@@ -77,6 +84,7 @@ public class PlayerController : MonoBehaviourPun
         {
             _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         }
+       
     }
 
     private void Start()
@@ -89,13 +97,20 @@ public class PlayerController : MonoBehaviourPun
         _jumpTimeoutDelta = JumpTimeout;
         _fallTimeoutDelta = FallTimeout;
         isDodge = false;
+
+        pv = GetComponent<PhotonView>();
+        VirtualCamera = GameObject.FindAnyObjectByType<CinemachineVirtualCamera>();
+        if (pv.IsMine)
+        {
+            VirtualCamera.Follow = CinemachineCameraTarget.transform;
+            //VirtualCamera.LookAt = transform;
+        }
     }
 
     private void Update()
     {
         if (!photonView.IsMine)
         {
-            Debug.Log("photonView is not mine");
             return;
         }
         JumpAndGravity();
@@ -123,9 +138,9 @@ public class PlayerController : MonoBehaviourPun
     {
         transform.Rotate( new Vector3(0f,(_input.look.x * RotationSpeed * RotationMultiplier),0f), Space.Self);
         
-        _CameraVerticalAngle += _input.look.y * RotationSpeed * RotationMultiplier;
-        _CameraVerticalAngle = Mathf.Clamp(_CameraVerticalAngle, -89f, 89f);
-        PlayerCamera.transform.localEulerAngles = new Vector3(_CameraVerticalAngle, 0, 0);
+        _cinemachineTargetPitch += _input.look.y * RotationSpeed * RotationMultiplier;
+        _cinemachineTargetPitch = Mathf.Clamp(_cinemachineTargetPitch, -89f, 89f);
+        CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
     }
 
     private void Move()

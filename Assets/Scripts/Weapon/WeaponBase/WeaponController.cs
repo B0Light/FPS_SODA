@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Photon.Pun;
 
 public enum WeaponShootType
 {
@@ -19,7 +20,7 @@ public struct CrosshairData
 }
 
 [RequireComponent(typeof(AudioSource))]
-public class WeaponController : MonoBehaviour
+public class WeaponController : MonoBehaviourPun
 {
     [Header("Information")]
     public string WeaponName;
@@ -258,10 +259,12 @@ public class WeaponController : MonoBehaviour
         }
     }
 
+    [PunRPC]
     public void ShowWeapon(bool show)
     {
         WeaponRoot.SetActive(show);
         IsWeaponActive = show;
+        photonView.RPC("ShowWeapon",RpcTarget.Others, show);
     }
 
     public void UseAmmo(float amount)

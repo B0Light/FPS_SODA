@@ -69,8 +69,6 @@ public class PlayerWeaponsManager : MonoBehaviourPun
         m_PlayerController = GetComponent<PlayerController>();
         m_InputSystem = GetComponent<InputSystem>();
 
-        SetFov(DefaultFov);
-
         OnSwitchedToWeapon += OnWeaponSwitched;
 
         foreach (var weapon in StartingWeapons)
@@ -162,11 +160,6 @@ public class PlayerWeaponsManager : MonoBehaviourPun
         WeaponParentSocket.localPosition = m_WeaponMainLocalPosition + m_WeaponBobLocalPosition + m_WeaponRecoilLocalPosition;
     }
 
-    public void SetFov(float fov)
-    {
-        m_PlayerController.PlayerCamera.fieldOfView = fov;
-    }
-
     public void SwitchWeapon(bool ascendingOrder)
     {
         int newWeaponIndex = -1;
@@ -239,15 +232,13 @@ public class PlayerWeaponsManager : MonoBehaviourPun
                 m_WeaponMainLocalPosition = Vector3.Lerp(m_WeaponMainLocalPosition,
                     AimingWeaponPosition.localPosition + activeWeapon.AimOffset,
                     AimingAnimationSpeed * Time.deltaTime);
-                SetFov(Mathf.Lerp(m_PlayerController.PlayerCamera.fieldOfView,
-                    activeWeapon.AimZoomRatio * DefaultFov, AimingAnimationSpeed * Time.deltaTime));
+                
             }
             else
             {
                 m_WeaponMainLocalPosition = Vector3.Lerp(m_WeaponMainLocalPosition,
                     DefaultWeaponPosition.localPosition, AimingAnimationSpeed * Time.deltaTime);
-                SetFov(Mathf.Lerp(m_PlayerController.PlayerCamera.fieldOfView, DefaultFov,
-                    AimingAnimationSpeed * Time.deltaTime));
+               
             }
         }
     }

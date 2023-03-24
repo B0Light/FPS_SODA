@@ -2,22 +2,21 @@ using Photon.Pun; // 유니티용 포톤 컴포넌트들
 using Photon.Realtime; // 포톤 서비스 관련 라이브러리
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 // 마스터(매치 메이킹) 서버와 룸 접속을 담당
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     private string gameVersion = "1"; // 게임 버전
 
-    private string userID = "jack";
-
     public Text connectionInfoText; // 네트워크 정보를 표시할 텍스트
+    public TMP_Text idText;
     public Button joinButton; // 룸 접속 버튼
 
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.GameVersion = gameVersion;        // 접속에 필요한 정보(게임 버전) 설정
-        PhotonNetwork.NickName = userID;
 
         Debug.Log(PhotonNetwork.SendRate);
 
@@ -27,6 +26,35 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         joinButton.interactable = false;
         // 접속을 시도 중임을 텍스트로 표시
         connectionInfoText.text = "마스터 서버에 접속중...";
+    }
+
+    // 룸 접속 시도
+    public void Connect()
+    {
+        if (idText.text.Length <= 1)
+        {
+            connectionInfoText.text = "input your name more than 1";
+            return;
+        }
+        else
+        {
+            joinButton.interactable = false;
+            PhotonNetwork.LocalPlayer.NickName = idText.text;
+            // 마스터 서버에 접속중이라면
+            if (PhotonNetwork.IsConnected)
+            {
+                // 룸 접속 실행
+                connectionInfoText.text = "룸에 접속...";
+                PhotonNetwork.JoinRandomRoom();
+            }
+            else
+            {
+                // 마스터 서버에 접속중이 아니라면, 마스터 서버에 접속 시도
+                connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않음\n접속 재시도 중...";
+                // 마스터 서버로의 재접속 시도
+                PhotonNetwork.ConnectUsingSettings();
+            }
+        }
     }
 
     // 마스터 서버 접속 성공시 자동 실행
@@ -48,28 +76,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         // 마스터 서버로의 재접속 시도
         PhotonNetwork.ConnectUsingSettings();
-    }
-
-    // 룸 접속 시도
-    public void Connect()
-    {
-        // 중복 접속 시도를 막기 위해, 접속 버튼 잠시 비활성화
-        joinButton.interactable = false;
-
-        // 마스터 서버에 접속중이라면
-        if (PhotonNetwork.IsConnected)
-        {
-            // 룸 접속 실행
-            connectionInfoText.text = "룸에 접속...";
-            PhotonNetwork.JoinRandomRoom();
-        }
-        else
-        {
-            // 마스터 서버에 접속중이 아니라면, 마스터 서버에 접속 시도
-            connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않음\n접속 재시도 중...";
-            // 마스터 서버로의 재접속 시도
-            PhotonNetwork.ConnectUsingSettings();
-        }
     }
 
     // (빈 방이 없어)랜덤 룸 참가에 실패한 경우 자동 실행

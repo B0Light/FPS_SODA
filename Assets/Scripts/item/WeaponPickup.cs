@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Photon.Pun;
 
  public class WeaponPickup : Pickup
 {
@@ -17,6 +18,7 @@
         }
     }
 
+    
     protected override void OnPicked(PlayerController byPlayer)
     {
         PlayerWeaponsManager playerWeaponsManager = byPlayer.GetComponent<PlayerWeaponsManager>();
@@ -30,7 +32,7 @@
                 }
 
                 PlayPickupFeedback();
-                Destroy(gameObject);
+                PhotonNetwork.Destroy(gameObject);
             }
         }
     }

@@ -30,7 +30,7 @@ public class EnemyBullet : MonoBehaviourPun
     {
         yield return new WaitForSeconds(m_lifeTime);
         Impact();
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     protected void OnCollisionEnter(Collision collision)

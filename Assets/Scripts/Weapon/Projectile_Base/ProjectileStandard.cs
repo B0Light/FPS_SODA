@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -83,15 +84,13 @@ public class ProjectileStandard : ProjectileBase
             }
         }
         
-        
-        // impact vfx
         if (ImpactVfx)
         {
             GameObject impactVfxInstance = Instantiate(ImpactVfx, transform.position,
                 Quaternion.LookRotation(transform.position));
             if (ImpactVfxLifetime > 0)
             {
-                Destroy(impactVfxInstance.gameObject, ImpactVfxLifetime);
+                Destroy(impactVfxInstance, ImpactVfxLifetime);
             }
         }
         Destroy(this.gameObject);

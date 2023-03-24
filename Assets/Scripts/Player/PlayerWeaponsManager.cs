@@ -160,6 +160,7 @@ public class PlayerWeaponsManager : MonoBehaviourPun
         WeaponParentSocket.localPosition = m_WeaponMainLocalPosition + m_WeaponBobLocalPosition + m_WeaponRecoilLocalPosition;
     }
 
+    [PunRPC]
     public void SwitchWeapon(bool ascendingOrder)
     {
         int newWeaponIndex = -1;
@@ -180,7 +181,8 @@ public class PlayerWeaponsManager : MonoBehaviourPun
 
         SwitchToWeaponIndex(newWeaponIndex);
     }
-        
+
+    [PunRPC]
     public void SwitchToWeaponIndex(int newWeaponIndex)
     {
         if (newWeaponIndex != ActiveWeaponIndex && newWeaponIndex >= 0)
@@ -335,6 +337,7 @@ public class PlayerWeaponsManager : MonoBehaviourPun
         
 
     // Adds a weapon to our inventory
+    [PunRPC]
     public bool AddWeapon(WeaponController weaponPrefab)
     {
         if (HasWeapon(weaponPrefab) != null)
@@ -418,5 +421,6 @@ public class PlayerWeaponsManager : MonoBehaviourPun
     {
         if (newWeapon != null)
             newWeapon.ShowWeapon(true);
+        
     }
 }

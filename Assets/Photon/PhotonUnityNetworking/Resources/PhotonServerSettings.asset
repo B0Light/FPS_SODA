@@ -43,6 +43,11 @@ MonoBehaviour:
   - Heal
   - TakeDamage
   - ShowWeapon
+  - HandleShoot
+  - SwitchToWeaponIndex
+  - SwitchWeapon
+  - OnPicked
+  - AddWeapon
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

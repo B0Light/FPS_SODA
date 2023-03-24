@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using Photon.Pun;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
-public class Pickup : MonoBehaviour
+public class Pickup : MonoBehaviourPun
 {
     public float VerticalBobFrequency = 1f;
     public float BobbingAmount = 1f;

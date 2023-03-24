@@ -52,7 +52,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         Vector3 randomSpawnPos = Random.insideUnitSphere * 5f;
         // ?? y?? 0?? ??
         randomSpawnPos.y = 0f;
-
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         // ???? ?? ?? ???????? ?? ??
         // ?, ?? ?? ????? ????, ?? ???? ?? ??? ??????? ??
         PhotonNetwork.Instantiate(playerPrefab.name, randomSpawnPos, Quaternion.identity);
@@ -68,7 +69,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     // ??? ??? ???? ?? ??? ?
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             PhotonNetwork.LeaveRoom();
         }

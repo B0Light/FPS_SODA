@@ -259,12 +259,11 @@ public class WeaponController : MonoBehaviourPun
         }
     }
 
-    [PunRPC]
+    
     public void ShowWeapon(bool show)
     {
         WeaponRoot.SetActive(show);
         IsWeaponActive = show;
-        photonView.RPC("ShowWeapon",RpcTarget.Others, show);
     }
 
     public void UseAmmo(float amount)
@@ -360,8 +359,10 @@ public class WeaponController : MonoBehaviourPun
         return false;
     }
 
+    [PunRPC]
     void HandleShoot()
     {
+        
         int bulletsPerShotFinal = (ShootType == WeaponShootType.Charge)
             ? Mathf.CeilToInt(CurrentCharge * BulletsPerShot)
             : BulletsPerShot;

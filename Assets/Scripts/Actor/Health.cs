@@ -95,10 +95,10 @@ public class Health : MonoBehaviourPun
             foreach (MeshRenderer mesh in m_meshs)
                 mesh.material.color = Color.gray;
             m_health.Value = 0f;
-            isDead = true;
             PlayerController playerController = this.gameObject.GetComponent<PlayerController>();
-            if(playerController != null )
+            if(playerController != null && isDead == false)
             {
+                isDead = true;
                 playerController.Die();
             }
         }

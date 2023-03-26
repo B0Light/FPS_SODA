@@ -1,6 +1,7 @@
 using Cinemachine;
 using Photon.Pun;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
@@ -243,11 +244,17 @@ public class PlayerController : MonoBehaviourPun
     [PunRPC]
     public void Die()
     {
+        photonView.RPC("Die", RpcTarget.Others, null);
         _animator.SetTrigger("doDie");
-        this.gameObject.SetActive(false);
-        photonView.RPC("Die",RpcTarget.Others);
+        StartCoroutine(DieFPX()); 
     }
 
+    IEnumerator DieFPX()
+    {
+        yield return new WaitForSeconds(3f);
+        this.gameObject.SetActive(false);
+    }
+    
     private static float ClampAngle(float lfAngle, float lfMin, float lfMax) // 카메라 회전시 360도 안으로 유지
     {
         if (lfAngle < -360f) lfAngle += 360f;

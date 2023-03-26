@@ -96,7 +96,11 @@ public class Health : MonoBehaviourPun
                 mesh.material.color = Color.gray;
             m_health.Value = 0f;
             isDead = true;
-            PhotonNetwork.Destroy(gameObject);
+            PlayerController playerController = this.gameObject.GetComponent<PlayerController>();
+            if(playerController != null )
+            {
+                playerController.Die();
+            }
         }
     }
 }

@@ -3,9 +3,6 @@ using Photon.Pun;
 
  public class WeaponPickup : Pickup
 {
-    [Tooltip("The prefab for the weapon that will be added to the player on pickup")]
-    public WeaponController WeaponPrefab;
-
     protected override void Start()
     {
         base.Start();
@@ -18,13 +15,14 @@ using Photon.Pun;
         }
     }
 
-    
     protected override void OnPicked(PlayerController byPlayer)
     {
+        Debug.Log("PICKUP : "+byPlayer.photonView.ViewID);
         PlayerWeaponsManager playerWeaponsManager = byPlayer.GetComponent<PlayerWeaponsManager>();
         if (playerWeaponsManager)
         {
-            if (playerWeaponsManager.AddWeapon(WeaponPrefab))
+            Debug.Log("PICKUP : " + byPlayer.photonView.ViewID);
+            if (playerWeaponsManager.AddWeapon(ItemId))
             {
                 if (playerWeaponsManager.GetActiveWeapon() == null)
                 {
@@ -32,7 +30,11 @@ using Photon.Pun;
                 }
 
                 PlayPickupFeedback();
-                PhotonNetwork.Destroy(gameObject);
+
+                if (photonView.IsMine)
+                {
+                    PhotonNetwork.Destroy(gameObject);
+                }
             }
         }
     }

@@ -12,7 +12,7 @@ public class PlayerWeaponsManager : MonoBehaviourPun
         PutDownPrevious,
         PutUpNew,
     }
-    public List<WeaponController> StartingWeapons = new List<WeaponController>();
+    public List<int> StartingWeapons = new List<int>();
 
     [Header("References")]
     public Transform WeaponParentSocket;
@@ -45,7 +45,8 @@ public class PlayerWeaponsManager : MonoBehaviourPun
     public UnityAction<WeaponController, int> OnAddedWeapon;
     public UnityAction<WeaponController, int> OnRemovedWeapon;
 
-    WeaponController[] m_WeaponSlots = new WeaponController[9]; // 9 available weapon slots
+    public WeaponController[] m_WeaponSlots = new WeaponController[9];
+    public WeaponController[] obtainableWeaponSlots = new WeaponController[9];
 
     float m_WeaponBobFactor;
     Vector3 m_WeaponBobLocalPosition;
@@ -159,8 +160,6 @@ public class PlayerWeaponsManager : MonoBehaviourPun
 
         WeaponParentSocket.localPosition = m_WeaponMainLocalPosition + m_WeaponBobLocalPosition + m_WeaponRecoilLocalPosition;
     }
-
-    [PunRPC]
     public void SwitchWeapon(bool ascendingOrder)
     {
         int newWeaponIndex = -1;
@@ -189,7 +188,7 @@ public class PlayerWeaponsManager : MonoBehaviourPun
         {
             m_WeaponSwitchNewWeaponIndex = newWeaponIndex;
 
-            
+            photonView.RPC("SwitchToWeaponIndex", RpcTarget.Others, newWeaponIndex);
             if (GetActiveWeapon() == null)
             {
                 // 무기가 비어있다면 들 준비
@@ -210,13 +209,13 @@ public class PlayerWeaponsManager : MonoBehaviourPun
         }
     }
         
-    public WeaponController HasWeapon(WeaponController weaponPrefab)
+    public WeaponController HasWeapon(int WeaponId)
     {
         // 인자로 받은 무기를 보유중이면 보유중인 무기 반환 아니면 null
         for (var index = 0; index < m_WeaponSlots.Length; index++)
         {
             var w = m_WeaponSlots[index];
-            if (w != null && w.SourcePrefab == weaponPrefab.gameObject)
+            if (w != null && w.WeaponId == WeaponId)
             {
                 return w;
             }
@@ -334,28 +333,23 @@ public class PlayerWeaponsManager : MonoBehaviourPun
         }
 
     }
-        
 
-    // Adds a weapon to our inventory
     [PunRPC]
-    public bool AddWeapon(WeaponController weaponPrefab)
+    public bool AddWeapon(int WeaponId)
     {
-        if (HasWeapon(weaponPrefab) != null)
-        {
-            return false;
-        }
-
+        if(HasWeapon(WeaponId)) return false;
+        photonView.RPC("AddWeapon", RpcTarget.Others, WeaponId);
         for (int i = 0; i < m_WeaponSlots.Length; i++)
         {
             if (m_WeaponSlots[i] == null)
             {
                 // 신규 무기 설정
-                WeaponController weaponInstance = Instantiate(weaponPrefab, WeaponParentSocket);
+                WeaponController weaponInstance = Instantiate(obtainableWeaponSlots[WeaponId], WeaponParentSocket);
                 weaponInstance.transform.localPosition = Vector3.zero;
                 weaponInstance.transform.localRotation = Quaternion.identity;
                 // 신규무기 투사체 오너 설정
                 weaponInstance.Owner = gameObject;
-                weaponInstance.SourcePrefab = weaponPrefab.gameObject;
+                weaponInstance.SourcePrefab = obtainableWeaponSlots[WeaponId].gameObject;
                 weaponInstance.ShowWeapon(false);
 
                 // 신규무기 레이어 설정

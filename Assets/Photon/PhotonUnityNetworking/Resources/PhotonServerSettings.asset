@@ -48,6 +48,12 @@ MonoBehaviour:
   - SwitchWeapon
   - OnPicked
   - AddWeapon
+  - Die
+  - OnTriggerEnter
+  - CreatWeaponNetwork
+  - HandleShootInputs
+  - ShotProcessOnServer
+  - UpdateAmmo
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

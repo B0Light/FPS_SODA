@@ -22,6 +22,8 @@ public struct CrosshairData
 [RequireComponent(typeof(AudioSource))]
 public class WeaponController : MonoBehaviourPun
 {
+    public int WeaponId;
+    [Space(10)]
     [Header("Information")]
     public string WeaponName;
     public Sprite WeaponIcon;
@@ -36,7 +38,7 @@ public class WeaponController : MonoBehaviourPun
     public WeaponShootType ShootType;
     public ProjectileBase ProjectilePrefab;
 
-        
+
     public float DelayBetweenShots = 0.5f;
     public float BulletSpreadAngle = 0f;
     public int BulletsPerShot = 1;
@@ -67,7 +69,7 @@ public class WeaponController : MonoBehaviourPun
     public float AmmoUsedOnStartCharge = 1f;
     public float AmmoUsageRateWhileCharging = 1f;
 
-    [Header("Audio & Visual")] 
+    [Header("Audio & Visual")]
     public GameObject MuzzleFlashPrefab;
     public bool UnparentMuzzleFlash;
     public AudioClip ShootSfx;
@@ -259,7 +261,7 @@ public class WeaponController : MonoBehaviourPun
         }
     }
 
-    
+
     public void ShowWeapon(bool show)
     {
         WeaponRoot.SetActive(show);
@@ -362,7 +364,7 @@ public class WeaponController : MonoBehaviourPun
     [PunRPC]
     void HandleShoot()
     {
-        
+
         int bulletsPerShotFinal = (ShootType == WeaponShootType.Charge)
             ? Mathf.CeilToInt(CurrentCharge * BulletsPerShot)
             : BulletsPerShot;

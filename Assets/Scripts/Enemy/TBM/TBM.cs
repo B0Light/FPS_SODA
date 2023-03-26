@@ -24,12 +24,10 @@ public class TBM : EnemyBullet
         yield return new WaitUntil(() => m_rigidbody.velocity.y < 0f);
         yield return new WaitForSeconds(0.1f);
         SearchEnemy();
-
-        yield return new WaitForSeconds(5f);
-        PhotonNetwork.Destroy(gameObject);
     }
     protected override void Start()
-    {  
+    {
+        GetComponent<Rigidbody>().velocity = Vector3.up * 15f;
         StartCoroutine(LaunchDelay());
         base.Start();
     }

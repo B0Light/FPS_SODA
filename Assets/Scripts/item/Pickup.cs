@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class Pickup : MonoBehaviourPun
 {
+    public int ItemId;
+    [Space(10)]
     public float VerticalBobFrequency = 1f;
     public float BobbingAmount = 1f;
     public float RotatingSpeed = 360f;

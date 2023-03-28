@@ -23,6 +23,7 @@ public struct CrosshairData
 public class WeaponController : MonoBehaviourPun
 {
     public int WeaponId;
+    private PhotonView m_PhotonView;
     [Space(10)]
     [Header("Information")]
     public string WeaponName;
@@ -111,20 +112,14 @@ public class WeaponController : MonoBehaviourPun
     public bool IsReloading { get; private set; }
 
     private Queue<Rigidbody> m_PhysicalAmmoPool;
+    
 
     void Awake()
     {
         m_CurrentAmmo = MaxAmmo;
         m_CarriedPhysicalBullets = HasPhysicalBullets ? ClipSize : 0;
 
-        m_ShootAudioSource = GetComponent<AudioSource>();
-        if (UseContinuousShootSound)
-        {
-            m_ContinuousShootAudioSource = gameObject.AddComponent<AudioSource>();
-            m_ContinuousShootAudioSource.playOnAwake = false;
-            m_ContinuousShootAudioSource.clip = ContinuousShootLoopSfx;
-            m_ContinuousShootAudioSource.loop = true;
-        }
+        
 
         if (HasPhysicalBullets)
         {
@@ -136,6 +131,19 @@ public class WeaponController : MonoBehaviourPun
                 shell.SetActive(false);
                 m_PhysicalAmmoPool.Enqueue(shell.GetComponent<Rigidbody>());
             }
+        }
+    }
+
+    private void Start()
+    {
+        m_PhotonView = GetComponent<PhotonView>();
+        m_ShootAudioSource = GetComponent<AudioSource>();
+        if (UseContinuousShootSound)
+        {
+            m_ContinuousShootAudioSource = gameObject.AddComponent<AudioSource>();
+            m_ContinuousShootAudioSource.playOnAwake = false;
+            m_ContinuousShootAudioSource.clip = ContinuousShootLoopSfx;
+            m_ContinuousShootAudioSource.loop = true;
         }
     }
 
@@ -213,7 +221,6 @@ public class WeaponController : MonoBehaviourPun
             {
                 float chargeLeft = 1f - CurrentCharge;
 
-                // Calculate how much charge ratio to add this frame
                 float chargeAdded = 0f;
                 if (MaxChargeDuration <= 0f)
                 {
@@ -259,13 +266,6 @@ public class WeaponController : MonoBehaviourPun
                 m_ContinuousShootAudioSource.Stop();
             }
         }
-    }
-
-
-    public void ShowWeapon(bool show)
-    {
-        WeaponRoot.SetActive(show);
-        IsWeaponActive = show;
     }
 
     public void UseAmmo(float amount)
@@ -316,19 +316,21 @@ public class WeaponController : MonoBehaviourPun
         }
     }
 
+    [PunRPC]
     bool TryShoot()
     {
         if (m_CurrentAmmo >= 1f
             && m_LastTimeShot + DelayBetweenShots < Time.time)
         {
-            HandleShoot();
+            m_PhotonView.RPC("HandleShoot", RpcTarget.All, null);
             m_CurrentAmmo -= 1f;
             return true;
         }
         return false;
     }
 
-    bool TryBeginCharge()
+    [PunRPC]
+    void TryBeginCharge()
     {
         if (!IsCharging
             && m_CurrentAmmo >= AmmoUsedOnStartCharge
@@ -339,22 +341,17 @@ public class WeaponController : MonoBehaviourPun
 
             LastChargeTriggerTimestamp = Time.time;
             IsCharging = true;
-
-            return true;
         }
-
-        return false;
     }
 
+    [PunRPC]
     bool TryReleaseCharge()
     {
         if (IsCharging)
         {
-            HandleShoot();
-
+            m_PhotonView.RPC("HandleShoot", RpcTarget.All, null);
             CurrentCharge = 0f;
             IsCharging = false;
-
             return true;
         }
 
@@ -364,7 +361,10 @@ public class WeaponController : MonoBehaviourPun
     [PunRPC]
     void HandleShoot()
     {
-
+        if (!m_PhotonView.IsMine)
+        {
+            CurrentCharge = 1;
+        }   
         int bulletsPerShotFinal = (ShootType == WeaponShootType.Charge)
             ? Mathf.CeilToInt(CurrentCharge * BulletsPerShot)
             : BulletsPerShot;

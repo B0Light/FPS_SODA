@@ -98,7 +98,7 @@ public class ChargedWeaponEffectsHandler : MonoBehaviour
         if (ParticleInstance == null)
             SpawnParticleSystem();
 
-        m_DiskOrbitParticle.gameObject.SetActive(m_WeaponController.IsWeaponActive);
+        m_DiskOrbitParticle.gameObject.SetActive(true);
         m_ChargeRatio = m_WeaponController.CurrentCharge;
 
         ChargingObject.transform.localScale = Scale.GetValueFromRatio(m_ChargeRatio);

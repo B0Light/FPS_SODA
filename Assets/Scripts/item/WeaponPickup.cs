@@ -24,18 +24,11 @@ using Photon.Pun;
             Debug.Log("PICKUP : " + byPlayer.photonView.ViewID);
             if (playerWeaponsManager.AddWeapon(ItemId))
             {
-                if (playerWeaponsManager.GetActiveWeapon() == null)
-                {
-                    playerWeaponsManager.SwitchWeapon(true);
-                }
-
+                PhotonNetwork.Destroy(this.gameObject);
                 PlayPickupFeedback();
-
-                if (photonView.IsMine)
-                {
-                    PhotonNetwork.Destroy(gameObject);
-                }
             }
         }
     }
+
+
 }

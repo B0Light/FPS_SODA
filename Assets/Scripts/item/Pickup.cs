@@ -70,4 +70,10 @@ public class Pickup : MonoBehaviourPun
 
         m_HasPlayedFeedback = true;
     }
+
+    [PunRPC]
+    public void destroyThisObj()
+    {
+        Destroy(gameObject);
+    }
 }

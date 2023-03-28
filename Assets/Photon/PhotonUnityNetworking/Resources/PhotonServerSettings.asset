@@ -54,6 +54,11 @@ MonoBehaviour:
   - HandleShootInputs
   - ShotProcessOnServer
   - UpdateAmmo
+  - destroyThisObj
+  - TryBeginCharge
+  - TryReleaseCharge
+  - TryShoot
+  - SetChargeRatio
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

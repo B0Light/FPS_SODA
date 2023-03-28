@@ -5,7 +5,7 @@ using System.Collections;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(PhotonView))]
-public class Health : MonoBehaviourPun
+public class Health : MonoBehaviourPun, IPunObservable
 {
     public Gauge<float> m_health;
     public float m_MaxHealth = 100f;
@@ -17,6 +17,20 @@ public class Health : MonoBehaviourPun
 
     public bool CanPickup() => m_health.Value < m_health.GetMaxValue();
     public float GetRatio() => m_health.Value / m_health.GetMaxValue();
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(m_health.Value);
+            stream.SendNext(isDead);
+        }
+        else
+        {
+            this.m_health.Value = (float)stream.ReceiveNext();
+            this.isDead = (bool)stream.ReceiveNext();
+        }
+    }
 
     [PunRPC]
     public void ApplyUpdatedHealth(float newHealth, bool newDead)
@@ -32,7 +46,7 @@ public class Health : MonoBehaviourPun
     void Start()
     {
         m_health = new Gauge<float>(m_MaxHealth);
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
             StartCoroutine("RecoverHealth", 2f);
     }
 
@@ -47,18 +61,18 @@ public class Health : MonoBehaviourPun
     [PunRPC]
     public void Heal(float healAmount)
     {
-        if(isDead) { return; }
+        if (isDead) { return; }
 
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
             m_health.Value += healAmount;
             photonView.RPC("ApplyUpdatedHealth", RpcTarget.Others, m_health.Value, isDead);
             photonView.RPC("Heal", RpcTarget.Others, healAmount);
         }
-        
+
     }
 
-    IEnumerator RecoverHealth(float delay) 
+    IEnumerator RecoverHealth(float delay)
     {
         if (m_health.Value < m_MaxHealth)
             m_health.Value += m_recover;
@@ -96,7 +110,7 @@ public class Health : MonoBehaviourPun
                 mesh.material.color = Color.gray;
             m_health.Value = 0f;
             PlayerController playerController = this.gameObject.GetComponent<PlayerController>();
-            if(playerController != null && isDead == false)
+            if (playerController != null && isDead == false)
             {
                 isDead = true;
                 playerController.Die();

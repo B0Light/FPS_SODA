@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviourPun
     public Vector3 inputDirection;
     private bool isDodge;
     private Vector3 dodgeVec;
+    private bool isDead = false;
 
     [Space(10)]
     public float JumpHeight = 1.2f;
@@ -244,6 +245,9 @@ public class PlayerController : MonoBehaviourPun
     [PunRPC]
     public void Die()
     {
+        if(isDead)  return;
+        isDead = true;
+        _WeaponsManager.WeaponParentSocket.gameObject.SetActive(false);
         photonView.RPC("Die", RpcTarget.Others, null);
         _animator.SetTrigger("doDie");
         StartCoroutine(DieFPX()); 

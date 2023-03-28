@@ -68,7 +68,7 @@ public class ProjectileStandard : ProjectileBase
     {
         Health health = collision.gameObject.GetComponent<Health>();
         
-        if (health)
+        if (health && PhotonNetwork.IsMasterClient)
             health.TakeDamage(Damage, m_ProjectileBase.Owner);
 
         
@@ -79,7 +79,7 @@ public class ProjectileStandard : ProjectileBase
             foreach (var hit in hits)
             {
                 Health blasted = collision.gameObject.GetComponent<Health>();
-                if (blasted)
+                if (blasted && PhotonNetwork.IsMasterClient)
                     blasted.TakeDamage(Damage, m_ProjectileBase.Owner);
             }
         }

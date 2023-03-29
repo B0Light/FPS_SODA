@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using Photon.Pun;
 public abstract class ProjectileBase : MonoBehaviourPun
 {
-    public GameObject Owner { get; private set; }
+    public GameObject Owner;
     public Vector3 InitialPosition { get; private set; }
     public Vector3 InitialDirection { get; private set; }
     public Vector3 InheritedMuzzleVelocity { get; private set; }

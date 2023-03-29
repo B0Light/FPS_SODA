@@ -1,10 +1,12 @@
+using Photon.Pun;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Windows;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(EnemyAtk))]
 [RequireComponent(typeof(EnemyPath))]
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviourPun
 {
     Health _health;
     EnemyAtk _enemyAtk;
@@ -12,6 +14,7 @@ public class EnemyController : MonoBehaviour
     [Header("Targeting")]
     public Transform m_target = null;
     public EnemyPath _path;
+    public Animator _anim;
     public float m_rotationSpeed = 1.0f;
     public float m_atkRadius = 2f;
     public float m_atkRange = 4f;
@@ -28,6 +31,7 @@ public class EnemyController : MonoBehaviour
         _health = GetComponent<Health>();
         _enemyAtk = GetComponent<EnemyAtk>();
         _path = GetComponent<EnemyPath>();
+        _anim = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -70,5 +74,23 @@ public class EnemyController : MonoBehaviour
     private void FixedUpdate()
     {
         Targeting();
+    }
+
+    public void Die()
+    {
+        m_isDead = true;
+        _anim.SetTrigger("doDie");
+        Destroy(gameObject, 3f);
+        //StartCoroutine(DestroyAfter(gameObject, 3f));
+    }
+
+    IEnumerator DestroyAfter(GameObject target, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if(target != null)
+        {
+            PhotonNetwork.Destroy(target);
+        }
     }
 }

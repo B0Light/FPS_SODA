@@ -17,7 +17,7 @@ public class EnemyPath : MonoBehaviour
     public Transform m_target = null;
 
     int m_count = 0;
-
+    bool chkDead = false;
     private void Awake()
     {
         _enemyController = GetComponent<EnemyController>();
@@ -49,7 +49,13 @@ public class EnemyPath : MonoBehaviour
 
     void Update()
     {
-        if (_enemyController.m_isAtk == true) return;
+        if (_enemyController.m_isDead == true && chkDead == false)
+        {
+            chkDead = true;
+            m_navMesh.isStopped = true;
+            m_navMesh.enabled = false;
+        }
+        if (_enemyController.m_isAtk == true || chkDead) return;
 
         _anim.SetBool("isWalk", m_navMesh.velocity.magnitude > 0);
         if (m_navMesh.velocity == Vector3.zero)
@@ -61,6 +67,7 @@ public class EnemyPath : MonoBehaviour
 
     public void SetTarget(Transform p_target)
     {
+        if (chkDead) return;
         CancelInvoke();
         m_target = p_target;
         TraceNavSetting();
@@ -70,12 +77,14 @@ public class EnemyPath : MonoBehaviour
 
     public void RemoveTarget()
     {
+        if (chkDead) return;
         m_target = null;
         MoveToNextWayNode();
     }
 
     void MoveToNextWayNode()
     {
+        if (chkDead) return;
         TraceNavSetting();
         if (m_target != null ) return;
 
@@ -89,6 +98,7 @@ public class EnemyPath : MonoBehaviour
     }
     void Sight()
     {
+        if (chkDead) return;
         Collider[] cols = Physics.OverlapSphere(transform.position, m_distance, m_layerMask);
 
         if (cols.Length > 0)

@@ -91,7 +91,7 @@ public class WeaponController : MonoBehaviourPun
     public float LastChargeTriggerTimestamp { get; private set; }
     Vector3 m_LastMuzzlePosition;
 
-    public GameObject Owner { get; set; }
+    public GameObject Owner;
     public GameObject SourcePrefab { get; set; }
     public bool IsCharging { get; private set; }
     public float CurrentAmmoRatio { get; private set; }

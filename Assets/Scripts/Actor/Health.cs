@@ -37,6 +37,7 @@ public class Health : MonoBehaviourPun, IPunObservable
     {
         m_health.Value = newHealth;
         isDead = newDead;
+        StartCoroutine(OnDmg());
     }
 
     private void Awake()
@@ -81,20 +82,20 @@ public class Health : MonoBehaviourPun, IPunObservable
         StartCoroutine("RecoverHealth", delay);
     }
 
-    [PunRPC]
     public void TakeDamage(float damage, GameObject damageSource)
     {
         m_target = damageSource;
-        if (PhotonNetwork.IsMasterClient)
-        {
-            m_health.Value -= damage;
-            photonView.RPC("ApplyUpdatedHealth", RpcTarget.Others, m_health.Value, isDead);
-            //photonView.RPC("TakeDamage", RpcTarget.Others, damage, damageSource);
-        }
-        StartCoroutine(OnDmg(damage));
+        photonView.RPC("TakeDmgOnServer", RpcTarget.MasterClient, damage);
     }
 
-    IEnumerator OnDmg(float damage)
+    [PunRPC]
+    public void TakeDmgOnServer(float damage)
+    {
+        m_health.Value -= damage;
+        photonView.RPC("ApplyUpdatedHealth", RpcTarget.All, m_health.Value, isDead);
+    }
+
+    IEnumerator OnDmg()
     {
         foreach (MeshRenderer mesh in m_meshs)
             mesh.material.color = Color.red;
@@ -110,11 +111,21 @@ public class Health : MonoBehaviourPun, IPunObservable
                 mesh.material.color = Color.gray;
             m_health.Value = 0f;
             PlayerController playerController = this.gameObject.GetComponent<PlayerController>();
-            if (playerController != null && isDead == false)
+            EnemyController enemyController = this.gameObject.GetComponent<EnemyController>();
+            if(isDead == false)
             {
                 isDead = true;
-                playerController.Die();
+                if (playerController != null)
+                {
+                   
+                    playerController.Die();
+                }
+                else if (enemyController != null)
+                {
+                    enemyController.Die();
+                }
             }
+            
         }
     }
 }

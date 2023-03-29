@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Photon.Pun;
 
-public class Compass : MonoBehaviour
+public class Compass : MonoBehaviourPun
 {
     public RectTransform CompasRect;
     public float VisibilityAngle = 180f;
@@ -19,10 +20,10 @@ public class Compass : MonoBehaviour
 
     float m_WidthMultiplier;
     float m_HeightOffset;
-
-    void Awake()
+    public PlayerController playerController;
+    public void setPlayer()
     {
-        PlayerController playerController = FindObjectOfType<PlayerController>();
+        playerController = FindObjectOfType<PlayerController>();
         m_PlayerTransform = playerController.transform;
 
         m_WidthMultiplier = CompasRect.rect.width / VisibilityAngle;
@@ -31,8 +32,8 @@ public class Compass : MonoBehaviour
 
     void Update()
     {
-        // this is all very WIP, and needs to be reworked
-        foreach (var element in m_ElementsDictionnary)
+            // this is all very WIP, and needs to be reworked
+            foreach (var element in m_ElementsDictionnary)
         {
             float distanceRatio = 1;
             float heightDifference = 0;

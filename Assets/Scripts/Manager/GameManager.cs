@@ -2,33 +2,27 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// ??? ?? ?? ??, ?? UI? ???? ?? ???
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
-    // ???? ??? ????? ???? ??? ????
     public static GameManager instance
     {
         get
         {
-            // ?? ??? ??? ?? ????? ???? ????
             if (m_instance == null)
             {
-                // ??? GameManager ????? ?? ??
                 m_instance = FindObjectOfType<GameManager>();
             }
-
-            // ??? ????? ??
             return m_instance;
         }
     }
 
-    private static GameManager m_instance; // ???? ??? static ??
+    private static GameManager m_instance; 
 
-    public GameObject playerPrefab; // ??? ???? ??? ???
+    public GameObject playerPrefab;
 
-    public bool isGameover { get; private set; } // ?? ?? ??
+    [SerializeField] Compass compass;
+    public bool isGameover { get; private set; }
 
-    // ????? ?? ????, ??? ???
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
 
@@ -37,15 +31,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Awake()
     {
-        // ?? ??? ????? ? ?? GameManager ????? ???
         if (instance != this)
         {
-            // ??? ??
             Destroy(gameObject);
         }
     }
 
-    // ?? ??? ??? ????? ? ?? ????? ??
     private void Start()
     {
         Vector3 randomSpawnPos = Random.insideUnitSphere * 5f;
@@ -53,17 +44,16 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        PhotonNetwork.Instantiate(playerPrefab.name, randomSpawnPos, Quaternion.identity);
+        GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, randomSpawnPos, Quaternion.identity);
+        compass.playerController = player.GetComponent<PlayerController>();
+        compass.setPlayer();
     }
 
-    // ?? ?? ??
     public void EndGame()
     {
-        // ?? ?? ??? ??? ??
         isGameover = true;
     }
 
-    // ??? ??? ???? ?? ??? ?
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha0))

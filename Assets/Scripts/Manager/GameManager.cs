@@ -1,3 +1,4 @@
+using Cinemachine;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,6 +21,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public GameObject playerPrefab;
 
+    public CinemachineVirtualCamera PlayerSightCam;
+
+    [Header("UIManager")]
     [SerializeField] Compass compass;
     public bool isGameover { get; private set; }
 
@@ -45,6 +49,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         Cursor.lockState = CursorLockMode.Locked;
 
         GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, randomSpawnPos, Quaternion.identity);
+        player.GetComponent<PlayerController>().VirtualCamera = PlayerSightCam;
         compass.playerController = player.GetComponent<PlayerController>();
         compass.setPlayer();
     }

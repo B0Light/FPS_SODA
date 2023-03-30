@@ -32,8 +32,9 @@ public class Compass : MonoBehaviourPun
 
     void Update()
     {
-            // this is all very WIP, and needs to be reworked
-            foreach (var element in m_ElementsDictionnary)
+        if (playerController.gameObject.GetComponent<Health>().isDead) return;
+        // this is all very WIP, and needs to be reworked
+        foreach (var element in m_ElementsDictionnary)
         {
             float distanceRatio = 1;
             float heightDifference = 0;

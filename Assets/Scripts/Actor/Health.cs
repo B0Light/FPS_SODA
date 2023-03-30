@@ -13,7 +13,7 @@ public class Health : MonoBehaviourPun, IPunObservable
     public GameObject m_target = null;
 
     protected MeshRenderer[] m_meshs;
-    protected bool isDead = false;
+    public bool isDead = false;
 
     public bool CanPickup() => m_health.Value < m_health.GetMaxValue();
     public float GetRatio() => m_health.Value / m_health.GetMaxValue();
@@ -35,9 +35,11 @@ public class Health : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void ApplyUpdatedHealth(float newHealth, bool newDead)
     {
+        if (isDead) return;
+        
+        StartCoroutine(OnDmg());
         m_health.Value = newHealth;
         isDead = newDead;
-        StartCoroutine(OnDmg());
     }
 
     private void Awake()
@@ -84,6 +86,7 @@ public class Health : MonoBehaviourPun, IPunObservable
 
     public void TakeDamage(float damage, GameObject damageSource)
     {
+        if(isDead) { return; }
         m_target = damageSource;
         photonView.RPC("TakeDmgOnServer", RpcTarget.MasterClient, damage);
     }
@@ -91,8 +94,10 @@ public class Health : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void TakeDmgOnServer(float damage)
     {
+        if (isDead) { return; }
         m_health.Value -= damage;
-        photonView.RPC("ApplyUpdatedHealth", RpcTarget.All, m_health.Value, isDead);
+        StartCoroutine(OnDmg());
+        photonView.RPC("ApplyUpdatedHealth", RpcTarget.Others, m_health.Value, isDead);
     }
 
     IEnumerator OnDmg()

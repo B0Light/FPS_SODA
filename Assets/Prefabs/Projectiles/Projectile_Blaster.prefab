@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76127d5de8fb4854f8c4be0906419549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Owner: {fileID: 0}
   Radius: 0.01
   Root: {fileID: 3659995153115176982}
   m_layerMask:
@@ -61,7 +62,7 @@ MonoBehaviour:
   HittableLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  Speed: 100
+  Speed: 200
   GravityDownAcceleration: 0
   TrajectoryCorrectionDistance: -1
   Damage: 10

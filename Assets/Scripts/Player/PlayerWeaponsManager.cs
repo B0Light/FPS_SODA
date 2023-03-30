@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using Cinemachine;
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -31,11 +32,12 @@ public class PlayerWeaponsManager : MonoBehaviourPun
     public float WeaponSwitchDelay = 1f;
     public LayerMask FpsWeaponLayer;
 
+    [Header("Cinemachine")]
+    public CinemachineVirtualCamera WeaponVCamera;
     public bool IsAiming { get; private set; }
 
     public int ActiveWeaponIndex = -1;
 
-    public UnityAction<WeaponController> OnSwitchedToWeapon;
     public UnityAction<WeaponController, int> OnAddedWeapon;
     public UnityAction<WeaponController, int> OnRemovedWeapon;
 
@@ -54,8 +56,6 @@ public class PlayerWeaponsManager : MonoBehaviourPun
     public Vector3 m_WeaponRecoilLocalPosition;
     Vector3 m_AccumulatedRecoil;
 
-    int m_WeaponSwitchNewWeaponIndex;
-
     void Start()
     {
         ActiveWeaponIndex = -1;
@@ -67,7 +67,7 @@ public class PlayerWeaponsManager : MonoBehaviourPun
         {
             AddWeapon(weapon);
         }
-
+        
         m_WeaponMainLocalPosition = new Vector3(1.2f, -0.8f, 1.6f);
         IsAiming = false;
     }
@@ -197,13 +197,16 @@ public class PlayerWeaponsManager : MonoBehaviourPun
             m_WeaponMainLocalPosition = Vector3.Lerp(m_WeaponMainLocalPosition,
                 AimingWeaponPosition.localPosition + activeWeapon.AimOffset,
                 AimingAnimationSpeed * Time.deltaTime);
-                
+            SetFov(Mathf.Lerp(m_PlayerController.VirtualCamera.m_Lens.FieldOfView,
+                        activeWeapon.AimZoomRatio * DefaultFov, AimingAnimationSpeed * Time.deltaTime));
+
         }
         else
         {
             m_WeaponMainLocalPosition = Vector3.Lerp(m_WeaponMainLocalPosition,
                 DefaultWeaponPosition.localPosition, AimingAnimationSpeed * Time.deltaTime);
-               
+            SetFov(Mathf.Lerp(m_PlayerController.VirtualCamera.m_Lens.FieldOfView, DefaultFov,
+                        AimingAnimationSpeed * Time.deltaTime));
         }
     }
 
@@ -286,5 +289,10 @@ public class PlayerWeaponsManager : MonoBehaviourPun
         m_WeaponSlots[ActiveWeaponIndex].gameObject.SetActive(false);
         m_WeaponSlots[weaponIdx].gameObject.SetActive(true);
         ActiveWeaponIndex = weaponIdx;
+    }
+
+    public void SetFov(float fov)
+    {
+        m_PlayerController.VirtualCamera.m_Lens.FieldOfView = fov;
     }
 }

@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviourPun
     private float _fallTimeoutDelta;
 
     private PhotonView pv;
-    private CinemachineVirtualCamera VirtualCamera;
+    public CinemachineVirtualCamera VirtualCamera;
     private PlayerWeaponsManager _WeaponsManager;
     private PlayerInput _playerInput;
     private CharacterController _controller;
@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviourPun
         isDodge = false;
 
         pv = GetComponent<PhotonView>();
-        VirtualCamera = GameObject.FindAnyObjectByType<CinemachineVirtualCamera>();
+
         if (pv.IsMine)
         {
             VirtualCamera.Follow = CinemachineCameraTarget.transform;

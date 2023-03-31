@@ -587,7 +587,7 @@ MonoBehaviour:
   m_health:
     _maxValue: 0
     _curValue: 0
-  m_MaxHealth: 100
+  m_MaxHealth: 10000
   m_recover: 1
   m_target: {fileID: 0}
   isDead: 0

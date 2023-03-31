@@ -39,10 +39,6 @@ public class EnemyAtk : MonoBehaviour
                 break;
 
             case Type.B:
-                yield return new WaitForSeconds(0.2f);
-                _anim.SetTrigger("doAtk");
-                MeleeAtk();
-                yield return new WaitForSeconds(2f);
                 break;
 
             case Type.C:

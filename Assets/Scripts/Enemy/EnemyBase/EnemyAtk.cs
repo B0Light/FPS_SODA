@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using Photon.Pun;
 
-public class EnemyAtk : MonoBehaviour
+public class EnemyAtk : MonoBehaviourPun
 {
 
     public enum Type

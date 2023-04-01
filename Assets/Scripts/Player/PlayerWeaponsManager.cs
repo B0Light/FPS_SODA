@@ -38,6 +38,7 @@ public class PlayerWeaponsManager : MonoBehaviourPun
 
     public int ActiveWeaponIndex = -1;
 
+    public UnityAction<int> OnSwitchedToWeapon;
     public UnityAction<WeaponController, int> OnAddedWeapon;
     public UnityAction<WeaponController, int> OnRemovedWeapon;
 
@@ -62,6 +63,8 @@ public class PlayerWeaponsManager : MonoBehaviourPun
 
         m_PlayerController = GetComponent<PlayerController>();
         m_InputSystem = GetComponent<InputSystem>();
+
+        OnSwitchedToWeapon += SetAcitveWeapon;
 
         foreach (var weapon in StartingWeapons)
         {
@@ -108,18 +111,21 @@ public class PlayerWeaponsManager : MonoBehaviourPun
         if (!IsAiming && (activeWeapon == null || !activeWeapon.IsCharging))
         {
             int switchWeaponInput = m_InputSystem.GetSwitchWeaponInput();
-            if (switchWeaponInput != 0)
+            if (photonView.IsMine)
             {
-                bool switchUp = switchWeaponInput > 0;
-                animator.SetTrigger("doSwap");
-                SwitchWeapon(switchUp);
-            }
-            else
-            {
-                switchWeaponInput = m_InputSystem.GetSelectWeaponInput();
-                if (switchWeaponInput > 0)
+                if (switchWeaponInput != 0)
                 {
-                    SwitchToWeaponIndex(switchWeaponInput - 1);
+                    bool switchUp = switchWeaponInput > 0;
+                    SwitchWeapon(switchUp);
+                }
+                else
+                {
+                    switchWeaponInput = m_InputSystem.GetSelectWeaponInput();
+                    if (switchWeaponInput > 0)
+                    {
+                        SwitchToWeaponIndex(switchWeaponInput - 1);
+                    }
+
                 }
             }
         }
@@ -142,6 +148,7 @@ public class PlayerWeaponsManager : MonoBehaviourPun
     }
     public void SwitchWeapon(bool scroll)
     {
+        if (!photonView.IsMine) { return; }
         if(ActiveWeaponIndex == -1) return;
         bool chk = false;
         int newWeaponIndex = -1;
@@ -185,8 +192,10 @@ public class PlayerWeaponsManager : MonoBehaviourPun
     {
         if (ActiveWeaponIndex == -1) return;
         if (ActiveWeaponIndex == newWeaponIndex || newWeaponIndex == -1) return;
+        animator.SetTrigger("doSwap");
+        OnSwitchedToWeapon.Invoke(newWeaponIndex);
+        //SetAcitveWeapon(newWeaponIndex);
         photonView.RPC("SwitchToWeaponIndex", RpcTarget.Others, newWeaponIndex);
-        SetAcitveWeapon(newWeaponIndex);
     }
         
     void UpdateWeaponAiming()
@@ -199,7 +208,8 @@ public class PlayerWeaponsManager : MonoBehaviourPun
                 AimingAnimationSpeed * Time.deltaTime);
             SetFov(Mathf.Lerp(m_PlayerController.VirtualCamera.m_Lens.FieldOfView,
                         activeWeapon.AimZoomRatio * DefaultFov, AimingAnimationSpeed * Time.deltaTime));
-
+            if(ActiveWeaponIndex < 2) activeWeapon.BulletSpreadAngle = 0;
+            
         }
         else
         {
@@ -207,6 +217,8 @@ public class PlayerWeaponsManager : MonoBehaviourPun
                 DefaultWeaponPosition.localPosition, AimingAnimationSpeed * Time.deltaTime);
             SetFov(Mathf.Lerp(m_PlayerController.VirtualCamera.m_Lens.FieldOfView, DefaultFov,
                         AimingAnimationSpeed * Time.deltaTime));
+            if(activeWeapon) activeWeapon.BulletSpreadAngle = 3;
+            if (ActiveWeaponIndex == 2) activeWeapon.BulletSpreadAngle = 10;
         }
     }
 
@@ -266,13 +278,14 @@ public class PlayerWeaponsManager : MonoBehaviourPun
     [PunRPC]
     public bool AddWeapon(int WeaponId)
     {
-        photonView.RPC("AddWeapon", RpcTarget.Others, WeaponId);
+        photonView.RPC("AddWeapon", RpcTarget.OthersBuffered, WeaponId);
         ActiveWeaponLV[WeaponId]++;
 
         if (GetActiveWeapon() == null)
         {
             ActiveWeaponIndex = WeaponId;
-            SetAcitveWeapon(ActiveWeaponIndex);
+            OnSwitchedToWeapon.Invoke(ActiveWeaponIndex);
+            //SetAcitveWeapon(ActiveWeaponIndex);
         }
 
         return false;

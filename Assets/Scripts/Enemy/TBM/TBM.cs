@@ -12,7 +12,7 @@ public class TBM : EnemyBullet
 
     void SearchEnemy()
     {
-        Collider[] cols = Physics.OverlapSphere(transform.position, 100f, m_layerMask);
+        Collider[] cols = Physics.OverlapSphere(transform.position, 500f, m_layerMask);
         if (cols.Length > 0)
         {
             m_target = cols[Random.Range(0, cols.Length)].transform;

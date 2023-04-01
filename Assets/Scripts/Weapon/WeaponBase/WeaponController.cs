@@ -29,7 +29,6 @@ public class WeaponController : MonoBehaviourPun
     public string WeaponName;
     public Sprite WeaponIcon;
     public CrosshairData CrosshairDataDefault;
-    public CrosshairData CrosshairDataTargetInSight;
 
     [Header("Internal References")]
     public GameObject WeaponRoot;
@@ -118,8 +117,6 @@ public class WeaponController : MonoBehaviourPun
     {
         m_CurrentAmmo = MaxAmmo;
         m_CarriedPhysicalBullets = HasPhysicalBullets ? ClipSize : 0;
-
-        
 
         if (HasPhysicalBullets)
         {

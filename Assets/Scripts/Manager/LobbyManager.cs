@@ -25,7 +25,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 룸 접속 버튼을 잠시 비활성화
         joinButton.interactable = false;
         // 접속을 시도 중임을 텍스트로 표시
-        connectionInfoText.text = "마스터 서버에 접속중...";
+        connectionInfoText.text = "Connecting to master server...";
     }
 
     // 룸 접속 시도
@@ -44,13 +44,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             if (PhotonNetwork.IsConnected)
             {
                 // 룸 접속 실행
-                connectionInfoText.text = "룸에 접속...";
+                connectionInfoText.text = "Connecting...";
                 PhotonNetwork.JoinRandomRoom();
             }
             else
             {
                 // 마스터 서버에 접속중이 아니라면, 마스터 서버에 접속 시도
-                connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않음\n접속 재시도 중...";
+                connectionInfoText.text = "Offline: No connection with master server\nRetrying connection...";
                 // 마스터 서버로의 재접속 시도
                 PhotonNetwork.ConnectUsingSettings();
             }
@@ -63,7 +63,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 룸 접속 버튼을 활성화
         joinButton.interactable = true;
         // 접속 정보 표시
-        connectionInfoText.text = "온라인 : 마스터 서버와 연결됨";
+        connectionInfoText.text = "Online: Connected with Master Server";
     }
 
     // 마스터 서버 접속 실패시 자동 실행
@@ -72,7 +72,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 룸 접속 버튼을 비활성화
         joinButton.interactable = false;
         // 접속 정보 표시
-        connectionInfoText.text = "오프라인 : 마스터 서버와 연결되지 않음\n접속 재시도 중...";
+        connectionInfoText.text = "Offline: Unable to connect to master server\nRetrying connection...";
 
         // 마스터 서버로의 재접속 시도
         PhotonNetwork.ConnectUsingSettings();
@@ -83,7 +83,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         Debug.Log($"JoinRandFail {returnCode} : {message}");
         // 접속 상태 표시
-        connectionInfoText.text = "빈 방이 없음, 새로운 방 생성...";
+        connectionInfoText.text = "No empty rooms, create new rooms...";
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 20;
         roomOptions.IsOpen = true;
@@ -103,7 +103,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         Debug.Log($"PhotonNetwork.InRoom : {PhotonNetwork.InRoom}");
         Debug.Log($"PlayerCount : {PhotonNetwork.CurrentRoom.PlayerCount}");
         // 접속 상태 표시
-        connectionInfoText.text = "방 참가 성공";
+        connectionInfoText.text = "room join success";
         // 모든 룸 참가자들이 Main 씬을 로드하게 함
         PhotonNetwork.LoadLevel("NewProject");
     }

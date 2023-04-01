@@ -32,6 +32,7 @@ public class Compass : MonoBehaviourPun
 
     void Update()
     {
+        if(playerController == null) return;
         if (playerController.gameObject.GetComponent<Health>().isDead) return;
         // this is all very WIP, and needs to be reworked
         foreach (var element in m_ElementsDictionnary)

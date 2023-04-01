@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 public class BossAtk : EnemyAtk
 {
     NavMeshAgent NavMeshAgent;
@@ -11,7 +12,7 @@ public class BossAtk : EnemyAtk
     public ProjectileStandard missile;
     public Transform missilePort;
     public Transform RockPort;
-    private GameObject m_target;
+    public GameObject m_target;
     public bool isLook;
 
     public GameObject ImpactVfx;
@@ -35,11 +36,15 @@ public class BossAtk : EnemyAtk
     // Update is called once per frame
     void Update()
     {
-        if (health)
+        if (health.m_health.Value > 0)
         {
             m_target = health.m_target;    
             if(m_target && isLook)
                 transform.LookAt(m_target.transform);
+        }
+        else
+        {
+            StopAllCoroutines();
         }
             
     }
@@ -102,13 +107,13 @@ public class BossAtk : EnemyAtk
     {
         isLook = false;
         _anim.SetTrigger("doBigShot");
-        GameObject I_Rock = Instantiate(Rock, RockPort.position, transform.rotation);
+        GameObject I_Rock = PhotonNetwork.Instantiate(Rock.name, RockPort.position, transform.rotation);
         I_Rock.GetComponent<BossRock>().Owner = gameObject;
         yield return new WaitForSeconds(3f);
         isLook = true;
         StartCoroutine(Think());
     }
-    IEnumerator Taunt()
+    public IEnumerator Taunt()
     {
         _anim.SetTrigger("doTaunt");
         yield return new WaitForSeconds(2f);
@@ -126,6 +131,7 @@ public class BossAtk : EnemyAtk
         yield return new WaitForSeconds(0.5f);
         StartCoroutine(Think());
     }
+
     public Vector3 GetShotDirectionWithinSpread(Transform shootTransform)
     {
         float spreadAngleRatio = BulletSpreadAngle / 180f;

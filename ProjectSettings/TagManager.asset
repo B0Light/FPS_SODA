@@ -8,6 +8,8 @@ TagManager:
   - SpellSword
   - Bullet
   - Floor
+  - Environment
+  - Boss
   layers:
   - Default
   - TransparentFX

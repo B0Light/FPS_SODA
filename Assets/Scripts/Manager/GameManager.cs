@@ -20,11 +20,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     private static GameManager m_instance; 
 
     public GameObject playerPrefab;
-
+    [SerializeField] Transform playerSpawnTransform;
     public CinemachineVirtualCamera PlayerSightCam;
 
     [Header("UIManager")]
+    [SerializeField] CrosshairManager crosshairManager;
     [SerializeField] Compass compass;
+    [SerializeField] PlayerHealthBar PlayerHealthBar;
     public bool isGameover { get; private set; }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -43,15 +45,17 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Start()
     {
-        Vector3 randomSpawnPos = Random.insideUnitSphere * 5f;
-        randomSpawnPos.y = 0f;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, randomSpawnPos, Quaternion.identity);
+        GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, playerSpawnTransform.position, playerSpawnTransform.rotation);
         player.GetComponent<PlayerController>().VirtualCamera = PlayerSightCam;
         compass.playerController = player.GetComponent<PlayerController>();
         compass.setPlayer();
+        crosshairManager.m_WeaponsManager = player.GetComponent<PlayerWeaponsManager>();
+        crosshairManager.setPlayer();
+        PlayerHealthBar.m_playerController = player.GetComponent<PlayerController>();
+        PlayerHealthBar.m_PlayerHealth = player.GetComponent<Health>();
     }
 
     public void EndGame()

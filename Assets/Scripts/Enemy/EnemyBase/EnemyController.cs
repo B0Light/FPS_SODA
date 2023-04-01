@@ -3,12 +3,9 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Windows;
 
-[RequireComponent(typeof(Health))]
-[RequireComponent(typeof(EnemyAtk))]
-[RequireComponent(typeof(EnemyPath))]
 public class EnemyController : MonoBehaviourPun
 {
-    Health _health;
+    protected Health _health;
     EnemyAtk _enemyAtk;
 
     [Header("Targeting")]
@@ -53,7 +50,7 @@ public class EnemyController : MonoBehaviourPun
         }
     }
 
-    void Targeting()
+    private void Targeting()
     {
         if (!m_isDead)
         {
@@ -80,8 +77,8 @@ public class EnemyController : MonoBehaviourPun
     {
         m_isDead = true;
         _anim.SetTrigger("doDie");
-        Destroy(gameObject, 3f);
-        //StartCoroutine(DestroyAfter(gameObject, 3f));
+        if(gameObject.tag != "Boss")
+            Destroy(gameObject, 3f);
     }
 
     IEnumerator DestroyAfter(GameObject target, float delay)

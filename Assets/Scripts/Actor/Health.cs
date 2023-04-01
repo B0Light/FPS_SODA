@@ -36,8 +36,9 @@ public class Health : MonoBehaviourPun, IPunObservable
     public void ApplyUpdatedHealth(float newHealth, bool newDead)
     {
         if (isDead) return;
-        
-        StartCoroutine(OnDmg());
+        if(m_health.Value > newHealth) { StartCoroutine(OnDmg()); }
+       
+
         m_health.Value = newHealth;
         isDead = newDead;
     }

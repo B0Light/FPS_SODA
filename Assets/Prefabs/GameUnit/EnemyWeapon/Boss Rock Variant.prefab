@@ -111,8 +111,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30d7f18b4e8cb374296bfedd36be972c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_dmg: 30
   m_layerMask:
     serializedVersion: 2
     m_Bits: 15927
   ImpactVfx: {fileID: 1599315238913598529, guid: 22cf106628ae5f043a9f66a4e155dd21, type: 3}
   Owner: {fileID: 0}
+--- !u!114 &844913420480694125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 697490214047590919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

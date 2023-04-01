@@ -161,9 +161,9 @@ MonoBehaviour:
   ShootType: 0
   ProjectilePrefab: {fileID: 8924682559891268397, guid: bfcdb7adcd222b444973577ade7d9aea, type: 3}
   DelayBetweenShots: 1
-  BulletSpreadAngle: 7
-  BulletsPerShot: 24
-  RecoilForce: 1
+  BulletSpreadAngle: 10
+  BulletsPerShot: 30
+  RecoilForce: 2
   AimZoomRatio: 0.7
   AimOffset: {x: 0, y: 0.13, z: 0}
   AutomaticReload: 1
@@ -188,6 +188,7 @@ MonoBehaviour:
   ContinuousShootStartSfx: {fileID: 0}
   ContinuousShootLoopSfx: {fileID: 0}
   ContinuousShootEndSfx: {fileID: 0}
+  Owner: {fileID: 0}
 --- !u!114 &8745372878802205896
 MonoBehaviour:
   m_ObjectHideFlags: 0

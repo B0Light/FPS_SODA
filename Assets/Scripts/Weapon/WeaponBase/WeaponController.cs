@@ -172,10 +172,13 @@ public class WeaponController : MonoBehaviourPun
 
     void Update()
     {
-        UpdateAmmo();
-        UpdateCharge();
-        UpdateContinuousShootSound();
-
+        if(photonView.IsMine)
+        {
+            UpdateAmmo();
+            UpdateCharge();
+            UpdateContinuousShootSound();
+        }
+       
         if (Time.deltaTime > 0)
         {
             MuzzleWorldVelocity = (WeaponMuzzle.position - m_LastMuzzlePosition) / Time.deltaTime;

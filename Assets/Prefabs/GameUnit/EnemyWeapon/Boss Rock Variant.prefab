@@ -114,7 +114,7 @@ MonoBehaviour:
   m_dmg: 30
   m_layerMask:
     serializedVersion: 2
-    m_Bits: 15927
+    m_Bits: 1591
   ImpactVfx: {fileID: 1599315238913598529, guid: 22cf106628ae5f043a9f66a4e155dd21, type: 3}
   Owner: {fileID: 0}
 --- !u!114 &844913420480694125

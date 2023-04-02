@@ -61,6 +61,12 @@ MonoBehaviour:
   - SetChargeRatio
   - TakeDmgOnServer
   - NextPhase
+  - SetBoss
+  - setAni1
+  - setAni2
+  - setAni3
+  - setMissilePortA
+  - setMissilePortB
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

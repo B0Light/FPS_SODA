@@ -26,34 +26,43 @@ public class BossManager : MonoBehaviourPun
     private void Start()
     {
         _weaponController = GetComponent<WeaponController>();
-        CurrBoss = PhotonNetwork.Instantiate(Phase1.name, BossTransform.position, BossTransform.rotation);
-        Phase1Health = CurrBoss.GetComponent<Health>();
-        BossAtk = CurrBoss.GetComponent<BossAtk>();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            CurrBoss = PhotonNetwork.Instantiate(Phase1.name, BossTransform.position, BossTransform.rotation);
+            Phase1Health = CurrBoss.GetComponent<Health>();
+            BossAtk = CurrBoss.GetComponent<BossAtk>();
+        } 
     }
 
     private void Update()
     {
-        if (Phase1Health.isDead && CurrPhase == 1)
-            photonView.RPC("NextPhase",RpcTarget.All, null);
+        if(PhotonNetwork.IsMasterClient)
+            if (Phase1Health.isDead && CurrPhase == 1)
+                photonView.RPC("NextPhase",RpcTarget.All, null);
     }
 
     [PunRPC]
     void NextPhase()
     {
         CurrPhase++;
+        _weaponController.Owner = gameObject;
+        Impact();
+        _weaponController.HandleShootInputs(false, true);
         StartCoroutine(ChangePhase());
     }
 
     IEnumerator ChangePhase()
     {
-        CurrBoss.SetActive(false);
-        _weaponController.Owner = gameObject;
-        Impact();
-        _weaponController.HandleShootInputs(false, true);
-        yield return new WaitForSeconds(0.5f); // ADD EFFECT
-        var newBoss = PhotonNetwork.Instantiate(Phase2.name, BossTransform.position, BossTransform.rotation);
-        BossAtk = newBoss.GetComponent<BossAtk>();
-        StartCoroutine(BossAtk.Taunt());
+        if (PhotonNetwork.IsMasterClient)
+        {
+            CurrBoss.SetActive(false);
+            PhotonNetwork.Destroy(CurrBoss);
+            yield return new WaitForSeconds(0.5f);
+            var newBoss = PhotonNetwork.Instantiate(Phase2.name, BossTransform.position, BossTransform.rotation);
+            BossAtk = newBoss.GetComponent<BossAtk>();
+            BossAtk.setAni3();
+            StartCoroutine(BossAtk.Taunt());
+        }
     }
 
     private void Impact()

@@ -21,36 +21,42 @@ public class BossAtk : EnemyAtk
     protected override void Awake()
     {
         base.Awake();
+        
         NavMeshAgent = GetComponent<NavMeshAgent>();    
         health = GetComponent<Health>();
         NavMeshAgent.isStopped = true;
     }
     void Start()
     {
-        m_meleeRadius = 10f;
+        _anim = GetComponentInChildren<Animator>();
+        m_meleeRadius = 20f;
         m_meleeRange = 1f;
         isLook = true;
-        StartCoroutine(Think());
+        if(PhotonNetwork.IsMasterClient)
+            StartCoroutine(Think());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (health.m_health.Value > 0)
+        if (PhotonNetwork.IsMasterClient)
         {
-            m_target = health.m_target;    
-            if(m_target && isLook)
-                transform.LookAt(m_target.transform);
+            if (health.m_health.Value > 0)
+            {
+                m_target = health.m_target;
+                if (m_target && isLook)
+                    transform.LookAt(m_target.transform);
+            }
+            else
+            {
+                StopAllCoroutines();
+            }
         }
-        else
-        {
-            StopAllCoroutines();
-        }
-            
     }
 
     IEnumerator Think()
     {
+        if(!PhotonNetwork.IsMasterClient) yield return null;
         if (m_target)
         {
             yield return new WaitForSeconds(0.1f);
@@ -60,17 +66,17 @@ public class BossAtk : EnemyAtk
                 //missile
                 case 0:
                 case 1:
-                    Debug.Log("Missile");
+                    photonView.RPC("setAni1", RpcTarget.All, null);
                     StartCoroutine(MissileShot());
                     break;
                 //Rock
                 case 2:
                 case 3:
-                    Debug.Log("Rock");
+                    photonView.RPC("setAni2", RpcTarget.All, null);
                     StartCoroutine(RockShot());
                     break;
                 case 4:
-                    Debug.Log("Taunt");
+                    photonView.RPC("setAni3", RpcTarget.All, null);
                     StartCoroutine(Taunt());
                     break;
             }
@@ -84,7 +90,6 @@ public class BossAtk : EnemyAtk
 
     IEnumerator MissileShot()
     {
-        _anim.SetTrigger("doShot");
         yield return new WaitForSeconds(0.2f);
         if (_weaponController != null)
         {
@@ -92,13 +97,13 @@ public class BossAtk : EnemyAtk
             _weaponController.HandleShootInputs(false, true);
         }
         yield return new WaitForSeconds(0.3f);
-        missilePort.localPosition += new Vector3(-3.4f,0,0);
+        photonView.RPC("setMissilePortA", RpcTarget.All, null);
         if (_weaponController != null)
         {
             _weaponController.Owner = gameObject;
             _weaponController.HandleShootInputs(false, true);
         }
-        missilePort.localPosition += new Vector3(3.4f, 0, 0);
+        photonView.RPC("setMissilePortB", RpcTarget.All, null);
         yield return new WaitForSeconds(2.5f);
         StartCoroutine(Think());
     }
@@ -106,7 +111,6 @@ public class BossAtk : EnemyAtk
     IEnumerator RockShot()
     {
         isLook = false;
-        _anim.SetTrigger("doBigShot");
         GameObject I_Rock = PhotonNetwork.Instantiate(Rock.name, RockPort.position, transform.rotation);
         I_Rock.GetComponent<BossRock>().Owner = gameObject;
         yield return new WaitForSeconds(3f);
@@ -115,7 +119,6 @@ public class BossAtk : EnemyAtk
     }
     public IEnumerator Taunt()
     {
-        _anim.SetTrigger("doTaunt");
         yield return new WaitForSeconds(2f);
         MeleeAtk();
         yield return new WaitForSeconds(0.1f);
@@ -131,6 +134,13 @@ public class BossAtk : EnemyAtk
         yield return new WaitForSeconds(0.5f);
         StartCoroutine(Think());
     }
+
+    [PunRPC] public void setAni1() { _anim.SetTrigger("doShot"); }
+    [PunRPC] public void setAni2() { _anim.SetTrigger("doBigShot"); }
+    [PunRPC] public void setAni3() { _anim.SetTrigger("doTaunt"); }
+    [PunRPC] public void setMissilePortA() { missilePort.localPosition += new Vector3(-3.4f, 0, 0); }
+    [PunRPC] public void setMissilePortB() { missilePort.localPosition += new Vector3(3.4f, 0, 0); }
+
 
     public Vector3 GetShotDirectionWithinSpread(Transform shootTransform)
     {

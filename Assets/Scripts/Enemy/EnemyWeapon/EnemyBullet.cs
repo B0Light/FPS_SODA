@@ -24,15 +24,7 @@ public class EnemyBullet : MonoBehaviourPun
     {
         Destroy(gameObject, m_lifeTime);
     }
-    
-    /*
-    protected IEnumerator LifeTime()
-    {
-        yield return new WaitForSeconds(m_lifeTime);
-        Impact();
-        PhotonNetwork.Destroy(gameObject);
-    }
-    */
+
     protected void OnCollisionEnter(Collision collision)
     {
         if (!collision.gameObject.CompareTag("Floor"))

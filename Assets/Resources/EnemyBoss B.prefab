@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 3
-  m_dmg: 100
+  m_dmg: 200
   BulletSpreadAngle: 0
   Rock: {fileID: 697490214047590919, guid: f20e5be9e19a40b4499c4de670782489, type: 3}
   missile: {fileID: -8745310077334913423, guid: 620d96962534d3647a0aa20f2e1cf2d3, type: 3}
@@ -277,11 +277,10 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 2
+  observableSearch: 0
   ObservedComponents:
   - {fileID: 1718957991010925761}
   - {fileID: 255506674420265231}
-  - {fileID: 1718957991010925773}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -397,7 +396,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1718957991060341026}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1013,7 +1012,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5290027653027861442}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
   m_Name: 

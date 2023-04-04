@@ -2260,6 +2260,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7712298623773679410}
     m_Modifications:
+    - target: {fileID: 555188489432107117, guid: 9969472b487d474439ac4d9cc4f00307, type: 3}
+      propertyPath: OverheatGradient.key0.b
+      value: 1.7352214
+      objectReference: {fileID: 0}
+    - target: {fileID: 555188489432107117, guid: 9969472b487d474439ac4d9cc4f00307, type: 3}
+      propertyPath: OverheatGradient.key0.g
+      value: 3.482202
+      objectReference: {fileID: 0}
+    - target: {fileID: 555188489432107117, guid: 9969472b487d474439ac4d9cc4f00307, type: 3}
+      propertyPath: OverheatGradient.key0.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 555188489432107117, guid: 9969472b487d474439ac4d9cc4f00307, type: 3}
+      propertyPath: OverheatGradient.key1.b
+      value: 5.2164745
+      objectReference: {fileID: 0}
+    - target: {fileID: 555188489432107117, guid: 9969472b487d474439ac4d9cc4f00307, type: 3}
+      propertyPath: OverheatGradient.key1.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 555188489432107117, guid: 9969472b487d474439ac4d9cc4f00307, type: 3}
+      propertyPath: OverheatGradient.key1.r
+      value: 0.07406757
+      objectReference: {fileID: 0}
     - target: {fileID: 2225486910712267856, guid: 9969472b487d474439ac4d9cc4f00307, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2320,6 +2344,10 @@ PrefabInstance:
       propertyPath: AimOffset.y
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 8323776800172828795, guid: 9969472b487d474439ac4d9cc4f00307, type: 3}
+      propertyPath: MuzzleFlashPrefab
+      value: 
+      objectReference: {fileID: 1416074664878166, guid: 617f36d624d400a4b835a1309da53fb3, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9969472b487d474439ac4d9cc4f00307, type: 3}
 --- !u!114 &808051973436033114 stripped

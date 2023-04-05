@@ -227,7 +227,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76127d5de8fb4854f8c4be0906419549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Radius: 5
+  Owner: {fileID: 0}
+  Radius: 20
   Root: {fileID: 1957659044971388997}
   m_layerMask:
     serializedVersion: 2
@@ -244,7 +245,7 @@ MonoBehaviour:
   Speed: 15
   GravityDownAcceleration: 15
   TrajectoryCorrectionDistance: -1
-  Damage: 1
+  Damage: 10
 --- !u!114 &-5588718055363799766
 MonoBehaviour:
   m_ObjectHideFlags: 0

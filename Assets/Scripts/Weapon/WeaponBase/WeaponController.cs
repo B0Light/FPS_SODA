@@ -36,7 +36,8 @@ public class WeaponController : MonoBehaviourPun
 
     [Header("Shoot Parameters")]
     public WeaponShootType ShootType;
-    public ProjectileBase ProjectilePrefab;
+    public ProjectileBase[] ProjectilePrefab;
+    public int ProjectileID = 0;
 
 
     public float DelayBetweenShots = 0.5f;
@@ -70,7 +71,7 @@ public class WeaponController : MonoBehaviourPun
     public float AmmoUsageRateWhileCharging = 1f;
 
     [Header("Audio & Visual")]
-    public GameObject MuzzleFlashPrefab;
+    public GameObject[] MuzzleFlashPrefab;
     public bool UnparentMuzzleFlash;
     public AudioClip ShootSfx;
     public AudioClip ChangeWeaponSfx;
@@ -373,15 +374,15 @@ public class WeaponController : MonoBehaviourPun
         for (int i = 0; i < bulletsPerShotFinal; i++)
         {
             Vector3 shotDirection = GetShotDirectionWithinSpread(WeaponMuzzle);
-            ProjectileBase newProjectile = Instantiate(ProjectilePrefab, WeaponMuzzle.position,
+            ProjectileBase newProjectile = Instantiate(ProjectilePrefab[ProjectileID], WeaponMuzzle.position,
                 Quaternion.LookRotation(shotDirection));
             newProjectile.Shoot(this);
         }
 
         // muzzle flash
-        if (MuzzleFlashPrefab != null)
+        if (MuzzleFlashPrefab[ProjectileID] != null)
         {
-            GameObject muzzleFlashInstance = Instantiate(MuzzleFlashPrefab, WeaponMuzzle.position,
+            GameObject muzzleFlashInstance = Instantiate(MuzzleFlashPrefab[ProjectileID], WeaponMuzzle.position,
                 WeaponMuzzle.rotation, WeaponMuzzle.transform);
             // Unparent the muzzleFlashInstance
             if (UnparentMuzzleFlash)

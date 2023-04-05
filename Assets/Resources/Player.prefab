@@ -2127,6 +2127,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1769622034613251270}
     - target: {fileID: 8323776800172828795, guid: 0fcd0f965b3f56b4b904e17f3c4678c6, type: 3}
+      propertyPath: ProjectilePrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 8924682559891268397, guid: bfcdb7adcd222b444973577ade7d9aea, type: 3}
+    - target: {fileID: 8323776800172828795, guid: 0fcd0f965b3f56b4b904e17f3c4678c6, type: 3}
+      propertyPath: MuzzleFlashPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 748781637555137343, guid: 4f5d4e5eaa0e5104791549cea3dc3f23, type: 3}
+    - target: {fileID: 8323776800172828795, guid: 0fcd0f965b3f56b4b904e17f3c4678c6, type: 3}
       propertyPath: CrosshairDataDefault.CrosshairSize
       value: 80
       objectReference: {fileID: 0}
@@ -2227,6 +2235,10 @@ PrefabInstance:
       propertyPath: Owner
       value: 
       objectReference: {fileID: 1769622034613251270}
+    - target: {fileID: 8323776800172828795, guid: a366d5282c7c9d34faf5907f5bcd34fd, type: 3}
+      propertyPath: ProjectilePrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 5542020336735652036, guid: 27ef154eca62de74e8f3a2aae58fbd97, type: 3}
     - target: {fileID: 8323776800172828795, guid: a366d5282c7c9d34faf5907f5bcd34fd, type: 3}
       propertyPath: CrosshairDataDefault.CrosshairColor.a
       value: 0.39215687
@@ -2346,6 +2358,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8323776800172828795, guid: 9969472b487d474439ac4d9cc4f00307, type: 3}
       propertyPath: MuzzleFlashPrefab
+      value: 
+      objectReference: {fileID: 748781637555137343, guid: 9f671b22f25370048a18fb1f821294ec, type: 3}
+    - target: {fileID: 8323776800172828795, guid: 9969472b487d474439ac4d9cc4f00307, type: 3}
+      propertyPath: ProjectilePrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 8924682559891268397, guid: ea8fff52da736ba4a8c0549e74fe632d, type: 3}
+    - target: {fileID: 8323776800172828795, guid: 9969472b487d474439ac4d9cc4f00307, type: 3}
+      propertyPath: ProjectilePrefab.Array.data[1]
+      value: 
+      objectReference: {fileID: 8924682559891268397, guid: 1399b7a8033c24fd9a680ad787951814, type: 3}
+    - target: {fileID: 8323776800172828795, guid: 9969472b487d474439ac4d9cc4f00307, type: 3}
+      propertyPath: MuzzleFlashPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 748781637555137343, guid: 9f671b22f25370048a18fb1f821294ec, type: 3}
+    - target: {fileID: 8323776800172828795, guid: 9969472b487d474439ac4d9cc4f00307, type: 3}
+      propertyPath: MuzzleFlashPrefab.Array.data[1]
       value: 
       objectReference: {fileID: 1416074664878166, guid: 617f36d624d400a4b835a1309da53fb3, type: 3}
     m_RemovedComponents: []

@@ -75,10 +75,10 @@ public class ProjectileStandard : ProjectileBase
         if (Boom)
         {
             RaycastHit[] hits = Physics.SphereCastAll(transform.position,
-                Radius, transform.up, 0f, m_layerMask);
-            foreach (var hit in hits)
+                Radius, Vector3.up, 0f, m_layerMask);
+            foreach (RaycastHit hit in hits)
             {
-                Health blasted = collision.gameObject.GetComponent<Health>();
+                Health blasted = hit.transform.GetComponent<Health>();
                 if (blasted && PhotonNetwork.IsMasterClient)
                     blasted.TakeDamage(Damage, m_ProjectileBase.Owner);
             }

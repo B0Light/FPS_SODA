@@ -419,4 +419,15 @@ public class WeaponController : MonoBehaviourPun
 
         return spreadWorldDirection;
     }
+
+    [PunRPC]
+    public void Upgrade()
+    {
+        if (ProjectilePrefab[ProjectileID+1] != null)
+        {
+            ProjectileID++;
+            m_PhotonView.RPC("Upgrade", RpcTarget.OthersBuffered, null);
+        }
+            
+    }
 }

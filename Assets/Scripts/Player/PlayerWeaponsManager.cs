@@ -280,7 +280,7 @@ public class PlayerWeaponsManager : MonoBehaviourPun
     {
         photonView.RPC("AddWeapon", RpcTarget.OthersBuffered, WeaponId);
         ActiveWeaponLV[WeaponId]++;
-
+        if (ActiveWeaponLV[WeaponId] > 2) m_WeaponSlots[WeaponId].Upgrade();
         if (GetActiveWeapon() == null)
         {
             ActiveWeaponIndex = WeaponId;

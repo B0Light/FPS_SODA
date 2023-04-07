@@ -52,7 +52,7 @@ MonoBehaviour:
   Root: {fileID: 3659995153115176982}
   m_layerMask:
     serializedVersion: 2
-    m_Bits: 52791
+    m_Bits: 512
   Boom: 0
   MaxLifeTime: 5
   ImpactVfx: {fileID: 1270034117851066, guid: e46e60dfd73d7ed4fa8a4ef323af2e69, type: 3}
@@ -61,7 +61,7 @@ MonoBehaviour:
   ImpactSfxClip: {fileID: 0}
   HittableLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 512
   Speed: 100
   GravityDownAcceleration: 0
   TrajectoryCorrectionDistance: -1

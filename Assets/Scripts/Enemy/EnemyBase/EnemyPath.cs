@@ -103,16 +103,14 @@ public class EnemyPath : MonoBehaviour
 
         if (cols.Length > 0)
         {
-            // 시야내에 적이 있는 경우
             Transform playerPos = cols[0].transform;
 
-            if(m_target == null) // idle 상태에서 적을 처음 발견
-                AttackNavSetting(); // 현재 움직이는 상태를 멈춤
+            if(m_target == null) 
+                AttackNavSetting(); 
             SetTarget(playerPos);
         }
         else
         {
-            // 자신이 피해를 받지 않고 시야에 적이 없는 경우
             if(_enemyController.m_target == null)
                 RemoveTarget();
         }

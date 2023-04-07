@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviourPun
 
     private void JumpAndGravity()
     {
-        if (Grounded) // 착지상태 
+        if (Grounded) // ???????? 
         {
             _fallTimeoutDelta = FallTimeout;
 
@@ -206,7 +206,7 @@ public class PlayerController : MonoBehaviourPun
                 _jumpTimeoutDelta -= Time.deltaTime;
             }
         }
-        else // 점프 중
+        else
         {
             _jumpTimeoutDelta = JumpTimeout;
 
@@ -259,14 +259,14 @@ public class PlayerController : MonoBehaviourPun
         this.gameObject.SetActive(false);
     }
     
-    private static float ClampAngle(float lfAngle, float lfMin, float lfMax) // 카메라 회전시 360도 안으로 유지
+    private static float ClampAngle(float lfAngle, float lfMin, float lfMax) // ?????? ?????? 360?? ?????? ????
     {
         if (lfAngle < -360f) lfAngle += 360f;
         if (lfAngle > 360f) lfAngle -= 360f;
         return Mathf.Clamp(lfAngle, lfMin, lfMax);
     }
 
-    private void OnDrawGizmosSelected() // 착지를 위한 구체 시각화 
+    private void OnDrawGizmosSelected() // ?????? ???? ???? ?????? 
     {
         Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
         Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);

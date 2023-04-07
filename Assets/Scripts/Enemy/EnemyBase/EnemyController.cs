@@ -77,6 +77,8 @@ public class EnemyController : MonoBehaviourPun
     {
         m_isDead = true;
         _anim.SetTrigger("doDie");
+        int rewardIdx = Random.Range(0,rewards.Length);
+        GameObject reward = PhotonNetwork.Instantiate(rewards[rewardIdx].name, transform.position, Quaternion.identity);
         if(gameObject.tag != "Boss")
             Destroy(gameObject, 3f);
     }

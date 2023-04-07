@@ -1,24 +1,57 @@
 ﻿<Properties StartupConfiguration="{D8C436A7-D429-85DA-4E22-9EB42A7802DA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Weapon/Projectile_Base/ProjectileStandard.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/item/WeaponSpawner.cs">
     <Files>
-      <File FileName="Assets/Scripts/Weapon/Projectile_Base/ProjectileStandard.cs" Line="79" Column="45" />
+      <File FileName="Assets/Scripts/Player/PlayerController.cs" Line="160" Column="92" IsPinned="True" />
+      <File FileName="Assets/Scripts/item/Pickup.cs" IsPinned="True" />
+      <File FileName="Assets/Scripts/item/ItemPickup.cs" IsPinned="True" />
+      <File FileName="Assets/Scripts/item/WeaponPickup.cs" IsPinned="True" />
+      <File FileName="Assets/Scripts/Weapon/Projectile_Base/ProjectileStandard.cs" />
       <File FileName="Assets/Scripts/Enemy/TBM/MissileLauncher.cs" />
-      <File FileName="Assets/Scripts/item/WeaponPickup.cs" />
-      <File FileName="Assets/Scripts/item/Pickup.cs" />
       <File FileName="Assets/Scripts/Manager/LobbyManager.cs" />
-      <File FileName="Assets/Scripts/Player/PlayerController.cs" />
       <File FileName="Assets/Scripts/Weapon/WeaponBase/WeaponController.cs" />
       <File FileName="Assets/Scripts/Player/PlayerWeaponsManager.cs" />
       <File FileName="Assets/Scripts/Actor/Health.cs" />
-      <File FileName="Assets/Scripts/Manager/GameManager.cs" />
       <File FileName="Assets/Scripts/Enemy/WorldspaceHealthBar.cs" />
       <File FileName="Assets/Scripts/Enemy/EnemyBase/EnemyAtk.cs" />
       <File FileName="Assets/Scripts/Player/PlayerHealthBar.cs" />
+      <File FileName="Assets/Scripts/Player/PlayerInventory.cs" />
+      <File FileName="Assets/Scripts/Enemy/EnemyBase/EnemyPath.cs" />
+      <File FileName="Assets/Scripts/Manager/GameManager.cs" />
+      <File FileName="Assets/Scripts/Enemy/EnemyBase/EnemyController.cs" />
+      <File FileName="Assets/Scripts/item/WeaponSpawner.cs" Line="20" Column="30" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="FPS_SODA" expanded="True">
+            <Node name="Assets" expanded="True" selected="True">
+              <Node name="Photon" expanded="True">
+                <Node name="PhotonUnityNetworking" expanded="True">
+                  <Node name="Code" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="Scripts" expanded="True">
+                <Node name="Enemy" expanded="True">
+                  <Node name="EnemyBase" expanded="True" />
+                  <Node name="TBM" expanded="True" />
+                </Node>
+                <Node name="item" expanded="True" />
+                <Node name="Manager" expanded="True" />
+                <Node name="Player" expanded="True" />
+                <Node name="Weapon" expanded="True">
+                  <Node name="Projectile_Base" expanded="True" />
+                  <Node name="WeaponBase" expanded="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="b287b9e5-4d78-461f-ba25-8f1087a304ff" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bf544b5c-5a3c-41e2-9778-ad3c7a43efcb" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

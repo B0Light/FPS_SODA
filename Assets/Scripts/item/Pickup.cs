@@ -74,6 +74,7 @@ public class Pickup : MonoBehaviourPun
     [PunRPC]
     public void destroyThisObj()
     {
-        Destroy(gameObject);
+        this.gameObject.SetActive(false);
+        Destroy(this.gameObject);
     }
 }

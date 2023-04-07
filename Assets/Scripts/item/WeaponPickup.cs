@@ -24,8 +24,8 @@ using Photon.Pun;
             Debug.Log("PICKUP : " + byPlayer.photonView.ViewID);
             if (playerWeaponsManager.AddWeapon(ItemId))
             {
-                PhotonNetwork.Destroy(this.gameObject);
                 PlayPickupFeedback();
+                photonView.RPC("destroyThisObj", RpcTarget.All, null);
             }
         }
     }

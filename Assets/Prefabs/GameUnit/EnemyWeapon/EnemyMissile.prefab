@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2668028849840243437}
   - component: {fileID: 9168168181227578906}
   - component: {fileID: 6052105682162940213}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4819,6 +4819,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1951504942688083938, guid: 45fafb1d61153494cb85310f993aa5ca, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 6374380065770891322, guid: 45fafb1d61153494cb85310f993aa5ca, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
@@ -4883,6 +4887,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyMissile
       objectReference: {fileID: 0}
+    - target: {fileID: 8687621084049323187, guid: 45fafb1d61153494cb85310f993aa5ca, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45fafb1d61153494cb85310f993aa5ca, type: 3}
 --- !u!4 &8135305506771993914 stripped
@@ -4907,7 +4915,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -4936,11 +4944,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76127d5de8fb4854f8c4be0906419549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Owner: {fileID: 0}
   Radius: 0.01
   Root: {fileID: 8135305506771993914}
   m_layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   Boom: 0
   MaxLifeTime: 5
   ImpactVfx: {fileID: 8142776624367745201, guid: be16a2ead503d12418c1f228fcee2f7c, type: 3}
@@ -4949,8 +4958,8 @@ MonoBehaviour:
   ImpactSfxClip: {fileID: 0}
   HittableLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
-  Speed: 20
+    m_Bits: 512
+  Speed: 50
   GravityDownAcceleration: 0
   TrajectoryCorrectionDistance: -1
   Damage: 40

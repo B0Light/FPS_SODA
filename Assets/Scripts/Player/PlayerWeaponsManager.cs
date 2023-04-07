@@ -278,17 +278,22 @@ public class PlayerWeaponsManager : MonoBehaviourPun
     [PunRPC]
     public bool AddWeapon(int WeaponId)
     {
+        if (WeaponId < 0) return false;
+        if (m_WeaponSlots[WeaponId] == null) return false;
         photonView.RPC("AddWeapon", RpcTarget.OthersBuffered, WeaponId);
         ActiveWeaponLV[WeaponId]++;
-        if (ActiveWeaponLV[WeaponId] > 2) m_WeaponSlots[WeaponId].Upgrade();
+
+        if (ActiveWeaponLV[WeaponId] > 2)
+            m_WeaponSlots[WeaponId].Upgrade();
+            
+        
         if (GetActiveWeapon() == null)
         {
             ActiveWeaponIndex = WeaponId;
             OnSwitchedToWeapon.Invoke(ActiveWeaponIndex);
             //SetAcitveWeapon(ActiveWeaponIndex);
         }
-
-        return false;
+        return true;
     }
 
     public WeaponController GetActiveWeapon()

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class WeaponSpawner : MonoBehaviour
 {
@@ -43,14 +44,13 @@ public class WeaponSpawner : MonoBehaviour
         }
         else if(GetCoin >= Price)
         {
-            GameObject player = other.gameObject;
             GetCoin -= Price;
-            Spawning(player);
+            Spawning();
         }
     }
 
-    public void Spawning(GameObject player)
+    public void Spawning()
     {
-        PhotonNetwork.Instantiate(SpawnItem[SpawnID].name, player.transform.forward, Quaternion.identity);
+        PhotonNetwork.Instantiate(SpawnItem[SpawnID].name, spawnPos.position, Quaternion.identity); ;
     }
 }

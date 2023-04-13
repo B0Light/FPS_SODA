@@ -2222,6 +2222,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1769622034613251270}
     - target: {fileID: 5360981464786926380, guid: 541891af4c3dc461a879197caf9ac66e, type: 3}
+      propertyPath: AimOffset.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5360981464786926380, guid: 541891af4c3dc461a879197caf9ac66e, type: 3}
       propertyPath: ProjectilePrefab.Array.data[0]
       value: 
       objectReference: {fileID: 8924682559891268397, guid: ea8fff52da736ba4a8c0549e74fe632d, type: 3}

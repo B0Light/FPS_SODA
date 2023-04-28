@@ -546,7 +546,8 @@ MonoBehaviour:
   MaxChargeDuration: 2
   AmmoUsedOnStartCharge: 1
   AmmoUsageRateWhileCharging: 1
-  MuzzleFlashPrefab: {fileID: 0}
+  MuzzleFlashPrefab:
+  - {fileID: 0}
   UnparentMuzzleFlash: 0
   ShootSfx: {fileID: 0}
   ChangeWeaponSfx: {fileID: 0}

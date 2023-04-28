@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] PlayerHealthBar PlayerHealthBar;
     public bool isGameover { get; private set; }
 
+    [Header("ScoreBoard")]
+    public int score = 0;
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
 
@@ -76,5 +79,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("LobbyScene");
+    }
+
+    public void JoinPlayer()
+    {
+
     }
 }

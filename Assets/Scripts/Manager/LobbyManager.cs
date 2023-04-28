@@ -85,7 +85,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 접속 상태 표시
         connectionInfoText.text = "No empty rooms, create new rooms...";
         RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = 20;
+        roomOptions.MaxPlayers = 6;
         roomOptions.IsOpen = true;
         roomOptions.IsVisible = true;
         PhotonNetwork.CreateRoom("NEW GAME", roomOptions);

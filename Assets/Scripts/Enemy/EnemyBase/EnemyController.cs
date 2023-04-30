@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviourPun
     EnemyAtk _enemyAtk;
 
     [Header("Targeting")]
-    public Transform m_target = null;
+    public GameObject m_target = null;
     public EnemyPath _path;
     public Animator _anim;
     public float m_rotationSpeed = 1.0f;
@@ -41,8 +41,8 @@ public class EnemyController : MonoBehaviourPun
         //target
         if (_health.m_target)
         {
-            m_target = _health.m_target.transform;
-            _path.SetTarget(m_target);
+            m_target = _health.m_target;
+            _path.SetTarget(m_target.transform);
         }
         else
         {
@@ -77,10 +77,13 @@ public class EnemyController : MonoBehaviourPun
     {
         m_isDead = true;
         _anim.SetTrigger("doDie");
-        int rewardIdx = Random.Range(0,rewards.Length);
-        GameObject reward = PhotonNetwork.Instantiate(rewards[rewardIdx].name, transform.position, Quaternion.identity);
-        if(gameObject.tag != "Boss")
-            Destroy(gameObject, 3f);
+        if(rewards.Length > 0)
+        {
+            int rewardIdx = Random.Range(0, rewards.Length);
+            GameObject reward = PhotonNetwork.Instantiate(rewards[rewardIdx].name, transform.position, Quaternion.identity);
+            if (gameObject.tag != "Boss")
+                Destroy(gameObject, 3f);
+        }
     }
 
     IEnumerator DestroyAfter(GameObject target, float delay)

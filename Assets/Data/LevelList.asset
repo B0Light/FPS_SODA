@@ -24,7 +24,7 @@ MonoBehaviour:
   - id: 2
     name: PVP
     description: GameScene1
-    sceneName: Level1
+    sceneName: LobbyScene
   - id: 3
     name: ComingSoon
     description: ComingSoon

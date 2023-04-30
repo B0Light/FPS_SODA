@@ -34,6 +34,9 @@ public class PlayerController : MonoBehaviourPun
     public float GroundedRadius = 0.5f;
     public LayerMask GroundLayers;
 
+    [Header("Score")]
+    public int score = 0;
+
     [Header("Cinemachine")]
     private float _cinemachineTargetPitch;
     public GameObject CinemachineCameraTarget;

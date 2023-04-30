@@ -3,6 +3,7 @@ using Photon.Realtime;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using System;
 
 [RequireComponent(typeof(PhotonView))]
 public class Health : MonoBehaviourPun, IPunObservable
@@ -123,7 +124,15 @@ public class Health : MonoBehaviourPun, IPunObservable
                 isDead = true;
                 if (playerController != null)
                 {
-                   
+                    
+                    GameManager gameManager = FindObjectOfType<GameManager>();
+                    Tuple<string, int> value;
+                    if (gameManager.killScore.TryGetValue(photonView.OwnerActorNr, out value))
+                    {
+                        int currSco = value.Item2;
+                        gameManager.killScore.Remove(photonView.OwnerActorNr); 
+                        gameManager.killScore.Add(photonView.OwnerActorNr, Tuple.Create(value.Item1, currSco - 1));
+                    }
                     playerController.Die();
                 }
                 else if (enemyController != null)

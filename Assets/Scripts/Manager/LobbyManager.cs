@@ -12,7 +12,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public Text connectionInfoText; // 네트워크 정보를 표시할 텍스트
     public TMP_Text idText;
     public Button joinButton; // 룸 접속 버튼
-
+    public GameObject joinObj;
+    public Button startButton;
+    public GameObject startObj;
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -22,8 +24,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.ConnectUsingSettings(); // 설정한 정보를 가지고 마스터 서버 접속 시도
 
-        // 룸 접속 버튼을 잠시 비활성화
+        // 룸 접속 버튼을 비활성화
+        joinObj.SetActive(false);
+        startObj.SetActive(false);
         joinButton.interactable = false;
+        startButton.interactable = false;
         // 접속을 시도 중임을 텍스트로 표시
         connectionInfoText.text = "Connecting to master server...";
     }
@@ -39,6 +44,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         else
         {
             joinButton.interactable = false;
+            joinObj.SetActive(false);
+            startObj.SetActive(false);
             PhotonNetwork.LocalPlayer.NickName = idText.text;
             // 마스터 서버에 접속중이라면
             if (PhotonNetwork.IsConnected)
@@ -62,6 +69,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         // 룸 접속 버튼을 활성화
         joinButton.interactable = true;
+        joinObj.SetActive(true);
+        startObj.SetActive(false);
         // 접속 정보 표시
         connectionInfoText.text = "Online: Connected with Master Server";
     }
@@ -104,7 +113,31 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         Debug.Log($"PlayerCount : {PhotonNetwork.CurrentRoom.PlayerCount}");
         // 접속 상태 표시
         connectionInfoText.text = "room join success";
+        
+        if(PhotonNetwork.IsMasterClient)
+        {
+            connectionInfoText.text = ($"PlayerCount : {PhotonNetwork.CurrentRoom.PlayerCount}");
+            joinObj.SetActive(false);
+            startObj.SetActive(true);
+            joinButton.interactable = false;
+            startButton.interactable = true;
+        }
+        else
+        {
+            photonView.RPC("UpdateInfoText", RpcTarget.MasterClient);
+        }
+        
+    }
+
+    public void StartGame()
+    {
         // 모든 룸 참가자들이 Main 씬을 로드하게 함
         PhotonNetwork.LoadLevel("NewProject");
+    }
+
+    [PunRPC]
+    public void UpdateInfoText()
+    {
+        connectionInfoText.text = ($"PlayerCount : {PhotonNetwork.CurrentRoom.PlayerCount}");
     }
 }

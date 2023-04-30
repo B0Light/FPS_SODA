@@ -3037,6 +3037,7 @@ MonoBehaviour:
   crosshairManager: {fileID: 460208131}
   compass: {fileID: 4802011617120744994}
   PlayerHealthBar: {fileID: 27358514}
+  score: 0
 --- !u!4 &1097743228
 Transform:
   m_ObjectHideFlags: 0

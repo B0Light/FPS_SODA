@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1349
   m_ShowMode: 4
-  m_Title: "\uACC4\uCE35 \uAD6C\uC870"
+  m_Title: "\uC778\uC2A4\uD399\uD130"
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 21834
+  controlID: 144
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 21840
+  controlID: 31
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 21846
+  controlID: 54
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -243,8 +243,8 @@ MonoBehaviour:
     y: 0
     width: 783
     height: 669
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -295,8 +295,8 @@ MonoBehaviour:
     y: 0
     width: 727
     height: 1299
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -522,14 +522,14 @@ MonoBehaviour:
   m_OverrideSceneCullingMask: 6917529027641081856
   m_SceneIsLit: 1
   m_SceneLighting: 1
-  m_2DMode: 0
+  m_2DMode: 1
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 297.68454, y: 176.37692, z: -390.42624}
+    m_Target: {x: 960, y: 540, z: 0}
     speed: 2
-    m_Value: {x: 297.68454, y: 176.37692, z: -390.42624}
+    m_Value: {x: 960, y: 540, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -576,17 +576,17 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.2973761, y: 0.07892626, z: -0.024665875, w: -0.95122784}
+    m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: -0.2973232, y: 0.08034881, z: -0.025110597, w: -0.9510586}
+    m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 12.124355
+    m_Target: 10
     speed: 2
-    m_Value: 12.124354
+    m_Value: 10
   m_Ortho:
-    m_Target: 0
+    m_Target: 1
     speed: 2
-    m_Value: 0
+    m_Value: 1
   m_CameraSettings:
     m_Speed: 1
     m_SpeedNormalized: 0.5
@@ -600,11 +600,11 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: 0.26134264, y: -0.73768824, z: 0.46195978, w: 0.4172729}
+  m_LastSceneViewRotation: {x: 0.35490867, y: -0.53418803, z: 0.2630004, w: 0.7208679}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
-  m_SceneVisActive: 1
+  m_SceneVisActive: 0
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
 --- !u!114 &14
@@ -794,9 +794,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 3848eeff
-      m_LastClickedID: -1161160
-      m_ExpandedIDs: 04e1f2ffc880f4ff58acf4ffa2c0f4ff5605f7ffd265f8ff7668f8ff4876f8ffa082f8ff048ff8ff4496f8ff5638faff9e5dfaffb0bffbffb6c2fbff009103001291030048930300c4470400d64704000c4a0400e8590400fa590400305c0400
+      m_SelectedIDs: dcd90c00
+      m_LastClickedID: 842204
+      m_ExpandedIDs: a22fd4ff5690d5ff5491d5ff1094d5ffdef9d6ffaefad6ffcefcd6ff0262d8ff7468d8ffd4dbd9ff5affd9ff0601daffb664dbff427bdbffa2dfdcffea3fdeff3841deff1e48dfff827ddfff5214e0ffd214e0ff5015e0ffd015e0ff5016e0ff4206e1ff6868e1ff2c6ae1ff2c1ee4ff9a08f2ff06fbfffff4ffffff9ec502005456030012e8030074eb03008cf406007cf50600b4f60600e8f60600180b0700dae709002ce80900425a0b00fcd70c0014d90c00cad90c00
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -861,22 +861,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/SimpleNaturePack/Prefabs
+    - Assets/Scenes
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/SimpleNaturePack/Prefabs
+  - Assets/Scenes
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\User\Documents\GitHub\FPS_SODA
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 30280500
-    m_LastClickedID: 337968
-    m_ExpandedIDs: 0000000010c40200081a0500921a0500d41a05001628050000ca9a3b
+    m_SelectedIDs: cc280200
+    m_LastClickedID: 141516
+    m_ExpandedIDs: 000000009e260200a0260200a2260200a4260200bc2e0200d82e020000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -904,7 +904,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000010c40200081a0500921a0500d41a050000ca9a3b
+    m_ExpandedIDs: 000000009e260200a0260200a2260200a4260200
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

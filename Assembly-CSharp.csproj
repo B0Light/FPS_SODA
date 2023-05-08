@@ -67,6 +67,7 @@
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChannelSelector.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyBose\BossRock.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
+    <Compile Include="Assets\Scripts\Manager\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyWeapon\EnemyBullet.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Assets\Scripts\Manager\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Actor\Actor.cs" />
     <Compile Include="Assets\Scripts\item\WeaponPickup.cs" />
+    <Compile Include="Assets\Scripts\Manager\Timer.cs" />
     <Compile Include="Assets\Scripts\Manager\LobbyManager.cs" />
     <Compile Include="Assets\Assets\BOXOPHOBIC\Utils\Scripts\StyledMono\StyledMonoBehaviour.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
@@ -185,24 +187,28 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
     <Compile Include="Assets\Scripts\UI\CompassMarker.cs" />
-    <Compile Include="Assets\Scripts\Manager\Timer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.xml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\Assets\Toon Fantasy Nature\ToonShading\Shaders\TFF_ToonWater.shader" />
     <None Include="Assets\Photon\PhotonUnityNetworking\changelog.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\Hovl Studio\Render Pipelines support\Shaders\URP_LightGlow.shader" />
+    <None Include="Assets\Assets\Toon Fantasy Nature\ToonShading\Shaders\TFF_ToonFire.shader" />
+    <None Include="Assets\Assets\Toon Fantasy Nature\ToonShading\Shaders\TFF_CustomToonOutline.shader" />
     <None Include="Assets\Hovl Studio\Toon Projectiles 2\Demo scene\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\Assets\Resources_Effect_Projectiles\Shaders\DissolveNoise.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\Photon\PhotonLibs\WebSocket\websocket-sharp.dll" />
+    <None Include="Assets\Assets\Toon Fantasy Nature\ToonShading\Shaders\TFF_Board_Cutout.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\Assets\Resources_Effect_Projectiles\Shaders\Distortion.shader" />
     <None Include="Assets\Assets\Resources_Effect_Projectiles\Shaders\Blend_TwoSides.shader" />
     <None Include="Assets\Assets\Resources_Effect_Projectiles\Shaders\Blend_CenterGlow.shader" />
+    <None Include="Assets\Assets\Toon Fantasy Nature\Documentation\Usage Guidelines.txt" />
     <None Include="Assets\Hovl Studio\Render Pipelines support\Documentation.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
@@ -223,7 +229,9 @@
     <None Include="Assets\UI pack\Documentation.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\Photon\PhotonLibs\Metro\Photon3Unity3D.dll" />
+    <None Include="Assets\Assets\Toon Fantasy Nature\ToonShading\Shaders\TFF_CustomToonVegetation.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\Assets\Toon Fantasy Nature\ToonShading\Shaders\TFF_CustomToon.shader" />
     <None Include="Assets\Shader\Skybox Cubemap Extended.shader" />
     <None Include="Assets\Photon\PhotonLibs\Photon3Unity3D.xml" />
     <None Include="Assets\Assets\Resources_Effect_Projectiles\Shaders\Add_CenterGlow.shader" />
@@ -233,6 +241,8 @@
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\Photon\PhotonUnityNetworking\link.xml" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\Assets\Toon Fantasy Nature\ToonShading\Shaders\TFF_CustomGrass.shader" />
+    <None Include="Assets\Assets\Toon Fantasy Nature\Documentation\URP_Instructions.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
   </ItemGroup>
   <ItemGroup>

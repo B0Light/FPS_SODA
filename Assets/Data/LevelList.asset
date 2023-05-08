@@ -16,7 +16,7 @@ MonoBehaviour:
   - id: 0
     name: Tutorial
     description: Training Ground
-    sceneName: NewProject
+    sceneName: LobbyScene
   - id: 1
     name: Story
     description: Protect Town
@@ -24,7 +24,7 @@ MonoBehaviour:
   - id: 2
     name: PVP
     description: GameScene1
-    sceneName: LobbyScene
+    sceneName: GameLobby
   - id: 3
     name: ComingSoon
     description: ComingSoon

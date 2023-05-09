@@ -62,6 +62,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6804866499668253161}
   - {fileID: 7712298623644368063}
   m_Father: {fileID: 479802776259598064}
   m_RootOrder: 1
@@ -112,7 +113,7 @@ Transform:
   m_Children:
   - {fileID: 6051423529535709778}
   m_Father: {fileID: 441575718582894949}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832379471123088695
 GameObject:
@@ -402,7 +403,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 4
   m_Radius: 1
-  m_SlopeLimit: 45
+  m_SlopeLimit: 60
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
@@ -1131,7 +1132,7 @@ Transform:
   m_Children:
   - {fileID: 1275793228900679252}
   m_Father: {fileID: 441575718582894949}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6741568249874574624
 GameObject:
@@ -1270,14 +1271,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7253003793120644354}
-  m_LocalRotation: {x: 0.000000062989756, y: 0.000000007450581, z: -4.440892e-16, w: 1}
-  m_LocalPosition: {x: -1.5265567e-16, y: 1.2050134, z: 0}
+  m_LocalRotation: {x: 0.00000008940697, y: 0.0977628, z: -0.000000014901161, w: 0.9952098}
+  m_LocalPosition: {x: 0, y: -0.83200717, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2913787612281638234}
-  m_Father: {fileID: 441575718582894949}
-  m_RootOrder: 1
+  m_Father: {fileID: 240716459332630191}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7450051085414228850
 GameObject:
@@ -1459,7 +1460,7 @@ Transform:
   - {fileID: 7712298623440295914}
   - {fileID: 7712298623773679410}
   m_Father: {fileID: 240716459332630191}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7712298623773679409
 GameObject:
@@ -1985,7 +1986,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7819625334471486553}
-  - {fileID: 6804866499668253161}
   - {fileID: 6697476609584294661}
   - {fileID: 183923923458913890}
   m_Father: {fileID: 3519621720944474428}

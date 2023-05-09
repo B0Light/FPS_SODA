@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using Photon.Realtime;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     private static GameManager m_instance; 
 
     public GameObject playerPrefab;
+    private GameObject player;
     [SerializeField] Transform playerSpawnTransform;
     public CinemachineVirtualCamera PlayerSightCam;
 
@@ -34,7 +36,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] Compass compass;
     [SerializeField] PlayerHealthBar PlayerHealthBar;
     public bool isGameover { get; private set; }
-    
+
+    [Header("Respawn")]
+    public Transform[] respawnPos;
 
     [Header("ScoreBoard")]
     public int score = 0;
@@ -99,14 +103,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, playerSpawnTransform.position, playerSpawnTransform.rotation);
-        player.GetComponent<PlayerController>().VirtualCamera = PlayerSightCam;
-        compass.playerController = player.GetComponent<PlayerController>();
-        compass.setPlayer();
-        crosshairManager.m_WeaponsManager = player.GetComponent<PlayerWeaponsManager>();
-        crosshairManager.setPlayer();
-        PlayerHealthBar.m_playerController = player.GetComponent<PlayerController>();
-        PlayerHealthBar.m_PlayerHealth = player.GetComponent<Health>();
+        CreatPlayer();
 
         foreach (Player photonPlayer in PhotonNetwork.PlayerList)
         {
@@ -133,9 +130,25 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             ranking_Health[idx].fillAmount = (float)kvp.Value.Item2 / 20;
             ranking_Text[idx++].text = kvp.Value.Item1 + " : " + kvp.Value.Item2.ToString();
-
         }
         
+    }
+
+    public void RespawnPlayer()
+    {
+        Invoke("CreatPlayer", 5f);
+    }
+
+    public void CreatPlayer()
+    {
+        player = PhotonNetwork.Instantiate(playerPrefab.name, respawnPos[UnityEngine.Random.Range(0, respawnPos.Length)].position, respawnPos[UnityEngine.Random.Range(0, respawnPos.Length)].rotation);
+        player.GetComponent<PlayerController>().VirtualCamera = PlayerSightCam;
+        compass.playerController = player.GetComponent<PlayerController>();
+        compass.setPlayer();
+        crosshairManager.m_WeaponsManager = player.GetComponent<PlayerWeaponsManager>();
+        crosshairManager.setPlayer();
+        PlayerHealthBar.m_playerController = player.GetComponent<PlayerController>();
+        PlayerHealthBar.m_PlayerHealth = player.GetComponent<Health>();
     }
 
     public override void OnLeftRoom()

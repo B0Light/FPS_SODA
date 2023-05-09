@@ -97,7 +97,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         roomOptions.MaxPlayers = 6;
         roomOptions.IsOpen = true;
         roomOptions.IsVisible = true;
-        PhotonNetwork.CreateRoom("NEW GAME", roomOptions);
+        PhotonNetwork.CreateRoom("Tutorial", roomOptions);
     }
 
     public override void OnCreatedRoom()

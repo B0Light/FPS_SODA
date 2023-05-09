@@ -24,7 +24,8 @@ public class BossAtk : EnemyAtk
         
         NavMeshAgent = GetComponent<NavMeshAgent>();    
         health = GetComponent<Health>();
-        NavMeshAgent.isStopped = true;
+        if(NavMeshAgent != null)
+            NavMeshAgent.isStopped = true;
     }
     void Start()
     {

@@ -253,7 +253,8 @@ public class PlayerController : MonoBehaviourPun
         _WeaponsManager.WeaponParentSocket.gameObject.SetActive(false);
         photonView.RPC("Die", RpcTarget.Others, null);
         _animator.SetTrigger("doDie");
-        StartCoroutine(DieFPX()); 
+        StartCoroutine(DieFPX());
+        PhotonNetwork.Destroy(gameObject);
     }
 
     IEnumerator DieFPX()
@@ -262,14 +263,14 @@ public class PlayerController : MonoBehaviourPun
         this.gameObject.SetActive(false);
     }
     
-    private static float ClampAngle(float lfAngle, float lfMin, float lfMax) // ?????? ?????? 360?? ?????? ????
+    private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
     {
         if (lfAngle < -360f) lfAngle += 360f;
         if (lfAngle > 360f) lfAngle -= 360f;
         return Mathf.Clamp(lfAngle, lfMin, lfMax);
     }
 
-    private void OnDrawGizmosSelected() // ?????? ???? ???? ?????? 
+    private void OnDrawGizmosSelected() 
     {
         Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
         Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);

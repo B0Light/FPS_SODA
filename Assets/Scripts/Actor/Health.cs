@@ -127,13 +127,18 @@ public class Health : MonoBehaviourPun, IPunObservable
                     
                     GameManager gameManager = FindObjectOfType<GameManager>();
                     Tuple<string, int> value;
+                    int currSco = 0;
                     if (gameManager.killScore.TryGetValue(photonView.OwnerActorNr, out value))
                     {
-                        int currSco = value.Item2;
+                        currSco = value.Item2;
                         gameManager.killScore.Remove(photonView.OwnerActorNr); 
                         gameManager.killScore.Add(photonView.OwnerActorNr, Tuple.Create(value.Item1, currSco - 1));
                     }
                     playerController.Die();
+                    if(currSco > 0)
+                    {
+                        gameManager.RespawnPlayer();
+                    }
                 }
                 else if (enemyController != null)
                 {

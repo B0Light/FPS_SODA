@@ -9,6 +9,7 @@ using TMPro;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    private string gameVersion = "1";
     [Header("DisconnectPanel")]
     public TMP_InputField NickNameInput;
 
@@ -27,6 +28,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public TMP_Text RoomInfoText;
     public TMP_Text[] ChatText;
     public TMP_InputField ChatInput;
+    public GameObject StartObj;
 
     [Header("ETC")]
     public TMP_Text StatusText;
@@ -83,7 +85,19 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
 
     #region 서버연결
-    void Awake() => Screen.SetResolution(960, 540, false);
+    void Awake()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.GameVersion = gameVersion;        // 접속에 필요한 정보(게임 버전) 설정
+        Debug.Log(PhotonNetwork.SendRate);
+    }
+
+
+    private void Start()
+    {
+        LobbyPanel.SetActive(false);
+        RoomPanel.SetActive(false);
+    }
 
     void Update()
     {
@@ -127,6 +141,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         RoomRenewal();
         ChatInput.text = "";
         for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
+
+        if (PhotonNetwork.IsMasterClient)
+        { 
+            StartObj.SetActive(true);
+        }
+        else
+        {
+            StartObj.SetActive(false);
+        }
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); }
@@ -180,4 +203,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
     #endregion
+
+    public void StartGame()
+    {
+        PhotonNetwork.LoadLevel("Level1");
+    }
 }

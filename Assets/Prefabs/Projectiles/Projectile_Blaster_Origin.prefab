@@ -67,6 +67,7 @@ MonoBehaviour:
   GravityDownAcceleration: 0
   TrajectoryCorrectionDistance: -1
   Damage: 10
+  upFigure: 5
 --- !u!54 &3766165204044183357
 Rigidbody:
   m_ObjectHideFlags: 0

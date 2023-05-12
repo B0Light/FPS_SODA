@@ -45,7 +45,6 @@ public class PlayerWeaponsManager : MonoBehaviourPun
     public WeaponController[] m_WeaponSlots = new WeaponController[9];
     public int[] ActiveWeaponLV = new int[9];
 
-
     float m_WeaponBobFactor;
     Vector3 m_WeaponBobLocalPosition;
     Vector3 m_LastCharacterPosition;

@@ -11,6 +11,8 @@ public abstract class ProjectileBase : MonoBehaviourPun
 
     public UnityAction OnShoot;
 
+    public int projectileLV { get; set; }
+
     public void Shoot(WeaponController controller)
     {
         Owner = controller.Owner;

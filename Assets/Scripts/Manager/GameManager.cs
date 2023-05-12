@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] CrosshairManager crosshairManager;
     [SerializeField] Compass compass;
     [SerializeField] PlayerHealthBar PlayerHealthBar;
+    [SerializeField] TMP_Text coin;
     public bool isGameover { get; private set; }
 
     [Header("Respawn")]
@@ -47,6 +48,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public Image[] ranking_Health;
     public TMP_Text[] ranking_Text;
 
+    [Header("WeaponIcon")]
+    public Image[] weaponIcon;
+    private PlayerWeaponsManager pwm;
+    private PlayerInventory inventory;
+
     class PlayerScore
     {
         public string Name { get; set; }
@@ -55,26 +61,26 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.IsWriting) // 송신
+        if (stream.IsWriting) // ????
         {
-            stream.SendNext(killScore.Count); // Dictionary의 크기를 먼저 전송합니다.
+            stream.SendNext(killScore.Count); // Dictionary?? ?????? ???? ??????????.
 
             foreach (var kvp in killScore)
             {
-                stream.SendNext(kvp.Key); // key값 전송
-                stream.SendNext(kvp.Value.Item1); // Tuple의 string 값 전송
-                stream.SendNext(kvp.Value.Item2); // Tuple의 int 값 전송
+                stream.SendNext(kvp.Key); // key?? ????
+                stream.SendNext(kvp.Value.Item1); // Tuple?? string ?? ????
+                stream.SendNext(kvp.Value.Item2); // Tuple?? int ?? ????
             }
         }
-        else // 수신
+        else // ????
         {
-            int count = (int)stream.ReceiveNext(); // Dictionary의 크기를 먼저 수신합니다.
+            int count = (int)stream.ReceiveNext(); // Dictionary?? ?????? ???? ??????????.
 
             for (int i = 0; i < count; i++)
             {
-                int key = (int)stream.ReceiveNext(); // key값 수신
-                string strValue = (string)stream.ReceiveNext(); // Tuple의 string 값 수신
-                int intValue = (int)stream.ReceiveNext(); // Tuple의 int 값 수신
+                int key = (int)stream.ReceiveNext(); // key?? ????
+                string strValue = (string)stream.ReceiveNext(); // Tuple?? string ?? ????
+                int intValue = (int)stream.ReceiveNext(); // Tuple?? int ?? ????
 
                 if (killScore.ContainsKey(key))
                 {
@@ -131,7 +137,31 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
             ranking_Health[idx].fillAmount = (float)kvp.Value.Item2 / 20;
             ranking_Text[idx++].text = kvp.Value.Item1 + " : " + kvp.Value.Item2.ToString();
         }
-        
+
+        coin.text = inventory.Coin.ToString();
+
+        for(int i = 0; i < weaponIcon.Length; i++)
+        {
+            Color color = weaponIcon[i].color;
+            if(pwm.ActiveWeaponLV[i] == 0)
+            {
+                color.a = 0;
+                weaponIcon[i].color = color;
+                continue;
+
+            }
+
+            if(i == pwm.ActiveWeaponIndex)
+            {
+                color.a = 1;
+                weaponIcon[i].color = color;
+            }
+            else
+            {
+                color.a = 0.5f;
+                weaponIcon[i].color = color;
+            }
+        }
     }
 
     public void RespawnPlayer()
@@ -145,6 +175,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         player.GetComponent<PlayerController>().VirtualCamera = PlayerSightCam;
         compass.playerController = player.GetComponent<PlayerController>();
         compass.setPlayer();
+        pwm = player.GetComponent<PlayerWeaponsManager>();
+        inventory = player.GetComponent<PlayerInventory>();
         crosshairManager.m_WeaponsManager = player.GetComponent<PlayerWeaponsManager>();
         crosshairManager.setPlayer();
         PlayerHealthBar.m_playerController = player.GetComponent<PlayerController>();

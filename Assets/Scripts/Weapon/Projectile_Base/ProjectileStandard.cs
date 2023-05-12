@@ -30,6 +30,7 @@ public class ProjectileStandard : ProjectileBase
 
     [Header("Damage")]
     public float Damage = 40f;
+    [SerializeField] int upFigure = 1;
 
 
     ProjectileBase m_ProjectileBase;
@@ -41,7 +42,7 @@ public class ProjectileStandard : ProjectileBase
     {
         m_ProjectileBase = GetComponent<ProjectileBase>();
         m_ProjectileBase.OnShoot += OnShoot;
-
+        Damage = Damage + upFigure * projectileLV;
         Destroy(gameObject, MaxLifeTime);
     }
 

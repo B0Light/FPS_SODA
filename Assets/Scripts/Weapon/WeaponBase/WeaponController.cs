@@ -38,7 +38,7 @@ public class WeaponController : MonoBehaviourPun
     public WeaponShootType ShootType;
     public ProjectileBase[] ProjectilePrefab;
     public int ProjectileID = 0;
-
+    public int weaponLV = 0;
 
     public float DelayBetweenShots = 0.5f;
     public float BulletSpreadAngle = 0f;
@@ -376,6 +376,8 @@ public class WeaponController : MonoBehaviourPun
             Vector3 shotDirection = GetShotDirectionWithinSpread(WeaponMuzzle);
             ProjectileBase newProjectile = Instantiate(ProjectilePrefab[ProjectileID], WeaponMuzzle.position,
                 Quaternion.LookRotation(shotDirection));
+
+            newProjectile.projectileLV = weaponLV;
             newProjectile.Shoot(this);
         }
 
@@ -423,6 +425,7 @@ public class WeaponController : MonoBehaviourPun
     [PunRPC]
     public void Upgrade()
     {
+        weaponLV++;
         if (ProjectilePrefab[ProjectileID+1] != null)
         {
             ProjectileID++;

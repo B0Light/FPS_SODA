@@ -137,7 +137,8 @@ public class Health : MonoBehaviourPun, IPunObservable
                     playerController.Die();
                     if(currSco > 0)
                     {
-                        gameManager.RespawnPlayer();
+                        if(photonView.IsMine)
+                            gameManager.RespawnPlayer();
                     }
                 }
                 else if (enemyController != null)

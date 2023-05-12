@@ -254,7 +254,8 @@ public class PlayerController : MonoBehaviourPun
         photonView.RPC("Die", RpcTarget.Others, null);
         _animator.SetTrigger("doDie");
         StartCoroutine(DieFPX());
-        PhotonNetwork.Destroy(gameObject);
+        if(PhotonNetwork.IsMasterClient)
+            PhotonNetwork.Destroy(gameObject);
     }
 
     IEnumerator DieFPX()

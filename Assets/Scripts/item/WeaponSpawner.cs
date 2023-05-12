@@ -46,7 +46,7 @@ public class WeaponSpawner : MonoBehaviour, IPunObservable
             PlayerInventory inventory = other.GetComponent<PlayerInventory>();
             if (inventory)
             {
-                if (inventory.Coin > setToken)
+                if (inventory.Coin >= setToken)
                 {
                     GetCoinPerSec += (setToken) * Time.deltaTime;
                     if(GetCoinPerSec >= setToken)

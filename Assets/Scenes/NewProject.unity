@@ -2512,6 +2512,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6691518467288012422, guid: 9afbc23485107fe4fa6956732e38ac4c, type: 3}
+      propertyPath: setTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7223172791069318216, guid: 9afbc23485107fe4fa6956732e38ac4c, type: 3}
       propertyPath: PlayerSightCam
       value: 

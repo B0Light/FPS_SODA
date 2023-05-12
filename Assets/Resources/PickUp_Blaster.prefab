@@ -20211,6 +20211,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   ProjectileID: 0
+  weaponLV: 0
   DelayBetweenShots: 0.1
   BulletSpreadAngle: 0
   BulletsPerShot: 1

@@ -34,7 +34,7 @@ public class Timer : MonoBehaviour
         }
         if(min < 0)
         {
-            Time.timeScale = 0;
+            GM.EndGame();
         }
 
         CntDownText.text = min.ToString() + " : " + Mathf.Round(sec).ToString();

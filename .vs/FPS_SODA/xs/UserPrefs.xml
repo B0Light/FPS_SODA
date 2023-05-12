@@ -1,7 +1,7 @@
 ﻿<Properties StartupConfiguration="{D8C436A7-D429-85DA-4E22-9EB42A7802DA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Player/PlayerHealthBar.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/item/WeaponSpawner.cs">
     <Files>
-      <File FileName="Assets/Scripts/Manager/GameManager.cs" Line="40" Column="24" IsPinned="True" />
+      <File FileName="Assets/Scripts/Manager/GameManager.cs" Line="134" Column="28" IsPinned="True" />
       <File FileName="Assets/Scripts/Player/PlayerController.cs" IsPinned="True" />
       <File FileName="Assets/Scripts/item/Pickup.cs" Line="1" Column="1" IsPinned="True" />
       <File FileName="Assets/Scripts/item/ItemPickup.cs" Line="1" Column="1" IsPinned="True" />
@@ -12,6 +12,8 @@
       <File FileName="Assets/Scripts/Weapon/WeaponBase/WeaponController.cs" Line="380" Column="51" />
       <File FileName="Assets/Scripts/Weapon/Projectile_Base/ProjectileBase.cs" Line="16" Column="51" />
       <File FileName="Assets/Scripts/Player/PlayerHealthBar.cs" Line="15" Column="1" />
+      <File FileName="Assets/Scripts/Manager/Timer.cs" Line="36" Column="10" />
+      <File FileName="Assets/Scripts/item/WeaponSpawner.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

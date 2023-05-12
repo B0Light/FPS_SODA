@@ -24,19 +24,21 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    private static GameManager m_instance; 
+    private static GameManager m_instance;
 
     public GameObject playerPrefab;
     private GameObject player;
     [SerializeField] Transform playerSpawnTransform;
     public CinemachineVirtualCamera PlayerSightCam;
+    public bool isGameover { get; private set; }
+    private KeyValuePair<int, Tuple<string, int>> winner;
 
     [Header("UIManager")]
     [SerializeField] CrosshairManager crosshairManager;
     [SerializeField] Compass compass;
     [SerializeField] PlayerHealthBar PlayerHealthBar;
     [SerializeField] TMP_Text coin;
-    public bool isGameover { get; private set; }
+    
 
     [Header("Respawn")]
     public Transform[] respawnPos;
@@ -115,12 +117,21 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             killScore.Add(photonPlayer.ActorNumber, Tuple.Create(photonPlayer.NickName, 20));
         }
-
+        isGameover = false;
     }
 
     public void EndGame()
     {
         isGameover = true;
+        if(PhotonNetwork.LocalPlayer.ActorNumber == winner.Key)
+        {
+            Win();
+        }
+        else
+        {
+            Lose();
+        }
+        Time.timeScale = 0;
     }
 
     private void Update()
@@ -130,8 +141,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             PhotonNetwork.LeaveRoom();
         }
-        
+
         var sortedByIntDescending = killScore.OrderByDescending(x => x.Value.Item2);
+        winner = sortedByIntDescending.First();
         foreach (var kvp in sortedByIntDescending)
         {
             ranking_Health[idx].fillAmount = (float)kvp.Value.Item2 / 20;
@@ -140,10 +152,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
         coin.text = inventory.Coin.ToString();
 
-        for(int i = 0; i < weaponIcon.Length; i++)
+        for (int i = 0; i < weaponIcon.Length; i++)
         {
             Color color = weaponIcon[i].color;
-            if(pwm.ActiveWeaponLV[i] == 0)
+            if (pwm.ActiveWeaponLV[i] == 0)
             {
                 color.a = 0;
                 weaponIcon[i].color = color;
@@ -151,7 +163,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
             }
 
-            if(i == pwm.ActiveWeaponIndex)
+            if (i == pwm.ActiveWeaponIndex)
             {
                 color.a = 1;
                 weaponIcon[i].color = color;
@@ -188,5 +200,15 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("LobbyScene");
+    }
+
+    void Win()
+    {
+        Debug.Log("win");
+    }
+
+    void Lose()
+    {
+        Debug.Log("Lose");
     }
 }

@@ -1,12 +1,12 @@
 ﻿<Properties StartupConfiguration="{D8C436A7-D429-85DA-4E22-9EB42A7802DA}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Enemy/EnemyBose/BossManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Manager/GameManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Manager/GameManager.cs" Line="181" Column="17" IsPinned="True" />
-      <File FileName="Assets/Scripts/Player/PlayerController.cs" IsPinned="True" />
+      <File FileName="Assets/Scripts/Manager/GameManager.cs" Line="53" Column="34" IsPinned="True" />
+      <File FileName="Assets/Scripts/Player/PlayerController.cs" Line="1" Column="1" IsPinned="True" />
       <File FileName="Assets/Scripts/item/Pickup.cs" IsPinned="True" />
-      <File FileName="Assets/Scripts/item/ItemPickup.cs" Line="1" Column="1" IsPinned="True" />
+      <File FileName="Assets/Scripts/item/ItemPickup.cs" IsPinned="True" />
       <File FileName="Assets/Scripts/item/WeaponPickup.cs" IsPinned="True" />
-      <File FileName="Assets/Scripts/Actor/Health.cs" Line="142" Column="22" IsPinned="True" />
+      <File FileName="Assets/Scripts/Actor/Health.cs" IsPinned="True" />
       <File FileName="Assets/Scripts/Player/PlayerWeaponsManager.cs" />
       <File FileName="Assets/Scripts/Weapon/Projectile_Base/ProjectileStandard.cs" />
       <File FileName="Assets/Scripts/Weapon/WeaponBase/WeaponController.cs" />
@@ -14,13 +14,14 @@
       <File FileName="Assets/Scripts/Player/PlayerHealthBar.cs" />
       <File FileName="Assets/Scripts/Manager/Timer.cs" />
       <File FileName="Assets/Scripts/item/WeaponSpawner.cs" />
-      <File FileName="Assets/Photon/PhotonUnityNetworking/Code/PhotonNetworkPart.cs" Line="804" Column="1" />
-      <File FileName="Assets/Scripts/Enemy/EnemyBose/BossManager.cs" Line="40" Column="1" />
+      <File FileName="Assets/Photon/PhotonUnityNetworking/Code/PhotonNetworkPart.cs" />
+      <File FileName="Assets/Scripts/Enemy/EnemyBose/BossManager.cs" />
+      <File FileName="Assets/Scripts/Manager/NetworkManager.cs" Line="29" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a7a58380-9763-4662-beee-34a2ecfdef96" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="cf6f2b9d-964e-4e5c-a249-074ea7c5e5a1" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

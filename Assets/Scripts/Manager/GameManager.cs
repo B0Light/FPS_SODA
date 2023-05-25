@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public Dictionary<int, Tuple<string, int>> killScore = new Dictionary<int, Tuple<string, int>>();
     public Image[] ranking_Health;
     public TMP_Text[] ranking_Text;
+    public TMP_Text[] End_RankingText;
+    public GameObject EndGameObj;
 
     [Header("WeaponIcon")]
     public Image[] weaponIcon;
@@ -123,6 +125,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public void EndGame()
     {
         isGameover = true;
+        EndRanking();
         if(PhotonNetwork.LocalPlayer.ActorNumber == winner.Key)
         {
             Win();
@@ -202,13 +205,25 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         SceneManager.LoadScene("LobbyScene");
     }
 
+
     void Win()
     {
         Debug.Log("win");
+
     }
 
     void Lose()
     {
         Debug.Log("Lose");
+    }
+
+    void EndRanking()
+    {
+        var sortedByIntDescending = killScore.OrderByDescending(x => x.Value.Item2);
+        idx = 0;
+        foreach (var kvp in sortedByIntDescending)
+        {
+            End_RankingText[idx++].text = kvp.Value.Item1 + " : " + kvp.Value.Item2.ToString();
+        }
     }
 }

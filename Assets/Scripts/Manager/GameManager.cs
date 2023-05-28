@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     private static GameManager m_instance;
 
     public GameObject playerPrefab;
-    private GameObject player;
+    public GameObject player;
     [SerializeField] Transform playerSpawnTransform;
     public CinemachineVirtualCamera PlayerSightCam;
     public bool isGameover { get; private set; }
@@ -38,7 +38,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] Compass compass;
     [SerializeField] PlayerHealthBar PlayerHealthBar;
     [SerializeField] TMP_Text coin;
-    
+    [SerializeField] GameObject EndGameObj;
+    [SerializeField] GameObject WinScene;
+    [SerializeField] GameObject LoseScene;
+
 
     [Header("Respawn")]
     public Transform[] respawnPos;
@@ -50,7 +53,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public Image[] ranking_Health;
     public TMP_Text[] ranking_Text;
     public TMP_Text[] End_RankingText;
-    public GameObject EndGameObj;
 
     [Header("WeaponIcon")]
     public Image[] weaponIcon;
@@ -112,7 +114,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
+        WinScene.SetActive(false);
+        LoseScene.SetActive(false);
+        EndGameObj.SetActive(false);
         CreatPlayer();
 
         foreach (Player photonPlayer in PhotonNetwork.PlayerList)
@@ -125,6 +129,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public void EndGame()
     {
         isGameover = true;
+        EndGameObj.SetActive(true); 
         EndRanking();
         if(PhotonNetwork.LocalPlayer.ActorNumber == winner.Key)
         {
@@ -209,12 +214,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     void Win()
     {
         Debug.Log("win");
-
+        WinScene.SetActive(true);
     }
 
     void Lose()
     {
         Debug.Log("Lose");
+        LoseScene.SetActive(true);
     }
 
     void EndRanking()
@@ -225,5 +231,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             End_RankingText[idx++].text = kvp.Value.Item1 + " : " + kvp.Value.Item2.ToString();
         }
+    }
+
+    public void ExitGame_End()
+    {
+        PhotonNetwork.LoadLevel("LobbyScene");
     }
 }

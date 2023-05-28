@@ -723,6 +723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfc8601c98747541add3428c27a02fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyManager: {fileID: 0}
   m_target: {fileID: 0}
   _path: {fileID: 0}
   _anim: {fileID: 0}

@@ -12,7 +12,7 @@ public class EnemyPath : MonoBehaviour
 
     public float m_distance = 0f;
     [SerializeField] LayerMask m_layerMask = 0;
-    [SerializeField] Transform[] m_patrolNode = null;
+    public Transform[] m_patrolNode = null;
 
     public Transform m_target = null;
 
@@ -90,8 +90,7 @@ public class EnemyPath : MonoBehaviour
 
         if(m_navMesh.velocity == Vector3.zero)
         {
-            m_count++;
-            if (m_count >= m_patrolNode.Length) m_count = 0;
+            m_count = Random.Range(0, m_patrolNode.Length);
             m_navMesh.SetDestination(m_patrolNode[m_count].position);
             this.gameObject.transform.LookAt(m_patrolNode[m_count].position);
         }

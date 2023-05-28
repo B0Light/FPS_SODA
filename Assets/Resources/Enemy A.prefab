@@ -503,10 +503,10 @@ MonoBehaviour:
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 2
+  m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &6028683965914864122
@@ -677,6 +677,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   ProjectileID: 0
+  weaponLV: 0
   DelayBetweenShots: 0.5
   BulletSpreadAngle: 0
   BulletsPerShot: 1
@@ -890,6 +891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a41171b56d0f9f54d9859e4027d4f090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyManager: {fileID: 0}
   m_target: {fileID: 0}
   _path: {fileID: 7945511950966895773}
   _anim: {fileID: 0}
@@ -932,10 +934,7 @@ MonoBehaviour:
   m_layerMask:
     serializedVersion: 2
     m_Bits: 512
-  m_patrolNode:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  m_patrolNode: []
   m_target: {fileID: 0}
 --- !u!114 &7945511950966895763
 MonoBehaviour:

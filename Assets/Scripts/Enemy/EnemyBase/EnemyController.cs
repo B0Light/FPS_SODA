@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviourPun
     protected Health _health;
     EnemyAtk _enemyAtk;
 
+    public EnemyManager enemyManager;
     [Header("Targeting")]
     public GameObject m_target = null;
     public EnemyPath _path;
@@ -76,6 +77,7 @@ public class EnemyController : MonoBehaviourPun
     public void Die()
     {
         m_isDead = true;
+        enemyManager.currEnemy -= 1;
         _anim.SetTrigger("doDie");
         if(rewards.Length > 0)
         {

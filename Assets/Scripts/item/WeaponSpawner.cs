@@ -63,7 +63,8 @@ public class WeaponSpawner : MonoBehaviour, IPunObservable
         else if(GetCoin >= Price)
         {
             GetCoin -= Price;
-            Spawning();
+            if(PhotonNetwork.IsMasterClient)
+                Spawning();
         }
     }
 

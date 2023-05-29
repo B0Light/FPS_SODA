@@ -2,6 +2,7 @@ using Photon.Pun;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Windows;
+using Unity.VisualScripting;
 
 public class EnemyController : MonoBehaviourPun
 {
@@ -34,13 +35,13 @@ public class EnemyController : MonoBehaviourPun
 
     void Update()
     {
+        if (m_isDead)
+        {
+            StopAllCoroutines();
+            return;
+        }
         if (PhotonNetwork.IsMasterClient)
         {
-            if (m_isDead)
-            {
-                StopAllCoroutines();
-                return;
-            }
             //target
             if (_health.m_target)
             {
@@ -52,69 +53,62 @@ public class EnemyController : MonoBehaviourPun
                 m_target = null;
             }
         }
+        
     }
 
     private void Targeting()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (!m_isDead)
         {
-            if (!m_isDead)
+            RaycastHit[] rayHits = Physics.SphereCastAll(transform.position,
+                m_atkRadius, transform.forward, m_atkRange, LayerMask.GetMask("Player"));
+            if (rayHits.Length > 0 && m_isAtk == false)
             {
-                RaycastHit[] rayHits = Physics.SphereCastAll(transform.position,
-                    m_atkRadius, transform.forward, m_atkRange, LayerMask.GetMask("Player"));
-                if (rayHits.Length > 0 && m_isAtk == false)
-                {
-                    m_isAtk = true;
-                    //this.gameObject.transform.LookAt(rayHits[0].transform.position);
-                    Vector3 dir = rayHits[0].transform.position - this.transform.position;
-                    this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * m_rotationSpeed);
-                    _path.AttackNavSetting();
-                    StartCoroutine(_enemyAtk.Atk());
-                }
+                m_isAtk = true;
+                //this.gameObject.transform.LookAt(rayHits[0].transform.position);
+                Vector3 dir = rayHits[0].transform.position - this.transform.position;
+                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * m_rotationSpeed);
+                _path.AttackNavSetting();
+                StartCoroutine(_enemyAtk.Atk());
             }
         }
-        
     }
     
     private void FixedUpdate()
     {
-        Targeting();
+        if (PhotonNetwork.IsMasterClient)
+            Targeting();
     }
 
     public void Die()
     {
-        if(PhotonNetwork.IsMasterClient)
+        m_isDead = true;
+        if (!isBoss)
+            enemyManager.currEnemy -= 1;
+        _anim.SetTrigger("doDie");
+        if (rewards.Length > 0)
         {
-            m_isDead = true;
-            if (!isBoss)
-                enemyManager.currEnemy -= 1;
-            _anim.SetTrigger("doDie");
-            if (rewards.Length > 0)
+            int rewardIdx = Random.Range(0, rewards.Length);
+            PhotonNetwork.Instantiate(rewards[rewardIdx].name, transform.position, Quaternion.identity);
+            if (isBoss)
             {
-                int rewardIdx = Random.Range(0, rewards.Length);
-                PhotonNetwork.Instantiate(rewards[rewardIdx].name, transform.position, Quaternion.identity);
-                if (isBoss)
+                for (int i = 0; i < 5; i++)
                 {
-                    for (int i = 0; i < 5; i++)
-                    {
-                        rewardIdx = Random.Range(0, rewards.Length);
-                        PhotonNetwork.Instantiate(rewards[rewardIdx].name, transform.position, Quaternion.identity);
-                    }
-
+                    rewardIdx = Random.Range(0, rewards.Length);
+                    PhotonNetwork.Instantiate(rewards[rewardIdx].name, transform.position, Quaternion.identity);
                 }
-                Destroy(gameObject, 3f);
+
             }
+            photonView.RPC("destroyThisObj", RpcTarget.All, null);
         }
-        
     }
 
-    IEnumerator DestroyAfter(GameObject target, float delay)
+
+
+    [PunRPC]
+    public void destroyThisObj()
     {
-        yield return new WaitForSeconds(delay);
-
-        if(target != null)
-        {
-            PhotonNetwork.Destroy(target);
-        }
+        Destroy(this.gameObject, 2f);
     }
+
 }

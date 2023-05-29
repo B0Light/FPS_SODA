@@ -71,6 +71,7 @@ MonoBehaviour:
   - UpdateInfoText
   - ChatRPC
   - Upgrade_Pun
+  - RemoveTarget
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

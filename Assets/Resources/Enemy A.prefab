@@ -219,16 +219,16 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isWalk
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isAtk
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: doDie
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: doAtk
   m_SynchronizeLayers:
   - SynchronizeType: 0

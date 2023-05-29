@@ -259,13 +259,17 @@ public class PlayerController : MonoBehaviourPun
     IEnumerator DieFPX()
     {
         yield return new WaitForSeconds(3f);
-        this.gameObject.SetActive(false);
         if(PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.Destroy(gameObject);
-        }
+            photonView.RPC("destroyThisObj", RpcTarget.All, null);
     }
-    
+
+    [PunRPC]
+    public void destroyThisObj()
+    {
+        this.gameObject.SetActive(false);
+        Destroy(this.gameObject);
+    }
+
     private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
     {
         if (lfAngle < -360f) lfAngle += 360f;

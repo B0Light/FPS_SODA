@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -20,6 +20,7 @@ public class CrosshairManager : MonoBehaviour
     {
         OnWeaponChanged(m_WeaponsManager.ActiveWeaponIndex);
         m_WeaponsManager.OnSwitchedToWeapon += OnWeaponChanged;
+        CrosshairImage.sprite = NullCrosshairSprite;
     }
 
     void OnWeaponChanged(int newWeaponIdx)

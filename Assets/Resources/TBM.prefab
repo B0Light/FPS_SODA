@@ -4978,10 +4978,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f350bc3164585d94ca1c432b3b9e2b24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_dmg: 10
+  m_dmg: 100
   m_layerMask:
     serializedVersion: 2
     m_Bits: 512
   ImpactVfx: {fileID: 1599315238913598529, guid: 44b1b034a259aeb4f82eceb04475c03b, type: 3}
   Owner: {fileID: 0}
+  m_target: {fileID: 0}
   m_speed: 50

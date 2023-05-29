@@ -1,3 +1,4 @@
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -27,6 +28,7 @@ public class EnemyPath : MonoBehaviour
 
     public void TraceNavSetting()
     {
+        if (!PhotonNetwork.IsMasterClient) { return; }
         m_navMesh.isStopped = false;
         m_navMesh.updatePosition = true;
         m_navMesh.updateRotation = true;
@@ -34,6 +36,7 @@ public class EnemyPath : MonoBehaviour
 
     public void AttackNavSetting()
     {
+        if (!PhotonNetwork.IsMasterClient) { return; }
         m_navMesh.isStopped = true;
         m_navMesh.updatePosition = false;
         m_navMesh.updateRotation = false;
@@ -43,30 +46,35 @@ public class EnemyPath : MonoBehaviour
 
     void Start()
     {
+        if (!PhotonNetwork.IsMasterClient) { return; }
         TraceNavSetting();
         InvokeRepeating("MoveToNextWayNode", 0f, 2f);
     }
 
     void Update()
     {
-        if (_enemyController.m_isDead == true && chkDead == false)
-        {
-            chkDead = true;
-            m_navMesh.isStopped = true;
-            m_navMesh.enabled = false;
-        }
-        if (_enemyController.m_isAtk == true || chkDead) return;
-
         _anim.SetBool("isWalk", m_navMesh.velocity.magnitude > 0);
-        if (m_navMesh.velocity == Vector3.zero)
-        {
-            MoveToNextWayNode();
+        if (PhotonNetwork.IsMasterClient) 
+        { 
+            if (_enemyController.m_isDead == true && chkDead == false)
+            {
+                chkDead = true;
+                m_navMesh.isStopped = true;
+                m_navMesh.enabled = false;
+            }
+            if (_enemyController.m_isAtk == true || chkDead) return;
+
+            if (m_navMesh.velocity == Vector3.zero)
+            {
+                MoveToNextWayNode();
+            }
+            Sight(); 
         }
-        Sight(); 
     }
 
     public void SetTarget(Transform p_target)
     {
+        if(!PhotonNetwork.IsMasterClient) { return; }
         if (chkDead) return;
         CancelInvoke();
         m_target = p_target;
@@ -77,6 +85,7 @@ public class EnemyPath : MonoBehaviour
 
     public void RemoveTarget()
     {
+        if (!PhotonNetwork.IsMasterClient) { return; }
         if (chkDead) return;
         m_target = null;
         MoveToNextWayNode();
@@ -84,6 +93,7 @@ public class EnemyPath : MonoBehaviour
 
     void MoveToNextWayNode()
     {
+        if (!PhotonNetwork.IsMasterClient) { return; }
         if (chkDead) return;
         TraceNavSetting();
         if (m_target != null ) return;
@@ -97,6 +107,7 @@ public class EnemyPath : MonoBehaviour
     }
     void Sight()
     {
+        if (!PhotonNetwork.IsMasterClient) { return; }
         if (chkDead) return;
         Collider[] cols = Physics.OverlapSphere(transform.position, m_distance, m_layerMask);
 

@@ -328,16 +328,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfc8601c98747541add3428c27a02fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyManager: {fileID: 0}
   m_target: {fileID: 0}
   _path: {fileID: 0}
   _anim: {fileID: 0}
   m_rotationSpeed: 1
   m_atkRadius: 2
   m_atkRange: 4
-  isBoss: 0
+  isBoss: 1
   m_isAtk: 0
   m_isDead: 0
-  rewards: []
+  rewards:
+  - {fileID: 8386253751778639384, guid: d008eafa80cbd46d29c4829137d2c194, type: 3}
+  - {fileID: 5171903386891180786, guid: 671e30d6b56a24d7695b01295e839374, type: 3}
+  - {fileID: 6361633097311417232, guid: ef96644cad2b44a6a9ba770efbc3ef78, type: 3}
+  - {fileID: 237899612797125245, guid: 0b2e677f3330c85418e0e81887d2905c, type: 3}
+  - {fileID: 237899612797125245, guid: b382a7ce852c06a4497d3aadcdf8d442, type: 3}
 --- !u!1 &1718957990531627524
 GameObject:
   m_ObjectHideFlags: 0

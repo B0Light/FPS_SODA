@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviourPun
     public Vector3 inputDirection;
     private bool isDodge;
     private Vector3 dodgeVec;
-    private bool isDead = false;
+    public bool isDead = false;
 
     [Space(10)]
     public float JumpHeight = 1.2f;
@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviourPun
     private InputSystem _input;
     private GameObject _mainCamera;
     private Animator _animator;
+    public GameManager GM;
 
     public float RotationMultiplier
     {
@@ -250,18 +251,19 @@ public class PlayerController : MonoBehaviourPun
     {
         if(isDead)  return;
         isDead = true;
-        _WeaponsManager.WeaponParentSocket.gameObject.SetActive(false);
         photonView.RPC("Die", RpcTarget.Others, null);
         _animator.SetTrigger("doDie");
         StartCoroutine(DieFPX());
-        if(PhotonNetwork.IsMasterClient)
-            PhotonNetwork.Destroy(gameObject);
     }
 
     IEnumerator DieFPX()
     {
         yield return new WaitForSeconds(3f);
         this.gameObject.SetActive(false);
+        if(PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
     }
     
     private static float ClampAngle(float lfAngle, float lfMin, float lfMax)

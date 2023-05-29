@@ -279,11 +279,15 @@ public class PlayerWeaponsManager : MonoBehaviourPun
     {
         if (WeaponId < 0) return false;
         if (m_WeaponSlots[WeaponId] == null) return false;
-        photonView.RPC("AddWeapon", RpcTarget.OthersBuffered, WeaponId);
+        if(photonView.IsMine)
+            photonView.RPC("AddWeapon", RpcTarget.Others, WeaponId);
         ActiveWeaponLV[WeaponId]++;
 
         if (ActiveWeaponLV[WeaponId] > 2)
+        {
             m_WeaponSlots[WeaponId].Upgrade();
+        }
+            
             
         
         if (GetActiveWeapon() == null)

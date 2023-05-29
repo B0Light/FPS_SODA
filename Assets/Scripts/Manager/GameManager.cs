@@ -9,6 +9,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using static UnityEngine.Rendering.DebugUI;
 
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -186,13 +187,14 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void RespawnPlayer()
     {
-        Invoke("CreatPlayer", 5f);
+        CreatPlayer();
     }
 
     public void CreatPlayer()
     {
         player = PhotonNetwork.Instantiate(playerPrefab.name, respawnPos[UnityEngine.Random.Range(0, respawnPos.Length)].position, respawnPos[UnityEngine.Random.Range(0, respawnPos.Length)].rotation);
         player.GetComponent<PlayerController>().VirtualCamera = PlayerSightCam;
+        player.GetComponent<PlayerController>().GM = this;
         compass.playerController = player.GetComponent<PlayerController>();
         compass.setPlayer();
         pwm = player.GetComponent<PlayerWeaponsManager>();
@@ -207,7 +209,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        SceneManager.LoadScene("LobbyScene");
+        SceneManager.LoadScene("0.TiltleSecene");
     }
 
 
@@ -225,6 +227,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     void EndRanking()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         var sortedByIntDescending = killScore.OrderByDescending(x => x.Value.Item2);
         idx = 0;
         foreach (var kvp in sortedByIntDescending)
@@ -235,6 +239,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void ExitGame_End()
     {
-        PhotonNetwork.LoadLevel("LobbyScene");
+        PhotonNetwork.LoadLevel("0.TiltleSecene");
     }
 }

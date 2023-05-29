@@ -15,34 +15,33 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(currEnemy < setEnemy)
-        {
-            StartCoroutine(spawn());
-        }
+        if(PhotonNetwork.IsMasterClient)
+            if(currEnemy < setEnemy)
+                StartCoroutine(spawn());
     }
 
     IEnumerator spawn()
     {
+        if(!PhotonNetwork.IsMasterClient) yield return null;
+
         yield return new WaitForSeconds(5f);
         if (currEnemy < setEnemy)
         {
             int rand_T = Random.Range(0, Enemy.Length);
             int rand_P = Random.Range(0, EnemySpawnPos.Length);
-            if (PhotonNetwork.IsMasterClient)
+            GameObject NewEnemy = PhotonNetwork.Instantiate(Enemy[rand_T].name, EnemySpawnPos[rand_P].position, Quaternion.identity);
+            EnemyPath enemyPath = NewEnemy.GetComponent<EnemyPath>();
+            if (enemyPath != null)
             {
-                GameObject NewEnemy = PhotonNetwork.Instantiate(Enemy[rand_T].name, EnemySpawnPos[rand_P].position, Quaternion.identity);
-                EnemyPath enemyPath = NewEnemy.GetComponent<EnemyPath>();
-                if (enemyPath != null)
-                {
-                    enemyPath.m_patrolNode = EnemyPath;
-                }
-                EnemyController enemyController = NewEnemy.GetComponent<EnemyController>();
-                if (enemyController != null)
-                {
-                    enemyController.enemyManager = this;
-                }
-                currEnemy += 1;
+                enemyPath.m_patrolNode = EnemyPath;
             }
+            EnemyController enemyController = NewEnemy.GetComponent<EnemyController>();
+            if (enemyController != null)
+            {
+                enemyController.enemyManager = this;
+            }
+            currEnemy += 1;
+            
         }
         
     }

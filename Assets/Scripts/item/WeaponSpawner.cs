@@ -20,6 +20,20 @@ public class WeaponSpawner : MonoBehaviour, IPunObservable
     private void Start()
     {
         image.sprite = itemSprite[SpawnID];
+        switch(SpawnID)
+        {
+            case 0:
+                fillImg.color = Color.cyan;
+                break;
+            case 1:
+                fillImg.color = Color.magenta;
+                Price = 1500;
+                break;
+            case 2:
+                fillImg.color = Color.blue;
+                Price = 2000;
+                break;
+        }
     }
 
     private void Update()

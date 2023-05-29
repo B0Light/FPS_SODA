@@ -869,7 +869,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6279300550912582146}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 100, y: 0, z: -25}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -902,7 +902,9 @@ MonoBehaviour:
   m_isAtk: 0
   m_isDead: 0
   rewards:
-  - {fileID: 237899612797125245, guid: 797c480eee41d450b8b3029b371ff6f7, type: 3}
+  - {fileID: 237899612797125245, guid: faf7cf2a6ab324c4aa450081ae816287, type: 3}
+  - {fileID: 237899612797125245, guid: 28a6691193b0e4a44bed1a4d635e55ac, type: 3}
+  - {fileID: 237899612797125245, guid: faf7cf2a6ab324c4aa450081ae816287, type: 3}
 --- !u!114 &7945511950966895768
 MonoBehaviour:
   m_ObjectHideFlags: 0

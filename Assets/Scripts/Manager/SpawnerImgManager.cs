@@ -17,8 +17,11 @@ public class SpawnerImgManager : MonoBehaviour
         if (GM != null)
         {
             player = GM.player;
-            targetPosition = new Vector3(player.transform.position.x, transform.position.y, player  .transform.position.z);
-            transform.LookAt(targetPosition);
+            if (player != null)
+            {
+                targetPosition = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
+                transform.LookAt(targetPosition);
+            }
         } 
     }
 }

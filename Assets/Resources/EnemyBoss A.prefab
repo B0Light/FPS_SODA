@@ -730,10 +730,19 @@ MonoBehaviour:
   m_rotationSpeed: 1
   m_atkRadius: 2
   m_atkRange: 4
-  isBoss: 0
+  isBoss: 1
   m_isAtk: 0
   m_isDead: 0
-  rewards: []
+  rewards:
+  - {fileID: 237899612797125245, guid: faf7cf2a6ab324c4aa450081ae816287, type: 3}
+  - {fileID: 237899612797125245, guid: 797c480eee41d450b8b3029b371ff6f7, type: 3}
+  - {fileID: 237899612797125245, guid: 0b2e677f3330c85418e0e81887d2905c, type: 3}
+  - {fileID: 237899612797125245, guid: 28a6691193b0e4a44bed1a4d635e55ac, type: 3}
+  - {fileID: 8386253751778639384, guid: d008eafa80cbd46d29c4829137d2c194, type: 3}
+  - {fileID: 237899612797125245, guid: 797c480eee41d450b8b3029b371ff6f7, type: 3}
+  - {fileID: 237899612797125245, guid: 797c480eee41d450b8b3029b371ff6f7, type: 3}
+  - {fileID: 237899612797125245, guid: b8b188ac6e7f68e4085935fa17b873ad, type: 3}
+  - {fileID: 237899612797125245, guid: b382a7ce852c06a4497d3aadcdf8d442, type: 3}
 --- !u!1 &4448511285358985317
 GameObject:
   m_ObjectHideFlags: 0

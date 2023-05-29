@@ -19,8 +19,8 @@ MonoBehaviour:
     sceneName: LobbyScene
   - id: 1
     name: Story
-    description: Protect Town
-    sceneName: 1.MainCamp
+    description: ComingSoon
+    sceneName: 
   - id: 2
     name: PVP
     description: GameScene1

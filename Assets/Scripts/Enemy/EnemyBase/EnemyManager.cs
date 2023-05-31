@@ -11,7 +11,7 @@ public class EnemyManager : MonoBehaviour
     [Space(10)]
     public int currEnemy = 0;
     [SerializeField] private int setEnemy;
-    [SerializeField] private Transform[] EnemyPath;
+    public Transform[] EnemyPath;
     // Update is called once per frame
     void Update()
     {
@@ -30,19 +30,12 @@ public class EnemyManager : MonoBehaviour
             int rand_T = Random.Range(0, Enemy.Length);
             int rand_P = Random.Range(0, EnemySpawnPos.Length);
             GameObject NewEnemy = PhotonNetwork.Instantiate(Enemy[rand_T].name, EnemySpawnPos[rand_P].position, Quaternion.identity);
-            EnemyPath enemyPath = NewEnemy.GetComponent<EnemyPath>();
-            if (enemyPath != null)
-            {
-                enemyPath.m_patrolNode = EnemyPath;
-            }
             EnemyController enemyController = NewEnemy.GetComponent<EnemyController>();
             if (enemyController != null)
             {
-                enemyController.enemyManager = this;
+                enemyController.EM = this;
             }
             currEnemy += 1;
-            
         }
-        
     }
 }

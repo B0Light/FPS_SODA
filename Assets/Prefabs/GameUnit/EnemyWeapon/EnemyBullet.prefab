@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8924682559891268397}
   - component: {fileID: 3766165204044183357}
   - component: {fileID: 5125089940843561726}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: EnemyBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,6 +66,7 @@ MonoBehaviour:
   GravityDownAcceleration: 0
   TrajectoryCorrectionDistance: -1
   Damage: 10
+  upFigure: 1
 --- !u!54 &3766165204044183357
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -102,9 +103,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3659995153115176982}
     m_Modifications:
+    - target: {fileID: 1245224536246384, guid: e7776336bc56a9b4caa1c90ea92ff765, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409903271756654, guid: e7776336bc56a9b4caa1c90ea92ff765, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 1595252117517162, guid: e7776336bc56a9b4caa1c90ea92ff765, type: 3}
       propertyPath: m_Name
       value: Projectile 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595252117517162, guid: e7776336bc56a9b4caa1c90ea92ff765, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1809088009161248, guid: e7776336bc56a9b4caa1c90ea92ff765, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4623055400575438, guid: e7776336bc56a9b4caa1c90ea92ff765, type: 3}
       propertyPath: m_RootOrder

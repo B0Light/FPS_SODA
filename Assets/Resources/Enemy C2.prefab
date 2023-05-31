@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a41171b56d0f9f54d9859e4027d4f090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyManager: {fileID: 0}
+  EM: {fileID: 0}
   m_target: {fileID: 0}
   _path: {fileID: 0}
   _anim: {fileID: 0}
@@ -374,7 +374,6 @@ MonoBehaviour:
   m_layerMask:
     serializedVersion: 2
     m_Bits: 512
-  m_patrolNode: []
   m_target: {fileID: 0}
 --- !u!65 &2136062863200022767
 BoxCollider:

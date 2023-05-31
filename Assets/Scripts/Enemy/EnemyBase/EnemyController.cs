@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviourPun
     protected Health _health;
     EnemyAtk _enemyAtk;
 
-    public EnemyManager enemyManager;
+    public EnemyManager EM;
     [Header("Targeting")]
     public GameObject m_target = null;
     public EnemyPath _path;
@@ -33,6 +33,10 @@ public class EnemyController : MonoBehaviourPun
         _anim = GetComponentInChildren<Animator>();
     }
 
+    private void Start()
+    {
+        EM = FindObjectOfType<EnemyManager>();
+    }
     void Update()
     {
         if (m_isDead)
@@ -84,9 +88,9 @@ public class EnemyController : MonoBehaviourPun
     {
         m_isDead = true;
         if (!isBoss)
-            enemyManager.currEnemy -= 1;
+            photonView.RPC("EnemyDown", RpcTarget.All, null);
         _anim.SetTrigger("doDie");
-        if (rewards.Length > 0)
+        if (rewards.Length > 0 && PhotonNetwork.IsMasterClient)
         {
             int rewardIdx = Random.Range(0, rewards.Length);
             PhotonNetwork.Instantiate(rewards[rewardIdx].name, transform.position, Quaternion.identity);
@@ -103,7 +107,11 @@ public class EnemyController : MonoBehaviourPun
         }
     }
 
-
+    [PunRPC]
+    public void EnemyDown()
+    {
+        EM.currEnemy -= 1;
+    }
 
     [PunRPC]
     public void destroyThisObj()

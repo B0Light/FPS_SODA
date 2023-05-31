@@ -72,6 +72,8 @@ MonoBehaviour:
   - ChatRPC
   - Upgrade_Pun
   - RemoveTarget
+  - SetDestination
+  - EnemyDown
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

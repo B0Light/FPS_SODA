@@ -28,7 +28,6 @@ public class EnemyAtk : MonoBehaviourPun
     public IEnumerator Atk()
     {
         _anim.SetBool("isWalk", false);
-        _anim.SetBool("isAtk", true);
 
         switch (enemyType)
         {

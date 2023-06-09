@@ -96,7 +96,6 @@
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\NamePickGui.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Scripts\Manager\AudioManager.cs" />
-    <Compile Include="Assets\Scripts\Actor\Actor.cs" />
     <Compile Include="Assets\Scripts\item\WeaponPickup.cs" />
     <Compile Include="Assets\Scripts\Manager\Timer.cs" />
     <Compile Include="Assets\Scripts\Manager\LobbyManager.cs" />
@@ -109,7 +108,6 @@
     <Compile Include="Assets\Scripts\Enemy\WorldspaceHealthBar.cs" />
     <Compile Include="Assets\Assets\BOXOPHOBIC\Utils\Scripts\StyledGizmos\StyledLabelGizmo.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
-    <Compile Include="Assets\Scripts\Actor\ActorsManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\TextToggleIsOnTransition.cs" />
